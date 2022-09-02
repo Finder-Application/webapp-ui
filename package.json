@@ -7,7 +7,9 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prettier:fix": "prettier --write",
+    "prettier:check": "prettier --check ."
   },
   "dependencies": {
     "axios": "^0.27.2",
