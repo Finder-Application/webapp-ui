@@ -1,8 +1,11 @@
+import { DefaultLayout } from '@/Layouts';
 import { routes } from '@/configs';
 import { Homepage } from '@/pages/Home';
 import { RouteFinder } from './types';
 
-const publicRoutes: RouteFinder[] = [{ path: routes.home, page: Homepage }];
+const publicRoutes: RouteFinder[] = [
+  { path: routes.home, page: Homepage, layout: DefaultLayout },
+];
 
 const privateRoutes: RouteFinder[] = [];
 
