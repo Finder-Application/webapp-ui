@@ -1,4 +1,4 @@
-import { DefaultLayout } from '@/Layouts';
+import { DefaultLayout } from '@/layouts';
 import { routes } from '@/configs';
 import { Homepage } from '@/pages/Home';
 import { RouteFinder } from './types';
