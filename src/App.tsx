@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import 'antd/dist/antd.css';
 import { privateRoutes, publicRoutes } from './routes';
 import { BrowserRouter } from 'react-router-dom';
