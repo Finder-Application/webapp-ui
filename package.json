@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview --host",
-    "format": "prettier --write .",
+    "format": "prettier --write ./src",
     "prettier:fix": "prettier --write",
     "prettier:check": "prettier --check ."
   },
