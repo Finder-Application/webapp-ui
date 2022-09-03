@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ReactIcon = () => {
+export const ReactIcon: React.FC = () => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

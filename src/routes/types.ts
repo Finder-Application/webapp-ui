@@ -1,5 +1,5 @@
 export interface RouteFinder {
   path: string;
-  page: () => JSX.Element;
-  layout?: () => JSX.Element;
+  page: (props: any) => JSX.Element;
+  layout?: (props: any) => JSX.Element;
 }
