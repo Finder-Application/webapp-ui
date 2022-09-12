@@ -1,45 +1,42 @@
-import { Fragment } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import 'antd/dist/antd.css';
-import { privateRoutes, publicRoutes } from './routes';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';
+import { DefaultLayout } from './layouts';
+import {
+  PrivateOutletRoute,
+  privateRoutes,
+  PublicOutletRoute,
+  publicRoutes,
+} from './routes';
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 function App() {
+  const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
+    routes.map((route, index) => {
+      const Page = route.page;
+      const Layout = route.layout || DefaultLayout;
+
+      return (
+        <Route
+          key={index}
+          path={route.path}
+          element={
+            <Layout>
+              <Page />
+            </Layout>
+          }
+        />
+      );
+    });
   return (
     <GlobalStyles>
       <BrowserRouter>
         <Routes>
-          {publicRoutes.map((route, index) => {
-            const Page = route.page;
-            const Layout = route.layout || Fragment;
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })}
-          {privateRoutes.map((route, index) => {
-            const Page = route.page;
-            const Layout = route.layout || Fragment;
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })}{' '}
+          <Route element={<PublicOutletRoute />}>
+            {renderRoutes([...publicRoutes])}
+          </Route>
+          <Route element={<PrivateOutletRoute />}>
+            {renderRoutes([...privateRoutes])}
+          </Route>
         </Routes>
       </BrowserRouter>
     </GlobalStyles>

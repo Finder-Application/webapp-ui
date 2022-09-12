@@ -1,3 +1,4 @@
 export * from './ButtonFinder';
-export * from './icons';
+export * from './Icons';
 export * from './GlobalStyles';
+export * from './AsyncImage';

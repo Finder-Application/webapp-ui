@@ -1,12 +1,21 @@
 import { DefaultLayout } from '@/layouts';
-import { routes } from '@/configs';
-import { Homepage } from '@/pages/Home';
-import { RouteFinder } from './types';
+import { Homepage, LoginPage } from '@/pages';
+
+// * Define all routes fro websites
+const routesPath = {
+  home: '/home',
+  login: '/',
+};
 
 const publicRoutes: RouteFinder[] = [
-  { path: routes.home, page: Homepage, layout: DefaultLayout },
+  {
+    path: routesPath.login,
+    page: LoginPage,
+  },
 ];
 
-const privateRoutes: RouteFinder[] = [];
+const privateRoutes: RouteFinder[] = [
+  { path: routesPath.home, page: Homepage, layout: DefaultLayout },
+];
 
-export { publicRoutes, privateRoutes };
+export { publicRoutes, privateRoutes, routesPath };

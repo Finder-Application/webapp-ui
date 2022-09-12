@@ -1,11 +1,14 @@
 import { ButtonFinder } from '@/components';
-import styles from './Home.module.scss';
 import classNames from 'classnames/bind';
+import styles from './Homepage.module.scss';
 const cx = classNames.bind(styles);
-export const Homepage = () => {
+const Homepage = () => {
   return (
     <div className={cx('wrapper')}>
-      <ButtonFinder type='primary' />
+      <ButtonFinder className='btn-color' isBorder>
+        Hello world
+      </ButtonFinder>
     </div>
   );
 };
+export default Homepage;
