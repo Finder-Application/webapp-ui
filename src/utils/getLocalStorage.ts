@@ -1,3 +1,5 @@
-export const getLocalStorage = (key: string): string => {
+import { StorageKey } from '@/configs';
+
+export const getLocalStorage = (key: StorageKey): string => {
   return localStorage.getItem(key) || '';
 };
