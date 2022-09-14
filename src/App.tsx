@@ -1,3 +1,5 @@
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { Fragment } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';
 import { DefaultLayout } from './layouts';
@@ -7,13 +9,17 @@ import {
   PublicOutletRoute,
   publicRoutes,
 } from './routes';
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
     routes.map((route, index) => {
       const Page = route.page;
-      const Layout = route.layout || DefaultLayout;
+      let Layout =
+        route.layout === undefined
+          ? DefaultLayout
+          : route.layout === null
+          ? Fragment
+          : route.layout;
 
       return (
         <Route
