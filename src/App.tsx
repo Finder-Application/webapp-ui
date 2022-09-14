@@ -1,14 +1,10 @@
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Fragment } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';
+import { privateRoutes, publicRoutes } from './configs';
 import { DefaultLayout } from './layouts';
-import {
-  PrivateOutletRoute,
-  privateRoutes,
-  PublicOutletRoute,
-  publicRoutes,
-} from './routes';
+import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
@@ -35,16 +31,14 @@ function App() {
     });
   return (
     <GlobalStyles>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<PublicOutletRoute />}>
-            {renderRoutes([...publicRoutes])}
-          </Route>
-          <Route element={<PrivateOutletRoute />}>
-            {renderRoutes([...privateRoutes])}
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route element={<PublicOutletRoute />}>
+          {renderRoutes([...publicRoutes])}
+        </Route>
+        <Route element={<PrivateOutletRoute />}>
+          {renderRoutes([...privateRoutes])}
+        </Route>
+      </Routes>
     </GlobalStyles>
   );
 }

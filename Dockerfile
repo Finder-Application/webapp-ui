@@ -3,9 +3,9 @@ FROM node:lastest
 WORKDIR /app
 
 COPY . .
-RUN npm ci
+RUN yarn
 
-RUN npm run build
+RUN yarn  build
 
 EXPOSE 3000
-CMD ["npm", "run","preview"]
+CMD ["yarn","preview"]

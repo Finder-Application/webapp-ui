@@ -1,4 +1,4 @@
-import { ConfigApi } from './types';
+import { ConfigApi } from '@/@types';
 
 export const devUrl: ConfigApi = {
   userUrl: '',
