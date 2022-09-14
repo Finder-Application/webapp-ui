@@ -10,8 +10,9 @@ const publicRoutes: RouteFinder[] = [
     path: ROUTES.login,
     page: LoginPage,
   },
+  { path: ROUTES.home, page: Homepage },
 ];
 
-const privateRoutes: RouteFinder[] = [{ path: ROUTES.home, page: Homepage }];
+const privateRoutes: RouteFinder[] = [];
 
 export { publicRoutes, privateRoutes };

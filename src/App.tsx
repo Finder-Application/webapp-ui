@@ -1,4 +1,3 @@
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Fragment } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';

@@ -22,7 +22,7 @@ export const ButtonFinder = React.forwardRef<
   );
 
   return (
-    <Button ref={ref} className={buttonFinderClassName}>
+    <Button ref={ref} {...props} className={buttonFinderClassName}>
       {props.children}
     </Button>
   );

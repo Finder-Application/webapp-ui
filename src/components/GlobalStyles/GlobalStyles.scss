@@ -5,12 +5,26 @@
   --black: #000;
   --white: #fff;
   --text-color: #161823;
+  --bg-main: #f5f5f5;
 
   // Default layout
-  --default-layout-header-height: 60px;
+  --default-layout-header-height: 56px;
   --default-layout-width: 1150px;
-  --default-layout-horizontal-spacer: 24px;
+
+  // space
+  --space-header: 2rem;
+
+  //size screen
+  --min-height: 110vh;
 }
-.body {
+
+body {
   font-family: 'Roboto', sans-serif;
+  // min-height: var(--min-height);
+  color: var(--black);
+  height: 100%;
+  font-size: 14px;
+}
+#root {
+  height: 100%;
 }

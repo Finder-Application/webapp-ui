@@ -1,5 +1,14 @@
-.wrapper {
-  &__btn {
-    background-color: rgb(255, 140, 0);
+.homepage {
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    padding-bottom: var(--space-header);
+  }
+  .search {
+    .select {
+      border-radius: 5px;
+      min-width: 10rem;
+    }
   }
 }
