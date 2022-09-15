@@ -1,28 +1,75 @@
 .post {
   transition: transform 0.25s ease-in-out, box-shadow 0.1s;
   cursor: pointer;
-  animation: fadeIn 1s ease-in both;
-  animation-delay: 2s;
+  animation: fadeIn 0.5s ease-in both;
+  margin-bottom: 5rem;
   .card {
-    height: 20rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    overflow: hidden;
     background-color: var(--white);
+    overflow: hidden;
+    height: var(--card-height);
     &__info {
       position: relative;
-      &__status {
+      --fs-state: 1rem;
+      --space-top: 0.5rem;
+      --space-status: 1rem;
+
+      &-status {
         position: absolute;
         right: 0;
-        top: 0.5rem;
+        top: var(--space-top);
+        font-size: var(--fs-state);
+
+        &--finding {
+          color: var(--finding-color);
+          background-color: var(--bg-finding);
+        }
+
+        &--found {
+          color: var(--found-color);
+          background-color: var(--bg-found);
+        }
+      }
+
+      &-content {
+        padding-left: var(--default-margin);
+        font-size: 1rem;
+        margin-top: calc(
+          var(--fs-state) + var(--space-top) + var(--space-status)
+        );
+        margin-bottom: var(--default-margin);
+
+        .content-item {
+          margin-bottom: 1rem;
+
+          span {
+            font-weight: bold;
+          }
+        }
       }
     }
-  }
-  &:hover {
-    transform: translateY(-0.5rem) scale(1.0125);
-    box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
+    &:hover {
+      // transform: translateY(-0.5rem) scale(1.0125);
+      box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
+    }
   }
 
+  .user {
+    font-size: 1.2rem;
+    margin-top: var(--default-margin);
+
+    &__avatar {
+      height: 2.5rem;
+      width: 2.5rem;
+      border-radius: 50%;
+      margin-right: var(--default-margin);
+    }
+
+    .created-at {
+      color: var(--text-second-color);
+    }
+  }
   @keyframes fadeIn {
     from {
       opacity: 0;

@@ -6,16 +6,24 @@
   --white: #fff;
   --text-color: #161823;
   --bg-main: #f5f5f5;
-
+  --finding-color: #33d142;
+  --bg-finding: #cdffc5;
+  --found-color: #3f3cf2;
+  --bg-found: rgba(68, 129, 248, 0.31);
+  --text-second-color: #8c8585;
   // Default layout
   --default-layout-header-height: 56px;
   --default-layout-width: 1150px;
 
   // space
   --space-header: 2rem;
+  --default-margin: 12px;
 
   //size screen
   --min-height: 110vh;
+
+  // card
+  --card-height: 300px;
 }
 
 body {
@@ -24,7 +32,36 @@ body {
   color: var(--black);
   height: 100%;
   font-size: 14px;
+  scroll-behavior: smooth;
 }
 #root {
   height: 100%;
+}
+
+// custom atd
+.ant-skeleton-header {
+  display: inline-block;
+}
+.ant-skeleton-image {
+  height: 100%;
+  width: 100%;
+}
+
+.ant-skeleton-image-svg {
+  margin: 0 var(--default-margin);
+}
+// Scrollbar CSS
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
 }
