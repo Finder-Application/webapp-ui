@@ -4,13 +4,20 @@ import styles from './AsyncImage.module.scss';
 import { Skeleton } from 'antd';
 
 const cx = classNames.bind(styles);
-type AsyncImageProps = React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
->;
+
+interface AsyncImageProps
+  extends React.DetailedHTMLProps<
+    React.ImgHTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  > {
+  avatar?: boolean;
+  picture?: boolean;
+  imageLoading?: boolean;
+}
+
 export const AsyncImage = (props: AsyncImageProps) => {
   const [loadedSrc, setLoadedSrc] = React.useState<string | null>(null);
-  const { src, className } = props;
+  const { src, className, avatar, imageLoading } = props;
 
   const AsyncImageClassName = cx('async-image', className);
   React.useEffect(() => {
@@ -28,9 +35,17 @@ export const AsyncImage = (props: AsyncImageProps) => {
     }
   }, [src]);
 
-  return loadedSrc === src ? (
+  const renderLoading = () => {
+    if (avatar) {
+      return (
+        <Skeleton className={AsyncImageClassName} avatar={avatar} active />
+      );
+    }
+    return <Skeleton.Image className={AsyncImageClassName} active />;
+  };
+  return loadedSrc === src && !imageLoading ? (
     <img alt='image' {...props} className={cx(AsyncImageClassName)} />
   ) : (
-    <Skeleton loading className={AsyncImageClassName} />
+    renderLoading()
   );
 };
