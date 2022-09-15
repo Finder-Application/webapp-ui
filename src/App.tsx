@@ -3,12 +3,13 @@ import { Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';
 import { privateRoutes, publicRoutes } from './configs';
 import { DefaultLayout } from './layouts';
+import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
     routes.map((route, index) => {
-      const Page = route.page;
+      const Page = <CustomPage {...route} />;
       let Layout =
         route.layout === undefined
           ? DefaultLayout
@@ -20,11 +21,7 @@ function App() {
         <Route
           key={index}
           path={route.path}
-          element={
-            <Layout>
-              <Page />
-            </Layout>
-          }
+          element={<Layout>{Page}</Layout>}
         />
       );
     });
