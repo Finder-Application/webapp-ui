@@ -36,7 +36,7 @@ const Homepage = () => {
           >
             {/* <Select.Option value=''>Please choose province</Select.Option> */}
             {constants.PROVINCES.map((province, index) => (
-              <Select.Option key={index} value={provinceState}>
+              <Select.Option key={index} value={province.name}>
                 {province.name}
               </Select.Option>
             ))}
@@ -55,7 +55,7 @@ const Homepage = () => {
           >
             {/* <Select.Option value=''>Please choose province</Select.Option> */}
             {constants.PROVINCES.map((province, index) => (
-              <Select.Option key={index} value={provinceState}>
+              <Select.Option key={index} value={province.name}>
                 {province.name}
               </Select.Option>
             ))}
@@ -74,7 +74,7 @@ const Homepage = () => {
           >
             {/* <Select.Option value=''>Please choose province</Select.Option> */}
             {constants.PROVINCES.map((province, index) => (
-              <Select.Option key={index} value={provinceState}>
+              <Select.Option key={index} value={province.name}>
                 {province.name}
               </Select.Option>
             ))}

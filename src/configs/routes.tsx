@@ -3,8 +3,8 @@ import Homepage from '@/pages/Homepage/Homepage';
 
 // * Define all routes fro websites
 export const ROUTES = {
-  home: '/home',
-  login: '/',
+  login: '/login',
+  home: '/',
 };
 const publicRoutes: RouteFinder[] = [
   {

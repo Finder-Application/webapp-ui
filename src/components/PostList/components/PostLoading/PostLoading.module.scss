@@ -1,0 +1,30 @@
+.post-loading {
+  transition: transform 0.25s ease-in-out, box-shadow 0.1s;
+  cursor: pointer;
+  animation: fadeIn 0.4s ease-in both;
+  margin-bottom: 5rem;
+  width: var(--width-post);
+  .card {
+    box-shadow: var(--box-shadow-post);
+    border-radius: 10px;
+    background-color: var(--white);
+    overflow: hidden;
+    height: var(--card-height);
+  }
+
+  .user {
+    margin-top: var(--default-margin);
+  }
+
+  // animation
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -20%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

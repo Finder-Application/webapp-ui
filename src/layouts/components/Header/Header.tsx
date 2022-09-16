@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
+import { Input } from 'antd';
 
 const cx = classNames.bind(styles);
 const Header = () => {
@@ -9,7 +10,6 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const moving = window.pageYOffset;
-
       setVisible(position >= moving);
       setPosition(moving);
     };
@@ -18,12 +18,20 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   });
-  const headerClassName = cx('header', {
-    ['header-hidden']: !visible,
-  });
+  const headerClassName = cx(
+    'header',
+    {
+      ['header-hidden']: !visible,
+    },
+    'd-flex justify-content-between'
+  );
   return (
     <div className={headerClassName}>
       <div className={cx('header__logo')}>Finder</div>
+
+      <div className={cx('header__right')}>
+        <Input placeholder='Search post in here ...' />
+      </div>
     </div>
   );
 };

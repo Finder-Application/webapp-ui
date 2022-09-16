@@ -1,9 +1,9 @@
 import React from 'react';
-import { Post } from './Post/Post';
+import { Post } from './components/Post/Post';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from 'PostList.module.scss';
 import { constants } from '@/configs';
-import { PostLoading } from './Post/PostLoading';
+import { PostLoading } from './components/PostLoading';
 export const PostList = () => {
   const [posts, setPosts] = React.useState([]);
 
@@ -15,13 +15,19 @@ export const PostList = () => {
     }, 1500);
   };
 
+  React.useEffect(() => {
+    let timer = setTimeout(() => {
+      setPosts(posts.concat(Array.from({ length: constants.POST_RENDER })));
+    }, 1500);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
   const renderLoadingListPost = () => {
     return (
-      <div className='row flex-wrap'>
+      <div className='row flex-wrap justify-content-start align-items-center'>
         {Array.from({ length: constants.POST_RENDER }).map((_, index) => (
-          <div className='col-md-4 col-sm-5' key={index}>
-            <PostLoading index={index} />
-          </div>
+          <PostLoading key={index} index={index} />
         ))}
       </div>
     );
@@ -33,11 +39,9 @@ export const PostList = () => {
       hasMore={true}
       loader={renderLoadingListPost()}
     >
-      <div className='row flex-wrap'>
+      <div className='row flex-wrap justify-content-start align-items-center'>
         {posts.map((_, index) => (
-          <div className='col-md-4 col-sm-5' key={index}>
-            <Post index={index} />
-          </div>
+          <Post key={index} />
         ))}
       </div>
     </InfiniteScroll>
