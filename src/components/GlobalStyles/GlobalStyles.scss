@@ -31,6 +31,7 @@
 
   // drawer
   --bg-drawer: rgb(132 205 222 / 13%);
+  font-size: 14px !important;
 }
 
 body {
@@ -38,7 +39,6 @@ body {
   // min-height: var(--min-height);
   color: var(--black);
   height: 100%;
-  font-size: 14px !important;
   scroll-behavior: smooth;
 }
 #root {
