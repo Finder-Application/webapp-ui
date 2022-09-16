@@ -9,8 +9,7 @@ import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
     routes.map((route, index) => {
-      const Page = <CustomPage {...route} />;
-      let Layout =
+      const Layout =
         route.layout === undefined
           ? DefaultLayout
           : route.layout === null
@@ -21,7 +20,11 @@ function App() {
         <Route
           key={index}
           path={route.path}
-          element={<Layout>{Page}</Layout>}
+          element={
+            <Layout>
+              <CustomPage {...route} />;
+            </Layout>
+          }
         />
       );
     });

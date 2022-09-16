@@ -10,11 +10,11 @@ const cx = classNames.bind(styles);
 const Homepage = () => {
   const [provinceState, setProvince] = useState('');
 
-  // const provincesFiltered = constants.PROVINCES.filter((province) =>
-  //   toLower(cleanAccents(province.name)).includes(
-  //     toLower(cleanAccents(provinceState))
-  //   )
-  // );
+  const provincesFiltered = constants.PROVINCES.filter((province) =>
+    toLower(cleanAccents(province.name)).includes(
+      toLower(cleanAccents(provinceState))
+    )
+  );
   return (
     <div className={cx('homepage')}>
       <div className={cx('title')}>
@@ -34,7 +34,7 @@ const Homepage = () => {
               setProvince(value.trim());
             }}
           >
-            {/* <Select.Option value=''>Please choose province</Select.Option> */}
+            <Select.Option value=''>Please choose province</Select.Option>
             {constants.PROVINCES.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
@@ -53,7 +53,7 @@ const Homepage = () => {
               setProvince(value.trim());
             }}
           >
-            {/* <Select.Option value=''>Please choose province</Select.Option> */}
+            <Select.Option value=''>Please choose province</Select.Option>
             {constants.PROVINCES.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
@@ -72,7 +72,7 @@ const Homepage = () => {
               setProvince(value.trim());
             }}
           >
-            {/* <Select.Option value=''>Please choose province</Select.Option> */}
+            <Select.Option value=''>Please choose province</Select.Option>
             {constants.PROVINCES.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
