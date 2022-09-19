@@ -7,11 +7,26 @@
   }
   .search {
     .select {
-      border-radius: 5px;
-      min-width: 10rem;
+      min-width: 15rem;
+      margin-right: 1rem;
+    }
+    :global(.ant-select-selector) {
+      border-radius: 10px;
+      height: auto;
+      padding: 0.35rem 1rem;
     }
   }
-  .select {
-    margin-right: 1rem;
+
+  .btn-reset {
+    background-color: var(--disabled-color);
+    border-radius: 10px;
+
+    span {
+      margin-left: var(--default-margin);
+    }
+
+    &:hover {
+      background-color: var(--primary);
+    }
   }
 }

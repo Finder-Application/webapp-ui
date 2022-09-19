@@ -47,7 +47,7 @@ const Header = () => {
         </Link>
         <span className={cx('header__nav__dot')}></span>
         <Link className={cx('header__nav__item')} to='about'>
-          Guidlines
+          Guidelines
         </Link>
       </div>
     );

@@ -8,3 +8,4 @@ export * from './GithubIcon';
 export * from './GitlabIcon';
 export * from './InstagramIcon';
 export * from './TelegramIcon';
+export * from './RefreshIcon';

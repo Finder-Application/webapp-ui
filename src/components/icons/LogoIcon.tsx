@@ -31,9 +31,11 @@ export const LogoIcon = (props: React.SVGProps<SVGSVGElement>) => {
           y2='25.2347'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#7CDFFF' />
-          <stop offset='0.46875' stop-color='#83E8E2' />
-          <stop offset='1' stop-color='#92FE9E' />
+          <stop stopColor='#7CDFFF'>
+            <stop offset='0.46875' stopColor='#83E8E2'>
+              <stop offset={1} stopColor='#92FE9E'></stop>
+            </stop>
+          </stop>
         </linearGradient>
         <linearGradient
           id='paint1_linear_1_5725'
@@ -43,9 +45,11 @@ export const LogoIcon = (props: React.SVGProps<SVGSVGElement>) => {
           y2='8.37467'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#7CDFFF' />
-          <stop offset='0.46875' stop-color='#83E8E2' />
-          <stop offset='1' stop-color='#92FE9E' />
+          <stop stopColor='#7CDFFF'>
+            <stop offset='0.46875' stopColor='#83E8E2'>
+              <stop offset={1} stopColor='#92FE9E'></stop>
+            </stop>
+          </stop>
         </linearGradient>
         <linearGradient
           id='paint2_linear_1_5725'
@@ -55,9 +59,11 @@ export const LogoIcon = (props: React.SVGProps<SVGSVGElement>) => {
           y2='8.36122'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#7CDFFF' />
-          <stop offset='0.46875' stop-color='#83E8E2' />
-          <stop offset='1' stop-color='#92FE9E' />
+          <stop stopColor='#7CDFFF'>
+            <stop offset='0.46875' stopColor='#83E8E2'>
+              <stop offset={1} stopColor='#92FE9E'></stop>
+            </stop>
+          </stop>
         </linearGradient>
       </defs>
     </svg>

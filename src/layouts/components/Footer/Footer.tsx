@@ -13,6 +13,7 @@ import {
   InstagramIcon,
   TelegramIcon,
 } from '@/components/Icons';
+import { AsyncImage } from '@/components';
 
 const cx = classNames.bind(styles);
 
@@ -49,7 +50,7 @@ const Footer = () => {
           <FigmaIcon />
         </div>
       </div>
-      <img src={FooterBackground} />
+      <AsyncImage src={FooterBackground} />
     </div>
   );
 };

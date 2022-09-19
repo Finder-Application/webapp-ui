@@ -31,8 +31,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 22em;
-    margin-left: 5em;
+    width: 22rem;
+    margin-left: 5rem;
 
     &__item {
       font-size: 1.1rem;
@@ -89,6 +89,12 @@
       padding: 0.5em 3em;
       border-radius: 10px;
       margin-left: 1.5rem;
+      border: none;
+
+      &:hover {
+        background-color: var(--primary);
+        color: var(--white);
+      }
     }
   }
 }

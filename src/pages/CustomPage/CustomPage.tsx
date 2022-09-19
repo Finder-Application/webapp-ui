@@ -8,8 +8,6 @@ const cx = classNames.bind(styles);
 export const CustomPage = (props: RouteFinder) => {
   const { pageY } = useWindowScroll();
 
-  console.log('pageY', pageY);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

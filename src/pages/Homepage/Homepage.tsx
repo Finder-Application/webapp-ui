@@ -6,6 +6,7 @@ import styles from './Homepage.module.scss';
 import toLower from 'lodash/toLower';
 import { cleanAccents } from '@/utils/cleanAccents';
 import { ButtonFinder, PostList } from '@/components';
+import RefreshIcon from '@/components/Icons/RefreshIcon';
 const cx = classNames.bind(styles);
 const Homepage = () => {
   const [provinceState, setProvince] = useState('');
@@ -73,7 +74,7 @@ const Homepage = () => {
             }}
           >
             <Select.Option value=''>Please choose province</Select.Option>
-            {constants.PROVINCES.map((province, index) => (
+            {provincesFiltered.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
               </Select.Option>
@@ -81,9 +82,13 @@ const Homepage = () => {
           </Select>
         </div>
 
-        <div className={cx('btn-reset')}>
-          <ButtonFinder type='primary'>Reset</ButtonFinder>
-        </div>
+        <ButtonFinder
+          icon={<RefreshIcon />}
+          className={cx('btn-reset')}
+          type='primary'
+        >
+          Reset Filter
+        </ButtonFinder>
       </div>
 
       <div className={cx('mt-4')}>

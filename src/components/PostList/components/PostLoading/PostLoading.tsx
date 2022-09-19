@@ -22,10 +22,10 @@ export const PostLoading = (props: PostProps) => {
       }}
     >
       <div className={cx('card', 'd-flex  justify-content-center')}>
-        <div className={cx('col-6 h-100')}>
+        <div className={cx('col-5 h-100')}>
           <AsyncImage imageLoading className={cx('image-loading')} />
         </div>
-        <div className={cx('card__info', 'col-6 h-100')}>
+        <div className={cx('card__info', 'col-7 h-100')}>
           <div className='d-flex align-items-center  p-1 h-100 '>
             <Skeleton paragraph />
           </div>

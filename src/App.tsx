@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';
-import { privateRoutes, publicRoutes } from './configs';
+import { privateRoutes, publicRoutes, ROUTES } from './configs';
 import { DefaultLayout } from './layouts';
 import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
@@ -37,6 +37,7 @@ function App() {
         <Route element={<PrivateOutletRoute />}>
           {renderRoutes([...privateRoutes])}
         </Route>
+        <Route path='*' element={<Navigate to={ROUTES.home} />} />
       </Routes>
     </GlobalStyles>
   );
