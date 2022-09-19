@@ -1,0 +1,13 @@
+.finder-logo {
+  display: flex;
+  flex-direction: row;
+
+  &__icon {
+    margin-right: 0.5em;
+  }
+
+  &__name {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+}

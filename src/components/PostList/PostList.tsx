@@ -36,7 +36,7 @@ export const PostList = () => {
     <InfiniteScroll
       dataLength={posts.length}
       next={fetchMoreData}
-      hasMore={true}
+      hasMore={false}
       loader={renderLoadingListPost()}
     >
       <div className='row flex-wrap justify-content-start align-items-center'>

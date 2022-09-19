@@ -4,16 +4,92 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--bg-second);
+  background-color: var(--white);
   box-shadow: 1px 1px 2px rgb(0 0 0 / 20%);
   display: flex;
   align-items: center;
   padding: 0 2rem;
   transition: top 0.35s ease-out;
   z-index: 99999;
+
   &__logo {
-    font-size: 1.2rem;
-    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+
+    &__icon {
+      margin-right: 0.5em;
+    }
+
+    &__name {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 22em;
+    margin-left: 5em;
+
+    &__item {
+      font-size: 1.1rem;
+      color: var(--black-1);
+      text-decoration: none;
+
+      &__active {
+        background: linear-gradient(
+          180deg,
+          #7cdfff 0%,
+          #83e8e2 46.88%,
+          #92fe9e 100%
+        );
+        font-weight: 700;
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    &__dot {
+      height: 4px;
+      width: 4px;
+      background-color: var(--black-1);
+      border-radius: 50%;
+      display: inline-block;
+    }
+  }
+
+  &__right {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    &__input {
+      width: 20em;
+      border-radius: 10px !important;
+      background-color: var(--grey-1);
+    }
+
+    :global(.ant-input) {
+      background-color: var(--grey-1) !important;
+    }
+
+    &__upload-btn {
+      background: linear-gradient(
+        90deg,
+        #83e8e2 0%,
+        #88efcb 64.57%,
+        #92fe9d 99.98%
+      );
+      padding: 0.5em 3em;
+      border-radius: 10px;
+      margin-left: 1.5rem;
+    }
   }
 }
 .header-hidden {
