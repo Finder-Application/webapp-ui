@@ -37,7 +37,14 @@ function App() {
         <Route element={<PrivateOutletRoute />}>
           {renderRoutes([...privateRoutes])}
         </Route>
-        <Route path='*' element={<Navigate to={ROUTES.home} />} />
+        <Route
+          path='*'
+          element={
+            <DefaultLayout>
+              <Navigate to={ROUTES.home} />
+            </DefaultLayout>
+          }
+        />
       </Routes>
     </GlobalStyles>
   );

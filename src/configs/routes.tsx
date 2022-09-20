@@ -5,6 +5,8 @@ import Homepage from '@/pages/Homepage/Homepage';
 export const ROUTES = {
   login: '/login',
   home: '/',
+  about: '/about',
+  guide: '/guide',
 };
 const publicRoutes: RouteFinder[] = [
   {
@@ -13,6 +15,8 @@ const publicRoutes: RouteFinder[] = [
     title: 'Login',
   },
   { path: ROUTES.home, page: Homepage, title: 'Homepage' },
+  { path: ROUTES.about, page: Homepage, title: 'About' },
+  { path: ROUTES.guide, page: Homepage, title: 'Guild Lines' },
 ];
 
 const privateRoutes: RouteFinder[] = [];

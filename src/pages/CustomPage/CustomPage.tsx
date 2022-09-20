@@ -16,14 +16,14 @@ export const CustomPage = (props: RouteFinder) => {
   return (
     <div className={cx('custom-page')}>
       <Page />
-      <button
+      {/* <button
         className={cx('scrollToTopBtn')}
         style={{
           top: Number(pageY) - 50,
         }}
       >
         ☝️
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import FooterBackground from '@/assets/footerBackground.png';
 import { FinderLogo } from '@/components/FinderLogo';
 
 import styles from './Footer.module.scss';
@@ -14,6 +13,7 @@ import {
   TelegramIcon,
 } from '@/components/Icons';
 import { AsyncImage } from '@/components';
+import images from '@/assets/images';
 
 const cx = classNames.bind(styles);
 
@@ -50,7 +50,7 @@ const Footer = () => {
           <FigmaIcon />
         </div>
       </div>
-      <AsyncImage src={FooterBackground} />
+      <AsyncImage src={images.footerBg} />
     </div>
   );
 };

@@ -27,7 +27,9 @@ export const PostList = () => {
     return (
       <div className='row flex-wrap justify-content-start align-items-center'>
         {Array.from({ length: constants.POST_RENDER }).map((_, index) => (
-          <PostLoading key={index} index={index} />
+          <div key={index} className='col-xl-3 col-lg-4'>
+            <PostLoading key={index} index={index} />
+          </div>
         ))}
       </div>
     );
@@ -36,12 +38,14 @@ export const PostList = () => {
     <InfiniteScroll
       dataLength={posts.length}
       next={fetchMoreData}
-      hasMore={false}
+      hasMore={posts.length <= 14}
       loader={renderLoadingListPost()}
     >
       <div className='row flex-wrap justify-content-start align-items-center'>
         {posts.map((_, index) => (
-          <Post key={index} />
+          <div key={index} className='col-xl-3 col-lg-4'>
+            <Post />
+          </div>
         ))}
       </div>
     </InfiniteScroll>
