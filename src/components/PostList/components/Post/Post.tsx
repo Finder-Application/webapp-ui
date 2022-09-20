@@ -12,7 +12,7 @@ const random = Math.floor(Math.random() * 10) % 2 === 0;
 export const Post = () => {
   const state = random ? 'finding' : 'found';
   const [isHover, setIsHover] = React.useState(false);
-  const [visibleDetail, setVisibleDetail] = React.useState(false);
+  const [detailVisible, setDetailVisible] = React.useState(false);
 
   const renderSuggestViewDetail = () => {
     return (
@@ -24,7 +24,7 @@ export const Post = () => {
         <ButtonFinder
           className={cx('w-100 mt-4')}
           type='primary'
-          onClick={() => setVisibleDetail(true)}
+          onClick={() => setDetailVisible(true)}
         >
           Detail{' '}
         </ButtonFinder>
@@ -35,7 +35,7 @@ export const Post = () => {
     );
   };
 
-  const renderInfoUserMissing = () => {
+  const renderMissingUserInfo = () => {
     return (
       <>
         <div className={cx('card__image', 'col-5 h-100')}>
@@ -109,14 +109,14 @@ export const Post = () => {
         onMouseMove={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
-        {renderInfoUserMissing()}
+        {renderMissingUserInfo()}
         {isHover && renderSuggestViewDetail()}
       </div>
       {renderBottom()}
-      {visibleDetail && (
+      {detailVisible && (
         <PostDetail
-          isVisible={visibleDetail}
-          onClose={() => setVisibleDetail(false)}
+          isVisible={detailVisible}
+          onClose={() => setDetailVisible(false)}
         />
       )}
     </div>

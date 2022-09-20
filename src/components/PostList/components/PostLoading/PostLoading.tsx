@@ -12,7 +12,8 @@ interface PostProps {
 
 export const PostLoading = (props: PostProps) => {
   const { index } = props;
-  const timeDelay = (index === constants.POST_RENDER ? 0 : index + 0.1) * 0.35;
+  const timeDelay =
+    (index === constants.RENDERED_POST_SIZE ? 0 : index + 0.1) * 0.35;
 
   return (
     <div
