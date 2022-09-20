@@ -1,8 +1,11 @@
 .button-finder {
   border-radius: 5px;
+  width: auto;
+  height: auto;
 }
 .primary {
   background-color: var(--primary);
+  border: none;
 }
 .button-finder--border {
   border-radius: 15px;

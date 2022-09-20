@@ -1,16 +1,15 @@
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Fragment } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { GlobalStyles } from './components';
-import { privateRoutes, publicRoutes } from './configs';
+import { privateRoutes, publicRoutes, ROUTES } from './configs';
 import { DefaultLayout } from './layouts';
+import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
     routes.map((route, index) => {
-      const Page = route.page;
-      let Layout =
+      const Layout =
         route.layout === undefined
           ? DefaultLayout
           : route.layout === null
@@ -23,7 +22,7 @@ function App() {
           path={route.path}
           element={
             <Layout>
-              <Page />
+              <CustomPage {...route} />;
             </Layout>
           }
         />
@@ -38,6 +37,14 @@ function App() {
         <Route element={<PrivateOutletRoute />}>
           {renderRoutes([...privateRoutes])}
         </Route>
+        <Route
+          path='*'
+          element={
+            <DefaultLayout>
+              <Navigate to={ROUTES.home} />
+            </DefaultLayout>
+          }
+        />
       </Routes>
     </GlobalStyles>
   );

@@ -1,5 +1,32 @@
-.wrapper {
-  &__btn {
-    background-color: rgb(255, 140, 0);
+.homepage {
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    padding-bottom: var(--space-header);
+  }
+  .search {
+    .select {
+      min-width: 15rem;
+      margin-right: 1rem;
+    }
+    :global(.ant-select-selector) {
+      border-radius: 10px;
+      height: auto;
+      padding: 0.35rem 1rem;
+    }
+  }
+
+  .btn-reset {
+    background-color: var(--disabled-color);
+    border-radius: 10px;
+
+    span {
+      margin-left: var(--default-margin);
+    }
+
+    &:hover {
+      background-color: var(--primary);
+    }
   }
 }

@@ -8,7 +8,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <div className={cx('default-layout')}>
       <Header />
-      <div className='main'>{children}</div>
+      <div className={cx('main')}>{children}</div>
       <Footer />
     </div>
   );

@@ -2,7 +2,6 @@ import { RequestOptions, RequestPayload } from '@/@types';
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@/utils';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import queryString from 'query-string';
-import { toast } from 'react-toastify';
 import { getUrl } from './service';
 
 const axiosClient = axios.create({
@@ -24,9 +23,6 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    if (error.response?.status === 404) {
-      toast.error('Not found api');
-    }
     if (error.response?.status == 401) {
       removeLocalStorage('TOKEN');
     }
@@ -42,6 +38,7 @@ const makeRequest = async (
   const { apiVersion, headers } = config;
   const { body, params, method } = payload;
   const apiUrl = getUrl(apiVersion);
+
   const token = getLocalStorage('TOKEN');
   const contentType =
     body instanceof FormData ? 'multipart/form-data' : 'application/json';

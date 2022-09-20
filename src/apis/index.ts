@@ -1,3 +1,4 @@
+import API from './service';
 export * from './config';
-export * from './service';
 export * from './urls';
+export default API;

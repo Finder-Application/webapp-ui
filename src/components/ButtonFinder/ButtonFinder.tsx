@@ -12,17 +12,18 @@ export const ButtonFinder = React.forwardRef<
   HTMLButtonElement | null,
   ButtonProps & ButtonFinderProps
 >((props, ref) => {
-  const { className, isBorder } = props;
+  const { className, isBorder, type } = props;
   const buttonFinderClassName = cx(
     'button-finder',
     {
       ['button-finder--border']: isBorder,
     },
-    className
+    className,
+    type
   );
 
   return (
-    <Button ref={ref} className={buttonFinderClassName}>
+    <Button ref={ref} {...props} className={buttonFinderClassName}>
       {props.children}
     </Button>
   );

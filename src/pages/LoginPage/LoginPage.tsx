@@ -9,6 +9,9 @@ const LoginPage = () => {
     <div className={cx('login-page')}>
       <AsyncImage
         className='hello'
+        style={{
+          height: '20rem',
+        }}
         src='https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
       />
     </div>

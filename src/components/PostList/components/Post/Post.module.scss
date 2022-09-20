@@ -1,0 +1,138 @@
+.post {
+  transition: transform 0.25s ease-in-out, box-shadow 0.1s;
+  cursor: pointer;
+  margin-bottom: 5rem;
+  position: relative;
+  // width: var(--width-post);
+
+  .card {
+    box-shadow: var(--box-shadow-post);
+    border: 1px solid var(--bg-second);
+
+    border-radius: 10px;
+    position: relative;
+    background-color: var(--white);
+    overflow: hidden;
+    height: var(--card-height);
+    &__info {
+      position: relative;
+      --fs-state: 1rem;
+      --space-top: 0.5rem;
+      --space-status: 1.5rem;
+
+      &-status {
+        position: absolute;
+        right: 0;
+        top: var(--space-top);
+        font-size: var(--fs-state);
+        border: none;
+        border-radius: 3px;
+        margin-right: var(--default-margin);
+        &--finding {
+          color: var(--finding-color);
+          background-color: var(--bg-finding);
+        }
+
+        &--found {
+          color: var(--found-color);
+          background-color: var(--bg-found);
+        }
+      }
+
+      &-content {
+        padding-left: var(--default-margin);
+        font-size: 1rem;
+        margin-top: calc(
+          var(--fs-state) + var(--space-top) + var(--space-status)
+        );
+        margin-bottom: var(--default-margin);
+
+        .content-item {
+          margin-bottom: 1rem;
+
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    &:hover {
+      box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
+    }
+
+    .detail {
+      position: absolute;
+      height: 100%;
+      width: 41.66666667%;
+      bottom: 0;
+      left: 0;
+      transition: transform 0.25s ease-in-out, box-shadow 0.1s;
+      animation: fadeInUp 0.45s ease-in both;
+
+      padding: var(--default-margin);
+      background: linear-gradient(
+        180deg,
+        rgb(0 0 0 / 0%) 0%,
+        #ffffff 0.01%,
+        rgb(0 0 0 / 24%) 0.02%,
+        #101010 99.96%,
+        #000000 99.97%
+      );
+      &-text {
+        color: var(--white);
+        font-size: 1.2rem;
+      }
+      button {
+        border-radius: 15px;
+        padding: 0.25rem 1rem;
+        &:first-child {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+
+  .user {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+
+    &__avatar {
+      height: 2.5rem;
+      width: 2.5rem;
+      border-radius: 50%;
+      margin-right: var(--default-margin);
+    }
+    &__info {
+      font-weight: bold;
+    }
+    .created-at {
+      color: var(--text-second-color);
+
+      span {
+        margin-left: var(--default-margin);
+      }
+    }
+  }
+  // animation
+  @keyframes fadeInUp {
+    from {
+      transform: translate3d(0, 50%, 0);
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeInUp {
+    from {
+      transform: translate3d(0, 50%, 0);
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+}

@@ -1,3 +1,3 @@
 interface DefaultLayoutProps {
-  children: JSX.Element;
+  children: JSX.Element | React.ReactNode;
 }
