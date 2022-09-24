@@ -1,6 +1,6 @@
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { FinderLogo } from '@/components/FinderLogo';
-import { NotificationIcon, UserIcon } from '@/components/Icons';
+import { NotificationIcon, SearchIcon, UserIcon } from '@/components/Icons';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -72,9 +72,8 @@ const Header = () => {
           ref={refSearch}
           onClick={() => setOnFocusSearch(true)}
         >
-          <BsSearch className={cx('search-icon')} />
+          <SearchIcon className={cx('search-icon')} />
           <input
-            defaultValue={searchValue}
             value={searchValue}
             className={cx('search-input')}
             type='text'

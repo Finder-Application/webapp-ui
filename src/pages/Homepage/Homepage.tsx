@@ -1,19 +1,19 @@
-import { constants } from '@/configs';
-import { Select } from 'antd';
-import classNames from 'classnames/bind';
-import { useState } from 'react';
-import styles from './Homepage.module.scss';
-import toLower from 'lodash/toLower';
-import { cleanAccents } from '@/utils/cleanAccents';
 import { ButtonFinder, PostList } from '@/components';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
+import GeoUtils from '@/utils/Geo.utils';
+import StringUtils from '@/utils/String.utils';
+import { Select } from 'antd';
+import classNames from 'classnames/bind';
+import toLower from 'lodash/toLower';
+import { useState } from 'react';
+import styles from './Homepage.module.scss';
 const cx = classNames.bind(styles);
 const Homepage = () => {
   const [provinceState, setProvince] = useState('');
-
-  const provincesFiltered = constants.PROVINCES.filter((province) =>
-    toLower(cleanAccents(province.name)).includes(
-      toLower(cleanAccents(provinceState))
+  const provinces = GeoUtils.getAllProvinces();
+  const provincesFiltered = provinces.filter((province) =>
+    toLower(StringUtils.cleanAccents(province.name)).includes(
+      toLower(StringUtils.cleanAccents(provinceState))
     )
   );
   return (
@@ -36,7 +36,7 @@ const Homepage = () => {
             }}
           >
             <Select.Option value=''>Please choose province</Select.Option>
-            {constants.PROVINCES.map((province, index) => (
+            {provinces.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
               </Select.Option>
@@ -55,7 +55,7 @@ const Homepage = () => {
             }}
           >
             <Select.Option value=''>Please choose province</Select.Option>
-            {constants.PROVINCES.map((province, index) => (
+            {provinces.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
               </Select.Option>

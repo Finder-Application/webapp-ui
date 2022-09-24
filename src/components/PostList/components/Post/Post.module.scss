@@ -40,7 +40,7 @@
       }
 
       &-content {
-        padding-left: var(--default-margin);
+        padding: 0 var(--default-margin);
         font-size: 1rem;
         margin-top: calc(
           var(--fs-state) + var(--space-top) + var(--space-status)

@@ -1,8 +1,8 @@
-import { setDocumentTitle } from '@/utils';
-import React, { useEffect } from 'react';
+import { useWindowScroll } from '@/hooks';
+import DocumentUtils from '@/utils/Document.utils';
 import classNames from 'classnames/bind';
+import { useEffect } from 'react';
 import styles from './CustomPage.module.scss';
-import { useWindowScroll, useWindowSize } from '@/hooks';
 
 const cx = classNames.bind(styles);
 export const CustomPage = (props: RouteFinder) => {
@@ -11,7 +11,7 @@ export const CustomPage = (props: RouteFinder) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  setDocumentTitle(props.title);
+  DocumentUtils.setTitle(props.title);
   const Page = props.page;
   return (
     <div className={cx('custom-page')}>

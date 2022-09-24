@@ -1,15 +1,23 @@
-import { RequestOptions, RequestPayload } from '@/@types';
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@/utils';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { constants } from './../configs/constants';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import queryString from 'query-string';
-import { getUrl } from './service';
+import StorageUtils from '@/utils/Storage.utils';
 
 const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
+  baseURL: constants.BASE_URL,
 });
 
-axiosClient.interceptors.request.use(async (config) => {
-  return config;
+axiosClient.interceptors.request.use((config): AxiosRequestConfig<any> => {
+  const { data } = config;
+  const token = StorageUtils.get('token');
+  const contentType =
+    data instanceof FormData ? 'multipart/form-data' : 'application/json';
+  const headers = {
+    'content-type': contentType,
+    authorization: `Bearer ${token}`,
+  };
+  return { headers, ...config };
 });
 
 axiosClient.interceptors.response.use(
@@ -17,7 +25,7 @@ axiosClient.interceptors.response.use(
     if (response && response.data) {
       const token = response.data.data?.token;
       if (token) {
-        setLocalStorage('token', token);
+        StorageUtils.set('token', token);
       }
       return response.data.data || response.data;
     }
@@ -25,36 +33,10 @@ axiosClient.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response?.status == 401) {
-      removeLocalStorage('token');
+      StorageUtils.remove('token');
     }
     throw error;
   }
 );
-const makeRequest = async (
-  config: RequestOptions,
-  url: string,
-  payload: RequestPayload
-): Promise<AxiosResponse<any, any>> => {
-  const { apiVersion, headers } = config;
-  const { body, params, method } = payload;
-  const apiUrl = getUrl(apiVersion);
 
-  const token = getLocalStorage('token');
-  const contentType =
-    body instanceof FormData ? 'multipart/form-data' : 'application/json';
-  const defaultHeaders = {
-    'content-type': contentType,
-    authorization: `Bearer ${token}`,
-  };
-
-  const configApi: AxiosRequestConfig = {
-    baseURL: apiUrl,
-    params,
-    headers: { ...defaultHeaders, ...headers },
-    data: body,
-    method,
-  };
-  return axiosClient(url, configApi);
-};
-
-export { makeRequest, axiosClient };
+export default axiosClient;
