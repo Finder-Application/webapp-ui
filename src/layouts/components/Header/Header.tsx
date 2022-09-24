@@ -72,7 +72,7 @@ const Header = () => {
           ref={refSearch}
           onClick={() => setOnFocusSearch(true)}
         >
-          <BsSearch />
+          <BsSearch className={cx('search-icon')}/>
           <input
             defaultValue={searchValue}
             value={searchValue}

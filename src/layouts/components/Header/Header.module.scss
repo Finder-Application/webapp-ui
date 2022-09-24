@@ -86,15 +86,17 @@
 
       &--active {
         width: 300px;
+        .search-icon{
+          margin-right:0.5rem;
+        }
       }
-
+     
       .search-input {
         color: var(--system-text-black-color);
         border: none;
         font-size: 1.1rem;
         background-color: var(--bg-second);
         outline: none;
-        padding-left: 1rem;
       }
 
       .search-result {

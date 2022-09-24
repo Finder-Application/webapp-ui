@@ -1,3 +1,4 @@
+import { AuthLayout } from '@/layouts';
 import { LoginPage } from '@/pages';
 import Homepage from '@/pages/Homepage/Homepage';
 
@@ -13,6 +14,7 @@ const publicRoutes: RouteFinder[] = [
     path: ROUTES.login,
     page: LoginPage,
     title: 'Login',
+    layout: AuthLayout,
   },
   { path: ROUTES.home, page: Homepage, title: 'Homepage' },
   { path: ROUTES.about, page: Homepage, title: 'About' },

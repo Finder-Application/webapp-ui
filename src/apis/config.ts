@@ -7,6 +7,7 @@ import { getUrl } from './service';
 const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
+
 axiosClient.interceptors.request.use(async (config) => {
   return config;
 });
@@ -16,7 +17,7 @@ axiosClient.interceptors.response.use(
     if (response && response.data) {
       const token = response.data.data?.token;
       if (token) {
-        setLocalStorage('TOKEN', token);
+        setLocalStorage('token', token);
       }
       return response.data.data || response.data;
     }
@@ -24,12 +25,11 @@ axiosClient.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response?.status == 401) {
-      removeLocalStorage('TOKEN');
+      removeLocalStorage('token');
     }
     throw error;
   }
 );
-
 const makeRequest = async (
   config: RequestOptions,
   url: string,
@@ -39,7 +39,7 @@ const makeRequest = async (
   const { body, params, method } = payload;
   const apiUrl = getUrl(apiVersion);
 
-  const token = getLocalStorage('TOKEN');
+  const token = getLocalStorage('token');
   const contentType =
     body instanceof FormData ? 'multipart/form-data' : 'application/json';
   const defaultHeaders = {
