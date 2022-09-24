@@ -1,1 +1,1 @@
-export * from './FinderLogo'
+export * from './FinderLogo';
