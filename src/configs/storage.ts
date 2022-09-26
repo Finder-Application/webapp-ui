@@ -1,5 +1,5 @@
 export const storageKey = {
-  TOKEN: 'token',
+  token: 'token',
 };
 
 export type StorageKey = keyof typeof storageKey;
