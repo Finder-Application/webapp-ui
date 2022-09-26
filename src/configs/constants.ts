@@ -6,3 +6,5 @@ export const constants = {
   PROVINCES: country.province,
   RENDERED_POST_SIZE: 7,
 };
+
+export const TOOL_TIP_zINDEX = 999999;
