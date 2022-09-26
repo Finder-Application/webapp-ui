@@ -49,6 +49,7 @@ export const AsyncImage = (props: Props) => {
     }
     return <Skeleton.Image className={AsyncImageClassName} active={true} />;
   };
+
   return loadedSrc === src && !imageLoading ? (
     <img alt='image' {...imageProps} className={cx(AsyncImageClassName)} />
   ) : (

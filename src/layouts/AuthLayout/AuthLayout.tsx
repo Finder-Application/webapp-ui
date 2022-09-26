@@ -8,7 +8,7 @@ const AuthLayout = ({ children }: DefaultLayoutProps) => {
     <div className={cx('auth-layout', 'd-flex justify-content-between')}>
       <div className={cx('auth-layout')}></div>
       <div className={cx('auth-layout__left')}></div>
-      <div className='content'>{children}</div>
+      <div className={cx('content')}>{children}</div>
       <div></div>
     </div>
   );
