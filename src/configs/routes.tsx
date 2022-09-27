@@ -2,7 +2,7 @@ import { AuthLayout } from '@/layouts';
 import { LoginPage } from '@/pages';
 import Homepage from '@/pages/Homepage/Homepage';
 
-// * Define all routes fro websites
+// * Define all routes for websites
 export const ROUTES = {
   login: '/login',
   home: '/',
