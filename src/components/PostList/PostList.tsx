@@ -40,7 +40,7 @@ export const PostList = () => {
       <div className='row flex-wrap justify-content-start align-items-center'>
         {posts.map((_, index) => (
           <div key={index} className='col-xl-3 col-lg-4'>
-              <Post key={index}  />
+            <Post key={index} />
           </div>
         ))}
       </div>
