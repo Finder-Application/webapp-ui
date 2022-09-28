@@ -1,1 +1,1 @@
-export {default as axiosClient} from './config';
+export { default as axiosClient } from './config';
