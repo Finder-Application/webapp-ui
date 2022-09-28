@@ -12,7 +12,13 @@ interface AsyncImageProps {
 type Props = ImageProps & AsyncImageProps;
 export const AsyncImage = (props: Props) => {
   const [loadedSrc, setLoadedSrc] = React.useState<string | null>(null);
-  const { avatar = false, alt = 'image', imageLoading, preview=false, ...imageProps } = props;
+  const {
+    avatar = false,
+    alt = 'image',
+    imageLoading,
+    preview = false,
+    ...imageProps
+  } = props;
   const { src, className } = imageProps;
   const AsyncImageClassName = cx('async-image', className);
 
@@ -46,7 +52,12 @@ export const AsyncImage = (props: Props) => {
     return <Skeleton.Image className={AsyncImageClassName} active={true} />;
   };
   return loadedSrc === src && !imageLoading ? (
-    <ImageAntd preview={preview} alt={alt} {...imageProps} className={cx(AsyncImageClassName)}/>
+    <ImageAntd
+      preview={preview}
+      alt={alt}
+      {...imageProps}
+      className={cx(AsyncImageClassName)}
+    />
   ) : (
     renderLoading()
   );
