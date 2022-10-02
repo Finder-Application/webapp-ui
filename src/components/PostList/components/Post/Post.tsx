@@ -14,6 +14,14 @@ export const Post = () => {
   const [isHover, setIsHover] = React.useState(false);
   const [detailVisible, setDetailVisible] = React.useState(false);
 
+  const onClosePostDetail = () => {
+    setDetailVisible(false);
+  };
+
+  const showPostDetail = () => {
+    setDetailVisible(true);
+  };
+
   const renderSuggestViewDetail = () => {
     return (
       <div className={cx('detail')}>
@@ -24,7 +32,7 @@ export const Post = () => {
         <ButtonFinder
           className={cx('w-100 mt-4')}
           type='primary'
-          onClick={() => setDetailVisible(true)}
+          onClick={showPostDetail}
         >
           Detail{' '}
         </ButtonFinder>
@@ -38,7 +46,7 @@ export const Post = () => {
   const renderMissingUserInfo = () => {
     return (
       <>
-        <div className={cx('card__image', 'col-5 h-100')}>
+        <div className={cx('card__image', 'col-5 h-100 p-0')}>
           <AsyncImage src='https://picsum.photos/200' />
         </div>
         <div className={cx('card__info', 'col-7 h-100')}>
@@ -114,10 +122,7 @@ export const Post = () => {
       </div>
       {renderBottom()}
       {detailVisible && (
-        <PostDetail
-          isVisible={detailVisible}
-          onClose={() => setDetailVisible(false)}
-        />
+        <PostDetail isVisible={detailVisible} onClose={onClosePostDetail} />
       )}
     </div>
   );

@@ -1,0 +1,53 @@
+.image-slider {
+  .slide {
+    transform: scale(0.9);
+    transition: transform 300ms;
+    opacity: 0.6;
+  }
+
+  .slideWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .prevArrow {
+    position: absolute;
+    top: 97%;
+    left: 8.2em;
+    z-index: 100;
+    cursor: pointer;
+    font-size: 2rem;
+  }
+
+  .nextArrow {
+    position: absolute;
+    top: 97%;
+    right: 8.2em;
+    z-index: 100;
+    cursor: pointer;
+    font-size: 2rem;
+  }
+
+  @media only screen and (min-width: 1920px) {
+    .prevArrow {
+      left: 12em;
+    }
+    .nextArrow {
+      right: 12em;
+    }
+  }
+
+  .carousel-dot {
+    font-size: 3rem;
+    color: var(--grey-2);
+
+    &--active {
+      color: var(--purple-1);
+    }
+  }
+  /* 
+    .prevArrow img,
+    .nextArrow img {
+      width: 4rem;
+    } */
+}

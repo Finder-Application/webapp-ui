@@ -1,4 +1,1 @@
-import API from './service';
-export * from './config';
-export * from './urls';
-export default API;
+export { default as axiosClient } from './config';

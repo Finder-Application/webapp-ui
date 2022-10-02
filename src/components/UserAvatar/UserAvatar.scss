@@ -1,0 +1,9 @@
+.user-avatar {
+  &__overlay {
+    min-width: 25em;
+
+    .ant-tooltip-arrow-content {
+      --antd-arrow-background-color: var(--white);
+    }
+  }
+}
