@@ -3,34 +3,17 @@ import React from 'react';
 export const CommentIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
-      xmlnsXlink='http://www.w3.org/1999/xlink'
-      width='22'
-      height='21'
+      width='26'
+      height='26'
+      viewBox='0 0 26 26'
       fill='none'
-      viewBox='0 0 22 21'
+      xmlns='http://www.w3.org/2000/svg'
       {...props}
     >
-      <path fill='url(#pattern0)' d='M0.177 0.177H21.5V20.765H0.177z'></path>
-      <defs>
-        <pattern
-          id='pattern0'
-          width='1'
-          height='1'
-          patternContentUnits='objectBoundingBox'
-        >
-          <use
-            transform='matrix(.01006 0 0 .01042 .017 0)'
-            xlinkHref='#image0_235_202'
-          ></use>
-        </pattern>
-        <image
-          id='image0_235_202'
-          width='96'
-          height='96'
-          xlinkHref='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABmJLR0QA/wD/AP+gvaeTAAAB2UlEQVR4nO3cTUrDQACG4U+xgqdwJWi9hngQ8R56gOIveBX/jqGIa4+gxYUt6KLZCGqGNuFNzfvA7EKc+b5OnNUkkiRJkiRJ0u+GSU6TPCYZJ/ns+RhXWZxU2bRmkOQ8ybQDi+7qmFYZDebM+FdrSa47sMBlGXdpuIRRBxa1bONsrqR/sJXkowMLWrYxSbJTF+5q3QNJDtLCN60H1pIc1j1UUsDe4nPprf26B0oK2GxgIn1Vm91KwUvek2wsPpfe+jPjkh2gFlkAzAJgFgArKaDkH7Xm5A6AWQDMAmAWALMAmKcgmDsAZgEwC4BZAMwCYJ6CYO4AmAXALABmATALgHkKgrkDYBYAswCYBcAsAOYpCOYOgFkAzAJgFgCzAJinIJg7AGYBMAuAWQDMAmCegmDuAJgFwCwAZgEwC4B5CoKVFPDa+iz+r9rsSgp4aWAifVWbXUkB9w1MpK9umnjJMN6WO++1ldt14ZbsgKckVwXP6bvLJM9NvWyQ2aeI/lUty7hNC3etrie5iJ+jv8Yks1vUW73odrf6Iw9J3jqwaHq8VVmMUnBVMWGRxR0B8/13DB9m+DDDhxk+zPBhhg8zfJjhwwwfZvgww4cZPszwYYYPO6YnIElSF30BiV0lArQbmfoAAAAASUVORK5CYII='
-        ></image>
-      </defs>
+      <path
+        d='M22.667 0.908142H3.91699C2.19336 0.908142 0.791992 2.30951 0.791992 4.03314V18.0956C0.791992 19.8193 2.19336 21.2206 3.91699 21.2206H8.60449V25.3222C8.60449 25.8007 9.15137 26.079 9.53711 25.7958L15.6357 21.2206H22.667C24.3906 21.2206 25.792 19.8193 25.792 18.0956V4.03314C25.792 2.30951 24.3906 0.908142 22.667 0.908142Z'
+        fill='black'
+      />
     </svg>
   );
 };
