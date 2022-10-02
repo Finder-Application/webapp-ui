@@ -1,0 +1,30 @@
+.comment-container {
+  border: solid 1px var(--grey-6);
+  border-radius: 5px;
+  padding: 0.1em 0.1em 0.2em 0.5em;
+  width: 100%;
+
+  &__user-name {
+    color: var(--black);
+    margin-right: 0.4em;
+    font-weight: 500;
+  }
+
+  &__comment-date {
+    color: var(--black-opacity-70);
+    font-size: 0.87rem;
+  }
+
+  &__comment-content {
+    font-weight: 300;
+    font-size: 0.9rem;
+  }
+
+  &__reply {
+    cursor: pointer;
+    &__reply-text {
+      font-size: 0.8rem;
+      color: var(--black-opacity-90);
+    }
+  }
+}

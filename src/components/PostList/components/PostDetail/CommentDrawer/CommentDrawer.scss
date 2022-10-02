@@ -1,0 +1,43 @@
+.comment-drawer-container {
+  &__comment-drawer {
+    background-color: var(--white);
+    position: absolute;
+    top: 0;
+    right: 0.5em;
+    width: 21%;
+    height: 100%;
+    border-left: 1px solid var(--grey-6);
+    transition: right 0.5s cubic-bezier(0.82, 0.085, 0.395, 0.895);
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &__inactive {
+      right: -50em;
+    }
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 2em;
+    right: 20.5%;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--grey-6);
+    border-radius: 2em;
+    padding: 0;
+    width: 2em;
+    height: 2em;
+    transition: right 0.5s cubic-bezier(0.82, 0.085, 0.395, 0.895);
+
+    @media only screen and (min-width: 1865px) {
+      right: 20.6%;
+    }
+
+    &__inactive {
+      right: -50em;
+    }
+  }
+}

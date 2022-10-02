@@ -3,16 +3,17 @@ import { TOOL_TIP_zINDEX } from '@/configs';
 import { Tooltip } from 'antd';
 import { TooltipProps } from 'antd/es/tooltip';
 import { UserIcon } from '../Icons';
-import { ContactInform } from '../PostList/components/PostDetail/ContactInform';
 
 import './UserAvatar.scss';
+import { ContactInform } from '../PostList/components/PostDetail/ContactInform';
 
 type UserAvarProps = {
   userIconColor?: string;
+  svgProps?: React.SVGProps<SVGSVGElement>;
 };
 
 export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
-  const { userIconColor = 'black', ...toolTopProps } = props;
+  const { userIconColor = 'black', svgProps, ...toolTopProps } = props;
   return (
     <Tooltip
       placement='leftTop'
@@ -35,7 +36,7 @@ export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
       overlayClassName={'user-avatar__overlay'}
       {...toolTopProps}
     >
-      <UserIcon color={userIconColor} />
+      <UserIcon color={userIconColor} {...svgProps} />
     </Tooltip>
   );
 };
