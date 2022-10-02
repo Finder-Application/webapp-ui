@@ -1,0 +1,77 @@
+.ResearchPage{
+    .header{
+        background-color: #fff;
+        position: relative;
+        top: -2rem;
+        padding: var(--space-header);
+        margin-bottom: var(--space-header);
+        margin: 0 -5rem;
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            padding-bottom: var(--space-header);
+        }
+        .optionSearch{
+            
+            display: flex;
+            // width: fit-content;
+            justify-content:center ;
+            .option{
+                margin-left: 2rem;
+                font-weight: lighter;
+            }
+            button{
+                position: relative;
+                margin: 0 2rem;
+                top: 2.5rem;
+                height: 50%;
+                background: linear-gradient(
+                    90deg,
+                    #83e8e2 0%,
+                    #88efcb 64.57%,
+                    #92fe9d 99.98%
+                );
+                padding: 0.5em 3em;
+                border-radius: 10px;
+                margin-left: 1.5rem;
+                border: none;
+
+                &:hover {
+                    background-color: var(--primary);
+                    color: var(--white);
+                }
+    
+            }
+            
+        }
+
+        
+    }
+    
+    .search {
+        .select {
+            min-width: 15rem;
+            margin-right: 1rem;
+        }
+        :global(.ant-select-selector) {
+            border-radius: 10px;
+            height: auto;
+            padding: 0.35rem 1rem;
+        }
+        
+    }
+    
+    .btn-reset {
+        background-color: var(--disabled-color);
+        border-radius: 10px;
+
+        span {
+            margin-left: var(--default-margin);
+        }
+
+        &:hover {
+            background-color: var(--primary);
+        }
+    }
+}
