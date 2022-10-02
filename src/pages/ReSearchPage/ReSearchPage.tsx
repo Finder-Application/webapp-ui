@@ -8,9 +8,10 @@ import { useState } from "react";
 import styles from "./ResearchPage.module.scss";
 import { toLower } from "lodash";
 import RefreshIcon from "@/components/Icons/RefreshIcon";
+
+import select from "antd/lib/select";
 import GeoUtils from "@/utils/Geo.utils";
 import StringUtils from "@/utils/String.utils";
-import select from "antd/lib/select";
 const cx = classNames.bind(styles);
 const ReSearch = ()=>{
     const [provinceState, setProvince] = useState('');
