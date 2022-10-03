@@ -5,7 +5,6 @@ import { privateRoutes, publicRoutes, ROUTES } from './configs';
 import { DefaultLayout } from './layouts';
 import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
-
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
     routes.map((route, index) => {

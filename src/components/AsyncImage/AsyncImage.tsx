@@ -10,7 +10,7 @@ interface AsyncImageProps {
   imageLoading?: boolean;
 }
 type Props = ImageProps & AsyncImageProps;
-export const AsyncImage = (props: Props) => {
+export const AsyncImage = React.forwardRef((props: Props, ref) => {
   const [loadedSrc, setLoadedSrc] = React.useState<string | null>(null);
   const {
     avatar = false,
@@ -61,4 +61,4 @@ export const AsyncImage = (props: Props) => {
   ) : (
     renderLoading()
   );
-};
+});
