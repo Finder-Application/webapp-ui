@@ -1,8 +1,3 @@
-import { useWindowSize } from '@/hooks';
-import { Button, Divider, Drawer, Tooltip } from 'antd';
-import toNumber from 'lodash/toNumber';
-import classNames from 'classnames/bind';
-import styles from './PostDetail.module.scss';
 import {
   CalendarIcon,
   CloseIcon,
@@ -11,18 +6,73 @@ import {
   DocumentIcon,
   ShareIcon,
 } from '@/components/Icons';
-import Slider from 'react-slick';
-import ImageSlider from './ImageSlider';
-import { MissingInform } from './MissingInform';
-import { ContactInform } from './ContactInform';
-import { TOOL_TIP_zINDEX } from '@/configs/constants';
-import { UserAvatar } from '@/components/UserAvatar';
+import { useWindowSize } from '@/hooks';
+import { Button, Divider, Drawer, Tooltip } from 'antd';
+import classNames from 'classnames/bind';
+import toNumber from 'lodash/toNumber';
+import styles from './PostDetail.module.scss';
 
+import { UserAvatar } from '@/components/UserAvatar';
+import { TOOL_TIP_zINDEX } from '@/configs/constants';
+import { useState } from 'react';
+import { ContactInform } from './ContactInform';
+import { ImageSlider } from './ImageSlider';
+import { MissingInform } from './MissingInform';
+import { CommentDrawer } from './CommentDrawer';
 const cx = classNames.bind(styles);
 interface PostDetailProps {
   isVisible?: boolean;
   onClose: () => void;
 }
+
+export const ShareToolTipButton = (props: React.HTMLProps<HTMLDivElement>) => {
+  return (
+    <div {...props}>
+      <Tooltip
+        placement='leftTop'
+        title='Share'
+        trigger='hover'
+        zIndex={TOOL_TIP_zINDEX}
+        overlayInnerStyle={{ padding: '0.5em 2em' }}
+      >
+        <Button className={cx('post-detail__interaction-items__item')}>
+          <ShareIcon width={15} height={15} />
+        </Button>
+      </Tooltip>
+    </div>
+  );
+};
+
+export const CommentTooltipButton = (
+  props: React.HTMLProps<HTMLDivElement>
+) => {
+  const { onClick } = props;
+  return (
+    <div {...props}>
+      <Tooltip
+        placement='leftTop'
+        title='Comments'
+        trigger='hover'
+        zIndex={TOOL_TIP_zINDEX}
+        overlayInnerStyle={{ padding: '0.5em 2em' }}
+      >
+        <Button
+          className={cx('post-detail__interaction-items__item')}
+          onClick={onClick}
+        >
+          <div
+            className={cx(
+              'post-detail__interaction-items__item__comments-count'
+            )}
+          >
+            48
+          </div>
+          <CommentIcon width={15} height={15} />
+        </Button>
+      </Tooltip>
+    </div>
+  );
+};
 
 export const LARGE_IMAGES = [
   {
@@ -54,6 +104,16 @@ export const PostDetail = (props: PostDetailProps) => {
 
   const { height, width } = useWindowSize();
 
+  const [showCommentDrawer, setShowCommentDrawer] = useState(false);
+
+  const onCloseCommentDrawer = () => {
+    setShowCommentDrawer(false);
+  };
+
+  const onOpenCommentDrawer = () => {
+    setShowCommentDrawer(true);
+  };
+
   return (
     <Drawer
       placement={'bottom'}
@@ -65,39 +125,15 @@ export const PostDetail = (props: PostDetailProps) => {
       headerStyle={{ display: 'none' }}
     >
       <CloseIcon onClick={onClose} className={cx('post-detail__close-icon')} />
-      <div className={cx('post-detail__interaction-items')}>
+      <div
+        className={cx(
+          'post-detail__interaction-items',
+          showCommentDrawer && 'post-detail__interaction-items__inactive'
+        )}
+      >
         <UserAvatar />
-        <Tooltip
-          placement='leftTop'
-          title='Comments'
-          trigger='hover'
-          zIndex={TOOL_TIP_zINDEX}
-          overlayInnerStyle={{ padding: '0.5em 2em' }}
-        >
-          <Button
-            className={cx('post-detail__interaction-items__item', 'my-4')}
-          >
-            <div
-              className={cx(
-                'post-detail__interaction-items__item__comments-count'
-              )}
-            >
-              48
-            </div>
-            <CommentIcon width={15} height={15} />
-          </Button>
-        </Tooltip>
-        <Tooltip
-          placement='leftTop'
-          title='Share'
-          trigger='hover'
-          zIndex={TOOL_TIP_zINDEX}
-          overlayInnerStyle={{ padding: '0.5em 2em' }}
-        >
-          <Button className={cx('post-detail__interaction-items__item')}>
-            <ShareIcon width={15} height={15} />
-          </Button>
-        </Tooltip>
+        <CommentTooltipButton className='my-4' onClick={onOpenCommentDrawer} />
+        <ShareToolTipButton />
       </div>
       <div className={cx('post-detail__main-content')}>
         <div className='col-9'>
@@ -148,6 +184,10 @@ export const PostDetail = (props: PostDetailProps) => {
           <ContactInform />
         </div>
       </div>
+      <CommentDrawer
+        visible={showCommentDrawer}
+        onClose={onCloseCommentDrawer}
+      />
     </Drawer>
   );
 };
