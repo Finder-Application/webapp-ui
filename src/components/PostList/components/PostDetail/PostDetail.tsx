@@ -137,7 +137,9 @@ export const PostDetail = (props: PostDetailProps) => {
       </div>
       <div className={cx('post-detail__main-content')}>
         <div className='col-9'>
-          <h1>Lorem Ipsum is simply dummy text of the printing</h1>
+          <h1 className='font-weight-bold'>
+            Lorem Ipsum is simply dummy text of the printing
+          </h1>
           <hr />
           <div className='mt-4 mb-5 d-flex flex-row align-items-center'>
             <div className='d-flex flex-row'>
@@ -163,7 +165,7 @@ export const PostDetail = (props: PostDetailProps) => {
 
           <div className='mt-5 mb-4 d-flex flex-row align-items-center'>
             <DocumentIcon />
-            <h5 className='m-0 ml-3'>Description</h5>
+            <h5 className='m-0 ml-3 font-weight-bold'>Description</h5>
           </div>
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -179,7 +181,7 @@ export const PostDetail = (props: PostDetailProps) => {
 
           <div className='mt-5 mb-4 d-flex flex-row align-items-center'>
             <ContactIcon />
-            <h5 className='m-0 ml-3'>Contact Information</h5>
+            <h5 className='m-0 ml-3 font-weight-bold'>Contact Information</h5>
           </div>
           <ContactInform />
         </div>
