@@ -1,0 +1,35 @@
+.comment-input-container {
+  width: 100%;
+
+  &--reply-mode {
+    width: 80%;
+  }
+
+  &__input-section {
+    background-color: var(--grey-7);
+    padding-bottom: 0.2em;
+    border-radius: 5px;
+
+    &__input {
+      border: none;
+      background-color: var(--grey-7);
+    }
+  }
+
+  &__attach-icon {
+    padding: 0;
+    border: none;
+    height: 1.5em;
+    background-color: transparent !important;
+    transition: none;
+    border-radius: 30px;
+  }
+  &__comment-btn {
+    color: var(--white);
+    background: var(--light-blue-1);
+
+    &--reply-mode {
+      font-size: 0.8rem;
+    }
+  }
+}
