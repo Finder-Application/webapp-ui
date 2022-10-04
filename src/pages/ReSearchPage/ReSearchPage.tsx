@@ -31,19 +31,18 @@ const ReSearch = ()=>{
     <div className={cx("ResearchPage")}>
         <div className= {cx("header")}>
             <h2 className={cx("title")}>30 related people according to your search</h2>
-            <div className= {cx('optionSearch')}>
-                <div className={cx('option')}>
+            <div className= {cx('header__options')}>
+                <div className={cx('header__options__search')}>
                     <p>Name</p>
-                    <Search placeholder="Search...." ></Search>
+                    <Search placeholder="Search...."  ></Search>
                 </div>
-                <div className={cx('option')}>
+                <div className={cx('header__options__birthdate')}>
                     <p>Birth year</p>
                     <DatePicker defaultValue={moment('25/09/2022', 'DD/MM/YYYY')} format={'DD/MM/YYYY'}/>
                 </div>
-                <div className={cx('option')}>
+                <div className={cx('header__options__residence')}>
                     <p>Residence</p>
                     <Select
-                    className={cx('select')}
                     defaultValue={provinceState}
                     showSearch
                     onChange={(value) => {
@@ -62,10 +61,10 @@ const ReSearch = ()=>{
                     ))}
                  </Select>
                 </div>
-                <div className={cx('option')}>
+                <div className={cx('header__options__gender')}>
                     <p>Geder</p>
                     <Select
-
+                        style={{color:'#403f3f', fontWeight:'lighter'}}
                         placeholder="Select gender"
                         optionFilterProp="children"
                         onChange={onChange}

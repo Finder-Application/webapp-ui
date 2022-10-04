@@ -4,23 +4,51 @@
         position: relative;
         top: -2rem;
         padding: var(--space-header);
-        margin-bottom: var(--space-header);
-        margin: 0 -5rem;
+        margin-bottom: 2rem;
+        margin: 0 -5.5rem ;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
         .title {
             text-align: center;
             font-size: 2rem;
             font-weight: bold;
             padding-bottom: var(--space-header);
+            color: #8C8585;
         }
-        .optionSearch{
+        .header__options{
             
             display: flex;
             // width: fit-content;
             justify-content:center ;
-            .option{
-                margin-left: 2rem;
-                font-weight: bold;
+            font-weight: bold;
+            color: black;
+            &__search{
+                margin: 0 2rem;
+                // font-weight: bold;
+
+                span{
+                    border-radius: 5px;
+                    color: rgb(134, 131, 131);
+                    border: #fff;
+                    background-color: #EFEFEF;
+                    input{
+                        background-color: #EFEFEF;
+                        color: #4a4949;
+                    }
+                }
             }
+            &__birthdate, &__residence, &__gender {
+                margin-right:2rem;
+                
+                div{
+                    border-radius: 5px;
+                   border: #fff;
+                   background-color: #EFEFEF;
+                   color: #4F4F4F;
+                }
+            }
+           
+
             button{
                 position: relative;
                 margin: 0 2rem;
