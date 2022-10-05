@@ -17,3 +17,5 @@ export * from './DocumentIcon';
 export * from './ContactIcon';
 export * from './CommentIcon';
 export * from './ShareIcon';
+export * from './AttachIcon';
+export * from './ReplyIcon';

@@ -12,7 +12,7 @@ export const MissingInform = (props: React.HTMLProps<HTMLDivElement>) => {
 
   return (
     <div {...props}>
-      <h5 className='mb-4'>Missing person Information</h5>
+      <h5 className='mb-4 font-weight-bold'>Missing person Information</h5>
       {renderInfoDetail('Fullname', 'Le Dinh Khoi')}
       {renderInfoDetail('Nickname', 'Win')}
       {renderInfoDetail('Dob', '30/08/2010')}

@@ -1,8 +1,6 @@
-import React from 'react';
 import { FinderLogo } from '@/components/FinderLogo';
-
-import styles from './Footer.module.scss';
-import classNames from 'classnames/bind';
+import images from '@/assets/images/footer';
+import { AsyncImage } from '@/components';
 import { ButtonFinder } from '@/components/ButtonFinder';
 import {
   FacebookIcon,
@@ -12,8 +10,8 @@ import {
   InstagramIcon,
   TelegramIcon,
 } from '@/components/Icons';
-import { AsyncImage } from '@/components';
-import images from '@/assets/images';
+import classNames from 'classnames/bind';
+import styles from './Footer.module.scss';
 
 const cx = classNames.bind(styles);
 
