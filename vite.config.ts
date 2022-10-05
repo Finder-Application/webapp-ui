@@ -5,13 +5,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  
-  plugins: [
-    react({
-      include: ['src/*'],
-      exclude: ['node_modules'],
-    }),
-    splitVendorChunkPlugin()],
+  plugins: [react(), splitVendorChunkPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

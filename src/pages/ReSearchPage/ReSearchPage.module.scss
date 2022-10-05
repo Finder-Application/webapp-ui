@@ -1,4 +1,4 @@
-.ResearchPage {
+.research-page {
   .header {
     background-color: var(--white);
     position: relative;
@@ -29,7 +29,7 @@
         span {
           border-radius: 5px;
           color: rgb(134, 131, 131);
-          border: #fff;
+          border: var(--white);
           background-color: #efefef;
           input {
             background-color: #efefef;
@@ -55,12 +55,7 @@
         margin: 0 2rem;
         top: 2.5rem;
         height: 50%;
-        background: linear-gradient(
-          90deg,
-          #83e8e2 0%,
-          #88efcb 64.57%,
-          #92fe9d 99.98%
-        );
+        background: var(--bg-primary-2);
         padding: 0.5em 3em;
         border-radius: 10px;
         margin-left: 1.5rem;

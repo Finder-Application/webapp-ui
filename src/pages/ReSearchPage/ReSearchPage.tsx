@@ -1,17 +1,14 @@
-import { ButtonFinder, Post, PostList } from '@/components';
+import { ButtonFinder, PostList } from '@/components';
 import { DatePicker, Select } from 'antd';
 import Search from 'antd/lib/transfer/search';
 import classNames from 'classnames/bind';
-import { constants } from '@/configs';
+import { toLower } from 'lodash';
 import moment from 'moment';
 import { useState } from 'react';
-import styles from './ResearchPage.module.scss';
-import { toLower } from 'lodash';
-import RefreshIcon from '@/components/Icons/RefreshIcon';
-
-import select from 'antd/lib/select';
+import styles from './ReSearchPage.module.scss';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
+import select from 'antd/lib/select';
 const cx = classNames.bind(styles);
 const ReSearch = () => {
   const [provinceState, setProvince] = useState('');
@@ -28,7 +25,7 @@ const ReSearch = () => {
   };
 
   return (
-    <div className={cx('ResearchPage')}>
+    <div className={cx('research-page')}>
       <div className={cx('header')}>
         <h2 className={cx('title')}>
           30 related people according to your search
