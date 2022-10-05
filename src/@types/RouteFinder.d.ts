@@ -1,6 +1,9 @@
 interface RouteFinder {
   path: string;
-  page: (props: any) => JSX.Element;
-  layout?: ((props: DefaultLayoutProps) => JSX.Element) | null;
+  page: React.LazyExoticComponent<() => JSX.Element>;
+  layout?:
+    | ((props: DefaultLayoutProps) => JSX.Element)
+    | null
+    | React.FC<DefaultLayoutProps>;
   title: string;
 }

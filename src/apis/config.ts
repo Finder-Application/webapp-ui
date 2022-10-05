@@ -11,10 +11,10 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config): AxiosRequestConfig<any> => {
   const { data } = config;
   const token = StorageUtils.get('token');
-  // const contentType =
-  //   data instanceof FormData ? 'multipart/form-data' : 'application/json';
+  const contentType =
+    data instanceof FormData ? 'multipart/form-data' : 'application/json';
   const headers = {
-    // 'content-type': contentType,
+    'content-type': contentType,
     authorization: `Bearer ${token}`,
   };
   console.log('config', config);

@@ -5,7 +5,6 @@ WORKDIR /app
 COPY . .
 RUN rm -rf node_modules
 RUN yarn
-RUN yarn add typescript
 RUN yarn  build 
 
 EXPOSE 3000
