@@ -1,7 +1,6 @@
 .post-detail {
   z-index: 999999;
   background-color: var(--black-opacity-84) !important;
-
   :global(.ant-drawer-content) {
     border-radius: 0;
     border-top-left-radius: 1em;
@@ -21,16 +20,22 @@
   &__interaction-items {
     position: absolute;
     top: 4em;
-    right: 8em;
+    right: 4em;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: right 0.5s cubic-bezier(0.82, 0.085, 0.395, 0.895);
 
     &__item {
       border-color: var(--grey-5);
       border-radius: 10px;
-      padding: 0.2em 0.7em;
+      width: 3em;
+      height: 3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
 
       &__comments-count {
         background-color: var(--white);
@@ -46,6 +51,10 @@
         align-items: center;
         border-radius: 10px;
       }
+    }
+
+    &__inactive {
+      right: -50em;
     }
   }
 
@@ -74,7 +83,7 @@
       border-radius: 1em;
       object-fit: cover;
     }
-    @media only screen and (min-width: 1920px) {
+    @media only screen and (min-width: 1865px) {
       img {
         width: 24em;
         height: 15em;

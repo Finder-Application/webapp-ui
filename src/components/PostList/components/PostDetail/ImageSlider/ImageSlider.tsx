@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Slider from 'react-slick';
-import { Image } from 'antd';
 import { NexArrowIcon, PrevArrowIcon } from '@/components/Icons';
 import { AsyncImage } from '@/components/AsyncImage';
 
@@ -40,7 +39,7 @@ type ImageSliderProps = {
   slidesToShow?: number;
 };
 
-const ImageSlider = ({ images, slidesToShow = 3 }: ImageSliderProps) => {
+export const ImageSlider = ({ images, slidesToShow = 3 }: ImageSliderProps) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const settings = {
@@ -78,7 +77,7 @@ const ImageSlider = ({ images, slidesToShow = 3 }: ImageSliderProps) => {
         <div className={cx(isActive ? 'activeSlide' : 'slide')} key={image?.id}>
           <div className='slideWrapper'>
             {isActive ? (
-              <Image src={image?.src} alt={image?.alt} />
+              <AsyncImage preview={true} src={image?.src} alt={image?.alt} />
             ) : (
               <AsyncImage src={image?.src} alt={image?.alt} />
             )}
@@ -91,5 +90,3 @@ const ImageSlider = ({ images, slidesToShow = 3 }: ImageSliderProps) => {
 
   return <Slider {...settings}>{templateImages}</Slider>;
 };
-
-export default ImageSlider;
