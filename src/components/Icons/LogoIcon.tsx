@@ -1,6 +1,11 @@
 import React from 'react';
 
-export const LogoIcon = (props: React.SVGProps<SVGSVGElement>) => {
+interface LogoIconProps extends React.SVGProps<SVGSVGElement> {
+  isLight?: boolean;
+}
+export const LogoIcon = (props: LogoIconProps) => {
+  const { isLight, ...defaultProps } = props;
+  const color = isLight ? 'white' : 'url(#paint2_linear_1_5725)';
   return (
     <svg
       width='22'
@@ -8,20 +13,17 @@ export const LogoIcon = (props: React.SVGProps<SVGSVGElement>) => {
       viewBox='0 0 22 26'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      {...props}
+      {...defaultProps}
     >
       <path
         d='M17.1147 25.2323V21.1809C9.2951 20.3402 4.9868 16.1317 4.13478 8.44067H0.0175438C-0.411049 16.5554 6.99034 25.4011 17.1147 25.2323Z'
-        fill='url(#paint0_linear_1_5725)'
+        fill={color}
       />
       <path
         d='M17.1702 8.37467H21.4492V0.0151367H17.1702V8.37467Z'
-        fill='url(#paint1_linear_1_5725)'
+        fill={color}
       />
-      <path
-        d='M8.55038 0V8.36122H12.8535V0H8.55038Z'
-        fill='url(#paint2_linear_1_5725)'
-      />
+      <path d='M8.55038 0V8.36122H12.8535V0H8.55038Z' fill={color} />
       <defs>
         <linearGradient
           id='paint0_linear_1_5725'

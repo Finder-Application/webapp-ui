@@ -1,2 +1,61 @@
 .login-page {
+  .header {
+    &-title {
+      color: var(--black);
+      font-size: 1.2rem;
+    }
+    &-navigate {
+      color: var(--primary-2);
+      cursor: pointer;
+
+      span {
+        color: var(--text-second-color);
+        &:hover {
+          color: var(--black);
+        }
+      }
+    }
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 3rem;
+    margin: 0.5rem 0;
+  }
+
+  .form-input {
+    margin: 0.5rem 0;
+
+    .label {
+      font-weight: 500;
+    }
+    .input {
+      margin-top: 0.5rem;
+      padding: 0.75rem 0.5rem;
+      border: none;
+      outline: none;
+      background: #ffffff;
+      border-radius: 9px;
+      width: 100%;
+      border: 1px solid var(--grey-2);
+      &:focus {
+        border: 1px solid var(--primary-2) !important;
+      }
+      span {
+        cursor: pointer;
+      }
+    }
+  }
+  :global(.ant-input-affix-wrapper-focused) {
+    border: 1px solid var(--primary-2) !important;
+  }
+  .btn-login {
+    margin-top: 2rem;
+    padding: 0.75rem;
+    border-radius: 15px;
+  }
+  .forgot-password:hover {
+    cursor: pointer;
+    color: var(--primary-2);
+  }
 }

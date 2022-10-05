@@ -21,7 +21,7 @@ function App() {
           path={route.path}
           element={
             <Layout>
-              <CustomPage {...route} />;
+              <CustomPage {...route} />
             </Layout>
           }
         />
