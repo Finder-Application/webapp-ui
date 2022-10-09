@@ -1,0 +1,73 @@
+.share-popup {
+  z-index: 99999999;
+  :global(.ant-modal-content) {
+    border-radius: 10px;
+    width: 24em;
+    text-align: center;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 0;
+    padding-bottom: 2em;
+  }
+
+  :global(.ant-modal-footer) {
+    display: none;
+  }
+  &__header {
+    border-radius: 10px 10px 0 0;
+    background-color: var(--grey-6);
+    height: 8em;
+    position: relative;
+
+    &__image {
+      position: relative;
+      bottom: 7em;
+      border-radius: 20px;
+      width: 16em;
+      height: 14em;
+    }
+  }
+
+  &__fb-icon {
+    cursor: pointer;
+    background-color: var(--light-blue-2-opacity-20);
+    padding: 0.8em;
+    border-radius: 50px;
+
+    &:hover {
+      background-color: var(--light-blue-2-opacity-40);
+    }
+  }
+
+  &__twitter-icon {
+    cursor: pointer;
+    background-color: var(--light-blue-1-opacity-20);
+    padding: 1em 0.8em;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: var(--light-blue-1-opacity-40);
+    }
+  }
+
+  &__sharing-link-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--grey-6-opacity-38);
+    padding: 0.5em 1em;
+    border-radius: 5px;
+
+    &__link {
+      color: var(--grey-8);
+      font-size: 0.9rem;
+    }
+
+    &__copy {
+      color: var(--light-blue-3);
+      cursor: pointer;
+    }
+  }
+}
