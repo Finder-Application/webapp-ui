@@ -1,12 +1,36 @@
-FROM node:16-alpine3.15
+FROM node:16-alpine3.15 as development
 
 WORKDIR /app
 
-COPY . .
-RUN rm -rf node_modules
-RUN yarn
-RUN yarn  build 
+COPY package.json /app/package.json 
+COPY yarn.lock  /app/yarn.lock
 
-EXPOSE 3000
+RUN yarn 
+
+COPY . /app
+
+ENV CI=true
+ENV PORT=3000
+
+FROM development AS build
+
+RUN yarn build
+
 CMD ["yarn","preview"]
 
+# 2. For Nginx setup
+FROM nginx:latest
+
+# Copy config nginx
+COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build /app/dist .
+
+# Containers run nginx with global directives and daemon off
+EXPOSE 3000
