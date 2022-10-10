@@ -7,7 +7,7 @@ import {
   ShareIcon,
 } from '@/components/Icons';
 import { useWindowSize } from '@/hooks';
-import { Button, Divider, Drawer, Tooltip } from 'antd';
+import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import toNumber from 'lodash/toNumber';
 import styles from './PostDetail.module.scss';
@@ -19,6 +19,8 @@ import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
 import { MissingInform } from './MissingInform';
 import { CommentDrawer } from './CommentDrawer';
+import { usePostStore } from '@/store/post';
+import { SharingPopup } from './SharingPopup';
 const cx = classNames.bind(styles);
 interface PostDetailProps {
   isVisible?: boolean;
@@ -105,6 +107,9 @@ export const PostDetail = (props: PostDetailProps) => {
   const { height, width } = useWindowSize();
 
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
+  const setIsShowSharingPopup = usePostStore(
+    (state) => state.setIsShowSharingPopup
+  );
 
   const onCloseCommentDrawer = () => {
     setShowCommentDrawer(false);
@@ -112,6 +117,10 @@ export const PostDetail = (props: PostDetailProps) => {
 
   const onOpenCommentDrawer = () => {
     setShowCommentDrawer(true);
+  };
+
+  const showSharingPopupModal = () => {
+    setIsShowSharingPopup(true);
   };
 
   return (
@@ -124,6 +133,7 @@ export const PostDetail = (props: PostDetailProps) => {
       onClose={onClose}
       headerStyle={{ display: 'none' }}
     >
+      <SharingPopup />
       <CloseIcon onClick={onClose} className={cx('post-detail__close-icon')} />
       <div
         className={cx(
@@ -133,7 +143,7 @@ export const PostDetail = (props: PostDetailProps) => {
       >
         <UserAvatar />
         <CommentTooltipButton className='my-4' onClick={onOpenCommentDrawer} />
-        <ShareToolTipButton />
+        <ShareToolTipButton onClick={showSharingPopupModal} />
       </div>
       <div className={cx('post-detail__main-content')}>
         <div className='col-9'>
