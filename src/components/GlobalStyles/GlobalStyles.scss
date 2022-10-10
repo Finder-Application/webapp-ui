@@ -1,6 +1,8 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 :root {
+  font-size: 14px !important;
+
   --primary: #7cdfff;
   --primary-2: #03c2ff;
   --black: #000;
@@ -34,7 +36,6 @@
 
   // drawer
   --bg-drawer: rgb(132 205 222 / 13%);
-  font-size: 14px !important;
 
   // colors
   --black-1: rgba(51, 51, 51, 1);
@@ -64,6 +65,12 @@
 
   // btn
   --disabled-color: #d3d3d3;
+  --bg-primary-2: linear-gradient(
+    90deg,
+    #83e8e2 0%,
+    #88efcb 64.57%,
+    #92fe9d 99.98%
+  );
 }
 
 body {

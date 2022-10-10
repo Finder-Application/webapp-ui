@@ -1,5 +1,5 @@
 import { AuthLayout } from '@/layouts';
-import { LoginPage } from '@/pages';
+import { LoginPage, SearchPage } from '@/pages';
 import CreatePostPage from '@/pages/CreatePostPage/CreatePostPage';
 import React, { lazy } from 'react';
 
@@ -9,6 +9,7 @@ export const ROUTES = {
   home: '/',
   about: '/about',
   guide: '/guide',
+  search: '/search',
   createPost: '/create-post',
 };
 
@@ -38,6 +39,11 @@ const publicRoutes: RouteFinder[] = [
     path: ROUTES.createPost,
     page: React.lazy(() => import('@/pages/CreatePostPage/CreatePostPage')),
     title: 'Create Post',
+  },
+  {
+    path: ROUTES.search,
+    page: lazy(() => import('@/pages/ReSearchPage/ReSearchPage')),
+    title: 'Search',
   },
 ];
 
