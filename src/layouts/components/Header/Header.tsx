@@ -1,7 +1,7 @@
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { FinderLogo } from '@/components/FinderLogo';
 import { NotificationIcon, SearchIcon, UserIcon } from '@/components/Icons';
-import useOnClickOutside from '@/hooks/useOnClickOutside';
+import { useOnClickOutside } from '@/hooks';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
