@@ -1,0 +1,96 @@
+.research-page {
+  .header {
+    background-color: var(--white);
+    position: relative;
+    top: -2rem;
+    padding: var(--space-header);
+    margin-bottom: 2rem;
+    margin: 0 -5.5%;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
+      drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+    .title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      padding-bottom: var(--space-header);
+      color: #8c8585;
+    }
+    .header__options {
+      display: flex;
+      // width: fit-content;
+      justify-content: center;
+      font-weight: bold;
+      color: black;
+      &__search {
+        margin: 0 2rem;
+        // font-weight: bold;
+
+        span {
+          border-radius: 5px;
+          color: rgb(134, 131, 131);
+          border: var(--white);
+          background-color: #efefef;
+          input {
+            background-color: #efefef;
+            color: #4a4949;
+          }
+        }
+      }
+      &__birthdate,
+      &__residence,
+      &__gender {
+        margin-right: 2rem;
+
+        div {
+          border-radius: 5px;
+          border: #fff;
+          background-color: #efefef;
+          color: #4f4f4f;
+        }
+      }
+
+      button {
+        position: relative;
+        margin: 0 2rem;
+        top: 2.5rem;
+        height: 50%;
+        background: var(--bg-primary-2);
+        padding: 0.5em 3em;
+        border-radius: 10px;
+        margin-left: 1.5rem;
+        border: none;
+
+        &:hover {
+          background-color: var(--primary);
+          color: var(--white);
+        }
+      }
+    }
+  }
+
+  .search {
+    .select {
+      min-width: 15rem;
+      margin-right: 1rem;
+    }
+    :global(.ant-select-selector) {
+      border-radius: 10px;
+      height: auto;
+      padding: 0.35rem 1rem;
+    }
+  }
+
+  .btn-reset {
+    background-color: var(--disabled-color);
+    border-radius: 10px;
+
+    span {
+      margin-left: var(--default-margin);
+    }
+
+    &:hover {
+      background-color: var(--primary);
+    }
+  }
+}

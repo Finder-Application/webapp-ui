@@ -1,4 +1,5 @@
 import { CloseIcon } from '@/components/Icons';
+import { usePostStore } from '@/store/post';
 import { Button } from 'antd';
 import classNames from 'classnames';
 import React from 'react';
@@ -18,6 +19,9 @@ export const CommentDrawer = (
   props: CommentDrawerProps & React.HTMLProps<HTMLDivElement>
 ) => {
   const { visible = false, onClose } = props;
+  const setIsShowSharingPopup = usePostStore(
+    (state) => state.setIsShowSharingPopup
+  );
 
   return (
     <div className={cx('comment-drawer-container')}>
@@ -37,7 +41,10 @@ export const CommentDrawer = (
         )}
       >
         <div className='d-flex flex-row mt-4 ml-3 justify-content-end'>
-          <ShareToolTipButton className='mr-3' />
+          <ShareToolTipButton
+            className='mr-3'
+            onClick={() => setIsShowSharingPopup(true)}
+          />
         </div>
         <CommentInput className='ml-2 mt-5 mr-3 mb-5' />
 
