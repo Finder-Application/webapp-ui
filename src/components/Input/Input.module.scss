@@ -1,0 +1,9 @@
+.my-input {
+  &__label {
+    color: var(--grey-12);
+  }
+  &__input {
+    border: 1px solid var(--grey-9);
+    border-radius: 5px;
+  }
+}

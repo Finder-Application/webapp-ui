@@ -32,7 +32,7 @@ export const CommentDrawer = (
         )}
         onClick={onClose}
       >
-        <CloseIcon width={15} height={15} />
+        <CloseIcon width={10} height={10} />
       </Button>
       <div
         className={cx(
