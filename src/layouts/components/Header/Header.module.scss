@@ -184,12 +184,7 @@
     }
 
     &__upload-btn {
-      background: linear-gradient(
-        90deg,
-        #83e8e2 0%,
-        #88efcb 64.57%,
-        #92fe9d 99.98%
-      );
+      background: var(--bg-primary-2);
       padding: 0.5em 3em;
       border-radius: 10px;
       margin-left: 1.5rem;

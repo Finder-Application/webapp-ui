@@ -7,7 +7,7 @@ import {
   ShareIcon,
 } from '@/components/Icons';
 import { useWindowSize } from '@/hooks';
-import { Button, Divider, Drawer, Tooltip } from 'antd';
+import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import toNumber from 'lodash/toNumber';
 import styles from './PostDetail.module.scss';
@@ -19,6 +19,8 @@ import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
 import { MissingInform } from './MissingInform';
 import { CommentDrawer } from './CommentDrawer';
+import { usePostStore } from '@/store/post';
+import { SharingPopup } from './SharingPopup';
 const cx = classNames.bind(styles);
 interface PostDetailProps {
   isVisible?: boolean;
@@ -105,6 +107,9 @@ export const PostDetail = (props: PostDetailProps) => {
   const { height, width } = useWindowSize();
 
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
+  const setIsShowSharingPopup = usePostStore(
+    (state) => state.setIsShowSharingPopup
+  );
 
   const onCloseCommentDrawer = () => {
     setShowCommentDrawer(false);
@@ -112,6 +117,10 @@ export const PostDetail = (props: PostDetailProps) => {
 
   const onOpenCommentDrawer = () => {
     setShowCommentDrawer(true);
+  };
+
+  const showSharingPopupModal = () => {
+    setIsShowSharingPopup(true);
   };
 
   return (
@@ -124,6 +133,7 @@ export const PostDetail = (props: PostDetailProps) => {
       onClose={onClose}
       headerStyle={{ display: 'none' }}
     >
+      <SharingPopup />
       <CloseIcon onClick={onClose} className={cx('post-detail__close-icon')} />
       <div
         className={cx(
@@ -133,11 +143,13 @@ export const PostDetail = (props: PostDetailProps) => {
       >
         <UserAvatar />
         <CommentTooltipButton className='my-4' onClick={onOpenCommentDrawer} />
-        <ShareToolTipButton />
+        <ShareToolTipButton onClick={showSharingPopupModal} />
       </div>
       <div className={cx('post-detail__main-content')}>
         <div className='col-9'>
-          <h1>Lorem Ipsum is simply dummy text of the printing</h1>
+          <h1 className='font-weight-bold'>
+            Lorem Ipsum is simply dummy text of the printing
+          </h1>
           <hr />
           <div className='mt-4 mb-5 d-flex flex-row align-items-center'>
             <div className='d-flex flex-row'>
@@ -163,7 +175,7 @@ export const PostDetail = (props: PostDetailProps) => {
 
           <div className='mt-5 mb-4 d-flex flex-row align-items-center'>
             <DocumentIcon />
-            <h5 className='m-0 ml-3'>Description</h5>
+            <h5 className='m-0 ml-3 font-weight-bold'>Description</h5>
           </div>
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -179,7 +191,7 @@ export const PostDetail = (props: PostDetailProps) => {
 
           <div className='mt-5 mb-4 d-flex flex-row align-items-center'>
             <ContactIcon />
-            <h5 className='m-0 ml-3'>Contact Information</h5>
+            <h5 className='m-0 ml-3 font-weight-bold'>Contact Information</h5>
           </div>
           <ContactInform />
         </div>

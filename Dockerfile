@@ -1,10 +1,36 @@
-FROM node:16-alpine as builder
-WORKDIR /code/
-ADD package-lock.json .
-ADD package.json .
-RUN npm ci
-ADD . .
-RUN npm run build
+FROM node:16-alpine3.15 as development
 
-FROM devforth/spa-to-http:latest
-COPY --from=builder /code/dist/ .
+WORKDIR /app
+
+COPY package.json /app/package.json 
+COPY yarn.lock  /app/yarn.lock
+
+RUN yarn 
+
+COPY . /app
+
+ENV CI=true
+ENV PORT=3000
+
+FROM development AS build
+
+RUN yarn build
+
+CMD ["yarn","preview"]
+
+# 2. For Nginx setup
+FROM nginx:latest
+
+# Copy config nginx
+COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build /app/dist .
+
+# Containers run nginx with global directives and daemon off
+EXPOSE 3000

@@ -19,3 +19,5 @@ export * from './CommentIcon';
 export * from './ShareIcon';
 export * from './AttachIcon';
 export * from './ReplyIcon';
+export * from './TwitterIcon';
+export * from './FacebookSharingIcon';

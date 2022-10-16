@@ -5,6 +5,8 @@ import { privateRoutes, publicRoutes, ROUTES } from './configs';
 import { DefaultLayout } from './layouts';
 import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
@@ -22,7 +24,7 @@ function App() {
           path={route.path}
           element={
             <Layout>
-              <CustomPage {...route} />;
+              <CustomPage {...route} />
             </Layout>
           }
         />
@@ -30,22 +32,25 @@ function App() {
     });
   return (
     <GlobalStyles>
-      <Routes>
-        <Route element={<PublicOutletRoute />}>
-          {renderRoutes([...publicRoutes])}
-        </Route>
-        <Route element={<PrivateOutletRoute />}>
-          {renderRoutes([...privateRoutes])}
-        </Route>
-        <Route
-          path='*'
-          element={
-            <DefaultLayout>
-              <Navigate to={ROUTES.home} />
-            </DefaultLayout>
-          }
-        />
-      </Routes>
+      <>
+        <Routes>
+          <Route element={<PublicOutletRoute />}>
+            {renderRoutes([...publicRoutes])}
+          </Route>
+          <Route element={<PrivateOutletRoute />}>
+            {renderRoutes([...privateRoutes])}
+          </Route>
+          <Route
+            path='*'
+            element={
+              <DefaultLayout>
+                <Navigate to={ROUTES.home} />
+              </DefaultLayout>
+            }
+          />
+        </Routes>
+        <ToastContainer />
+      </>
     </GlobalStyles>
   );
 }

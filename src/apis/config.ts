@@ -17,6 +17,8 @@ axiosClient.interceptors.request.use((config): AxiosRequestConfig<any> => {
     'content-type': contentType,
     authorization: `Bearer ${token}`,
   };
+  console.log('config', config);
+
   return { headers, ...config };
 });
 

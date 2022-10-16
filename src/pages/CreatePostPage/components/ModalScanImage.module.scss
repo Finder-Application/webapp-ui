@@ -1,0 +1,31 @@
+.modal-scan {
+  :global(.ant-image) {
+    position: relative;
+  }
+  .scan {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 255, 51, 0) 43%,
+      var(--primary-2) 211%
+    );
+    border-bottom: 2px solid var(--primary-2);
+    animation: scanAnimation 2s infinite;
+    animation-timing-function: cubic-bezier(0.3, 0, 0.43, 0.7);
+    animation-delay: 1.4s;
+    position: absolute;
+    transform: translateY(-50%);
+    left: 0;
+    bottom: 0;
+  }
+  @keyframes scanAnimation {
+    0% {
+      transform: translateY(-100%);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+}

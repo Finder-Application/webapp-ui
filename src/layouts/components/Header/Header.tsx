@@ -1,12 +1,11 @@
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { FinderLogo } from '@/components/FinderLogo';
 import { NotificationIcon, SearchIcon, UserIcon } from '@/components/Icons';
+import { useOnClickOutside } from '@/hooks';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { BsSearch } from 'react-icons/bs';
 import styles from './Header.module.scss';
-import useOnClickOutside from '@/hooks/useOnClickOutside';
 
 const cx = classNames.bind(styles);
 const Header = () => {
