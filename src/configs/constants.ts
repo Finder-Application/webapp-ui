@@ -4,4 +4,5 @@ export const constants = {
   BASE_URL: 'http://localhost:4000',
 };
 
+// TODO: UPDATE TO CONSTANTS
 export const TOOL_TIP_zINDEX = 999999;

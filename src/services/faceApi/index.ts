@@ -1,1 +1,1 @@
-export { default as FaceApiService } from './faceApi';
+export { default as FaceApiService } from './faceApi.service';

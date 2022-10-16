@@ -8,9 +8,9 @@ const cx = classNames.bind(styles);
 export const CustomPage = (props: RouteFinder) => {
   const { pageY } = useWindowScroll();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
   DocumentUtils.setTitle(props.title);
   const Page = props.page;
   return (

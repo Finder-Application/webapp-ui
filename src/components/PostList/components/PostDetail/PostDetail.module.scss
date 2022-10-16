@@ -10,9 +10,26 @@
     border-radius: 1em;
   }
 
+  &__edit-btn {
+    padding: 0.8em 4.5em;
+    border-radius: 10px;
+    font-weight: 500;
+    background-color: var(--grey-17);
+  }
+  &__delete-btn {
+    padding: 0.8em 4.5em;
+    border-radius: 10px;
+    font-weight: 500;
+    background-color: var(--red-1);
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   &__close-icon {
     position: absolute;
-    top: -40px;
+    top: -2.4em;
     right: 10px;
     cursor: pointer;
   }

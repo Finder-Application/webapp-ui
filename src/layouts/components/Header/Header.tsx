@@ -6,13 +6,16 @@ import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
-
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/configs';
 const cx = classNames.bind(styles);
 const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const [onFocusSearch, setOnFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const navigate = useNavigate();
 
   // init Refs
   const refSearch = useRef<HTMLDivElement>(null);
@@ -86,7 +89,10 @@ const Header = () => {
 
         <NotificationIcon className='m-4' />
         <UserIcon />
-        <ButtonFinder className={cx('header__right__upload-btn')}>
+        <ButtonFinder
+          className={cx('header__right__upload-btn')}
+          onClick={() => navigate(ROUTES.createPost)}
+        >
           Upload
         </ButtonFinder>
       </div>
