@@ -1,6 +1,7 @@
 import { axiosClient } from '@/apis';
 import FileUtils from '@/utils/File.utils';
 
+
 class FaceApiService {
   private readonly baseURL: string = '/face-api';
 
