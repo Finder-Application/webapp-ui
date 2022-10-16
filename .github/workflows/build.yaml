@@ -18,6 +18,6 @@ jobs:
             cd build/  
             cd webapp-ui/
             git remote set-url origin https://cin12211:${{ secrets.GIT_TOKEN }}@github.com/Finder-Application/webapp-ui.git
-            git pull origin
+            git pull origin main
             cd ..
             docker compose up --build front-end -d
