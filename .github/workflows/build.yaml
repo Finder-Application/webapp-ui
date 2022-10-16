@@ -6,6 +6,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Deploy frontend to server
         uses: appleboy/ssh-action@master
         with:
@@ -21,3 +23,4 @@ jobs:
             git pull origin main
             cd ..
             docker compose up --build front-end -d
+
