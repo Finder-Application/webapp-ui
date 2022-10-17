@@ -15,7 +15,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
+          port: ${{ secrets.SSH_PORT }}
           sync: true
           script: |
             cd build/  
