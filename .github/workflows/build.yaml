@@ -1,4 +1,4 @@
-name: CI-CD front-end Deploy
+name: CI-CD FE Deploy
 on:
   push:
     branches: [main]
@@ -20,7 +20,7 @@ jobs:
           script: |
             cd build/  
             cd webapp-ui/
-            git pull origin main
+            git pull origin
             cd ..
             ls
             docker ps
