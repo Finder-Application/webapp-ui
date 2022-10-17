@@ -20,7 +20,7 @@ jobs:
           script: |
             cd build/  
             cd webapp-ui/
-            git pull origin
+            git pull
             cd ..
             ls
             docker ps
