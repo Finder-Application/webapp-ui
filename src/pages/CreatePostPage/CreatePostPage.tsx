@@ -55,17 +55,6 @@ const CreatePostPage = () => {
     <Form form={form} name='control-hooks' onFinish={onFinish}>
       <div className={cx('create-post')}>
         <div className={cx('create-post__creating-form')}>
-          <ButtonFinder
-            className={cx('create-post__creating-form__cancel-btn', 'mb-5')}
-          >
-            <CloseIcon
-              fontWeight={800}
-              width='13'
-              height='13'
-              className='mr-2'
-            />
-            Cancel
-          </ButtonFinder>
           <Form.Item
             name={CreatePostFormItemsName.POST_TITLE}
             rules={[

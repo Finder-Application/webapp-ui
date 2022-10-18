@@ -66,7 +66,9 @@ const Header = () => {
 
   return (
     <div className={headerClassName}>
-      <FinderLogo />
+      <NavLink to='/'>
+        <FinderLogo isLight={false} />
+      </NavLink>
       <NavBar />
       <div className={cx('header__right')}>
         <div

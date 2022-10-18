@@ -18,7 +18,7 @@ export const FinderLogo = (props: Props) => {
   const buttonFinderClassName = cx('finder-logo', props.className);
   return (
     <div {...defaultProps} className={buttonFinderClassName}>
-      <LogoIcon className={cx(`finder-logo__icon`)} isLight />
+      <LogoIcon className={cx(`finder-logo__icon`)} isLight={isLight} />
       <div className={cx(`finder-logo__name`)}>Finder</div>
     </div>
   );
