@@ -4,7 +4,7 @@ import FileUtils from '@/utils/File.utils';
 class FaceApiService {
   private readonly baseURL: string = '/face-api';
 
-  async isPerson(files: File[]) {
+  async detectImages(files: File[]) {
     const requestData = new FormData();
     await Promise.all(
       files.map(async (file) => {
