@@ -43,9 +43,14 @@ const LoginPage = () => {
       <div className={cx('header', 'd-flex justify-content-between')}>
         <div className={cx('header-title')}>Welcome to Finder</div>
         <div className={cx('header-navigate')}>
-          <span>Don't have account ?</span>
+          <span>Don't have account?</span>
           <br />
-          Sign up
+          <div
+            className='d-flex flex-row justify-content-end'
+            onClick={() => navigate(ROUTES.register)}
+          >
+            Sign up
+          </div>
         </div>
       </div>
 

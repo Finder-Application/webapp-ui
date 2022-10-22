@@ -1,4 +1,4 @@
-.login-page {
+.register-page {
   .header {
     &-title {
       color: var(--black);
@@ -49,10 +49,20 @@
   :global(.ant-input-affix-wrapper-focused) {
     border: 1px solid var(--primary-2) !important;
   }
-  .btn-login {
+  .btn-register {
     margin-top: 2rem;
     padding: 0.75rem;
     border-radius: 10px;
+  }
+  .btn-google {
+    padding: 0.75rem;
+    border-radius: 10px;
+    display: flex;
+    border: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-blue-4);
   }
   .forgot-password:hover {
     cursor: pointer;

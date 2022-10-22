@@ -10,7 +10,7 @@ const AuthLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
   return (
     <div className={cx('auth-layout', 'd-flex justify-content-between')}>
       <div className={cx('auth-layout__logo')}>
-        <FinderLogo isLight={false} />
+        <FinderLogo isLight={true} />
       </div>
       <div className={cx('auth-layout__left', 'w-50')}>
         <AsyncImage
