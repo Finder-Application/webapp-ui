@@ -12,6 +12,9 @@
   transition: top 0.35s ease-out;
   z-index: 99999;
 
+  a {
+    text-decoration: none;
+  }
   &__logo {
     display: flex;
     flex-direction: row;

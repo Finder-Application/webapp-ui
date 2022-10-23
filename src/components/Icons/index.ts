@@ -21,3 +21,8 @@ export * from './AttachIcon';
 export * from './ReplyIcon';
 export * from './TwitterIcon';
 export * from './FacebookSharingIcon';
+export * from './DropdownIcon';
+export * from './CalendarIcon2';
+export * from './TickIcon';
+export * from './PlusIcon';
+export * from './TrashIcon';

@@ -1,4 +1,4 @@
-name: CI-CD Backend Deploy
+name: CI-CD FE Deploy
 on:
   push:
     branches: [main]
@@ -6,7 +6,10 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy frontend to server
+      - name: Checkout
+        uses: actions/checkout@v2
+            
+      - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -14,10 +17,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           sync: true
+          script_stop: true
           script: |
-            cd build/  
-            cd webapp-ui/
-            git remote set-url origin https://cin12211:${{ secrets.GIT_TOKEN }}@github.com/Finder-Application/webapp-ui.git
-            git pull origin
-            cd ..
-            docker compose up --build front-end -d
+            sh script/build-fe.sh

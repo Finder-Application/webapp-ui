@@ -5,6 +5,7 @@ import {
   ContactIcon,
   DocumentIcon,
   ShareIcon,
+  TrashIcon,
 } from '@/components/Icons';
 import { useWindowSize } from '@/hooks';
 import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
@@ -21,6 +22,10 @@ import { MissingInform } from './MissingInform';
 import { CommentDrawer } from './CommentDrawer';
 import { usePostStore } from '@/store/post';
 import { SharingPopup } from './SharingPopup';
+import { ButtonFinder } from '@/components/ButtonFinder';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/configs';
+
 const cx = classNames.bind(styles);
 interface PostDetailProps {
   isVisible?: boolean;
@@ -106,6 +111,7 @@ export const PostDetail = (props: PostDetailProps) => {
 
   const { height, width } = useWindowSize();
 
+  const navigate = useNavigate();
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
@@ -194,6 +200,23 @@ export const PostDetail = (props: PostDetailProps) => {
             <h5 className='m-0 ml-3 font-weight-bold'>Contact Information</h5>
           </div>
           <ContactInform />
+          <div className='d-flex flex-row align-items-center justify-content-center mt-5'>
+            <ButtonFinder
+              className={cx('post-detail__edit-btn', 'mr-3')}
+              onClick={() =>
+                navigate(ROUTES.createPost, {
+                  state: {
+                    isFromPostDetail: true,
+                  },
+                })
+              }
+            >
+              Edit Post
+            </ButtonFinder>
+            <ButtonFinder className={cx('post-detail__delete-btn')}>
+              <TrashIcon width={15} height={15} className='mr-2' /> Delete
+            </ButtonFinder>
+          </div>
         </div>
       </div>
       <CommentDrawer
