@@ -26,3 +26,4 @@ export * from './CalendarIcon2';
 export * from './TickIcon';
 export * from './PlusIcon';
 export * from './TrashIcon';
+export * from './ColoringGoogleIcon';
