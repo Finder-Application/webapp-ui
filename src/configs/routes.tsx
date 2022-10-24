@@ -6,6 +6,7 @@ import React, { lazy } from 'react';
 // * Define all routes for websites
 export const ROUTES = {
   login: '/login',
+  register: '/register',
   home: '/',
   about: '/about',
   guide: '/guide',
@@ -19,6 +20,12 @@ const publicRoutes: RouteFinder[] = [
     title: 'Login',
     layout: AuthLayout,
     page: lazy(() => import('@/pages/LoginPage/LoginPage')),
+  },
+  {
+    path: ROUTES.register,
+    title: 'Register',
+    layout: AuthLayout,
+    page: lazy(() => import('@/pages/RegisterPage/RegisterPage')),
   },
   {
     path: ROUTES.home,
