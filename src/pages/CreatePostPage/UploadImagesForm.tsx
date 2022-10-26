@@ -4,9 +4,11 @@ import { cx } from './CreatePostPage';
 import PostImages from '@/assets/images/post';
 import { CloseIcon, PlusIcon } from '@/components/Icons';
 import { toast } from 'react-toastify';
+import { useFaceApi } from '@/hooks/query/useFaceApi';
 
 export const UploadImagesForm = () => {
   const [files, setFiles] = useState<string[]>([]);
+  const faceDetect = useFaceApi();
 
   const inputImageFile = React.useRef<HTMLInputElement | null>(null);
 
@@ -24,7 +26,6 @@ export const UploadImagesForm = () => {
   const onAddFileClick = () => {
     inputImageFile?.current?.click();
   };
-
   const uploadSingleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (e.target.files) {
@@ -36,7 +37,7 @@ export const UploadImagesForm = () => {
           const reader = new FileReader();
           reader.readAsDataURL(e.target.files[i]);
           const fileSize = e.target.files[i].size;
-
+          faceDetect.mutate([e.target.files[i]]);
           // Once loaded, do something with the string
           reader.onload = (event) => {
             const base64 = event.target?.result as string;

@@ -10,10 +10,6 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config): AxiosRequestConfig<any> => {
   const { data } = config;
-  console.log(
-    '🚀 ~ file: config.ts ~ line 13 ~ axiosClient.interceptors.request.use ~ data',
-    data
-  );
   const token = StorageUtils.get('token');
   const contentType =
     data instanceof FormData ? 'multipart/form-data' : 'application/json';
