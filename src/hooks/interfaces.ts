@@ -85,6 +85,6 @@ export type IBaseUseMutationUpdate<TUpdate, TResponse> = BaseMMutation<
 >;
 export type IBaseUseMutationCreate<TCreate, TResponse> = BaseMMutation<
   TResponse,
-  '',
+  'id',
   TCreate
 >;
