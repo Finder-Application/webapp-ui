@@ -19,5 +19,3 @@ export interface ChildComment {
   likes: number;
   user: User;
 }
-
-export interface ResponseGetComments extends Pagination<Comment> {}

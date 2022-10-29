@@ -1,9 +1,6 @@
-import { IFormatOptionQuery } from '@/utils/getPagiantion';
-import { UseQueryOptions } from 'react-query';
-
-export interface PaginationServicer<T> {
-  getPagination: (query: IFormatOptionQuery) => Promise<T>;
-}
+import { IFormatOptionQuery } from '@/utils/getPagiantion.util';
+import { UseMutationOptions, UseQueryOptions } from 'react-query';
+import { QUERY_KEY, RESOURCE } from './constants';
 
 export interface Pagination<T> {
   data: T[];
@@ -19,13 +16,50 @@ export interface Meta {
   hasNextPage: boolean;
 }
 
-export interface IBaseUseReactQuery<T> {
-  dependent: [any];
+export interface IBaseUseQuery<T> {
+  dependencies: [any];
   configQuery: UseQueryOptions<T>;
-}
-
-export interface IBaseUseQuery<T> extends IBaseUseReactQuery<T> {
+  defineQUERY_KEY: QUERY_KEY;
   query: IFormatOptionQuery;
+  configApi: {
+    resource: RESOURCE;
+    isPublic?: boolean;
+  };
 }
 
-export interface IBaseUseMutation<T> extends IBaseUseReactQuery<T> {}
+export interface IBaseUseInfinities {
+  defineQUERY_KEY: QUERY_KEY;
+  query: IFormatOptionQuery;
+  configApi: {
+    resource: RESOURCE;
+    isPublic?: boolean;
+  };
+}
+
+export interface IBaseUseMutationDelete<T> {
+  configQuery: UseMutationOptions<T>;
+  configApi: {
+    resource: RESOURCE;
+    itemId: string;
+  };
+  defineQUERY_KEY?: QUERY_KEY;
+}
+
+export interface IBaseUseMutationUpdate<TUpdate, TResponse> {
+  configQuery: UseMutationOptions<TResponse>;
+  configApi: {
+    resource: RESOURCE;
+    itemId: string;
+    dataUpdate: TUpdate;
+  };
+  defineQUERY_KEY?: QUERY_KEY;
+}
+
+export interface IBaseUseMutationCreate<TCreate, TResponse> {
+  configQuery: UseMutationOptions<TResponse>;
+  configApi: {
+    resource: RESOURCE;
+    dataCreate: TCreate;
+  };
+  defineQUERY_KEY?: QUERY_KEY;
+}

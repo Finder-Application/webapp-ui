@@ -7,6 +7,7 @@ import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { Test } from './Test';
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
@@ -34,7 +35,7 @@ function App() {
     <GlobalStyles>
       <>
         <Routes>
-          <Route element={<PublicOutletRoute />}>
+          {/* <Route element={<PublicOutletRoute />}>
             {renderRoutes([...publicRoutes])}
           </Route>
           <Route element={<PrivateOutletRoute />}>
@@ -47,8 +48,10 @@ function App() {
                 <Navigate to={ROUTES.home} />
               </DefaultLayout>
             }
-          />
+          /> */}
         </Routes>
+        <Test />
+
         <ToastContainer />
       </>
     </GlobalStyles>
