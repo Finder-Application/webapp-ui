@@ -36,30 +36,8 @@ export interface IBaseUseInfinities {
   };
 }
 
-export interface IBaseUseMutationDelete<T> {
-  configQuery: UseMutationOptions<T>;
-  configApi: {
-    resource: RESOURCE;
-    itemId: string;
-  };
-  defineQueryKey?: QUERY_KEY;
-}
-
-export interface IBaseUseMutationUpdate<TUpdate, TResponse> {
-  configQuery: UseMutationOptions<TResponse>;
-  configApi: {
-    resource: RESOURCE;
-    itemId: string;
-    dataUpdate: TUpdate;
-  };
-  defineQueryKey?: QUERY_KEY;
-}
-
-export interface IBaseUseMutationCreate<TCreate, TResponse> {
-  configQuery: UseMutationOptions<TResponse>;
-  configApi: {
-    resource: RESOURCE;
-    dataCreate: TCreate;
-  };
+export interface IBaseUseMutation<TResponse, TError, TVariables> {
+  configMutation?: UseMutationOptions<TResponse, TError, TVariables>;
+  resource: RESOURCE;
   defineQueryKey?: QUERY_KEY;
 }

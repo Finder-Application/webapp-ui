@@ -3,7 +3,7 @@ import { queryClient } from '@/main';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 import { RESOURCE } from '../constants';
-import { IBaseUseMutationCreate } from '../interfaces';
+import { IBaseUseMutation } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
   message: string;
@@ -23,16 +23,20 @@ const createItem = <TCreate, TResponse>(
 };
 
 export const useMutationCreate = <TCreate, TResponse>(
-  option: IBaseUseMutationCreate<TCreate, TResponse>
+  option: IBaseUseMutation<
+    TResponse,
+    unknown,
+    {
+      dataCreate: TCreate;
+    }
+  >
 ) => {
-  const { configApi, configQuery, defineQueryKey } = option;
-
-  const { resource, dataCreate } = configApi;
+  const { resource, configMutation, defineQueryKey } = option;
 
   return useMutation(
-    () => createItem<TCreate, TResponse>(resource, dataCreate),
+    ({ dataCreate }) => createItem<TCreate, TResponse>(resource, dataCreate),
     {
-      ...configQuery,
+      ...configMutation,
       onSuccess(data, variables, context) {
         // pls don't care it , thanks
         if (defineQueryKey) {

@@ -35,7 +35,7 @@ function App() {
     <GlobalStyles>
       <>
         <Routes>
-          {/* <Route element={<PublicOutletRoute />}>
+          <Route element={<PublicOutletRoute />}>
             {renderRoutes([...publicRoutes])}
           </Route>
           <Route element={<PrivateOutletRoute />}>
@@ -48,10 +48,9 @@ function App() {
                 <Navigate to={ROUTES.home} />
               </DefaultLayout>
             }
-          /> */}
+          />
         </Routes>
-        <Test />
-
+        {/* <Test /> */}
         <ToastContainer />
       </>
     </GlobalStyles>

@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 import produce from 'immer';
 import { RESOURCE } from '../constants';
-import { IBaseUseMutationUpdate } from '../interfaces';
+import { IBaseUseMutation } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
   message: string;
@@ -26,16 +26,22 @@ const updateItem = <TUpdate, TResponse>(
 };
 
 export const useMutationUpdate = <TUpdate, TResponse>(
-  option: IBaseUseMutationUpdate<TUpdate, TResponse>
+  option: IBaseUseMutation<
+    TResponse,
+    unknown,
+    {
+      id: string;
+      dataUpdate: TUpdate;
+    }
+  >
 ) => {
-  const { configApi, configQuery, defineQueryKey } = option;
-
-  const { resource, itemId, dataUpdate } = configApi;
+  const { resource, configMutation, defineQueryKey } = option;
 
   return useMutation(
-    () => updateItem<TUpdate, TResponse>(resource, itemId, dataUpdate),
+    ({ id, dataUpdate }) =>
+      updateItem<TUpdate, TResponse>(resource, id, dataUpdate),
     {
-      ...configQuery,
+      ...configMutation,
       onSuccess(data, variables, context) {
         // pls don't care it , thanks
         if (defineQueryKey) {
