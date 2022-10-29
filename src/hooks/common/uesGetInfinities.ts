@@ -30,12 +30,11 @@ export const uesGetInfinities = <T>(
         page: pageParam,
         take: query.take ?? 20,
       };
-      const c = await getPagination<T>(
+      return await getPagination<T>(
         overrideQuery,
         configApi.resource,
         configApi.isPublic
       );
-      return c;
     },
     {
       getNextPageParam: (lastPage) => {
