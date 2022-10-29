@@ -1,5 +1,5 @@
 import { User } from '../auth/interface';
-import { Pagination } from '../interfaces';
+import { ResponseSchema } from '../interfaces';
 
 export interface Comment {
   id: number;

@@ -1,14 +1,14 @@
 import { IFormatOptionQuery } from '@/utils/getPagiantion.util';
-import { uesGetInfinities } from '../common/uesGetInfinities';
-import { QUERY_KEY, RESOURCE } from '../constants';
+import { uesGetInfinities } from '../common/useGetInfinities';
+import { QUERY_KEY, FEATURE } from '../constants';
 import { Comment } from './interface';
 
-export const uesGetInfiComments = (query: IFormatOptionQuery) =>
+export const uesGetInfiComments = (params: IFormatOptionQuery) =>
   uesGetInfinities<Comment>({
-    defineQUERY_KEY: QUERY_KEY.PAGINATION_COMMENTS,
-    query,
+    query_key: QUERY_KEY.PAGINATION_COMMENTS,
+    params,
     configApi: {
-      resource: RESOURCE.COMMENT,
+      feature: FEATURE.COMMENT,
       isPublic: true,
     },
   });

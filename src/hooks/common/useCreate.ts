@@ -2,7 +2,7 @@ import { axiosClient } from '@/apis';
 import { queryClient } from '@/main';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { RESOURCE } from '../constants';
+import { FEATURE } from '../constants';
 import { IBaseUseMutationCreate } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
@@ -13,7 +13,7 @@ export interface ResponseDeleteSuccess {
 }
 
 const createItem = <TCreate, TResponse>(
-  resource: RESOURCE,
+  resource: FEATURE,
   dataCreate: TCreate
 ): Promise<TResponse> => {
   const baseUrl = `/api/private/${resource}`;
@@ -25,9 +25,9 @@ const createItem = <TCreate, TResponse>(
 export const useMutationCreate = <TCreate, TResponse>(
   option: IBaseUseMutationCreate<TCreate, TResponse>
 ) => {
-  const { configApi, configQuery, defineQUERY_KEY } = option;
+  const { configApi, configQuery, query_key } = option;
 
-  const { resource, dataCreate } = configApi;
+  const { feature: resource, data: dataCreate } = configApi;
 
   return useMutation(
     () => createItem<TCreate, TResponse>(resource, dataCreate),
@@ -35,10 +35,8 @@ export const useMutationCreate = <TCreate, TResponse>(
       ...configQuery,
       onSuccess(data, variables, context) {
         // pls don't care it , thanks
-        if (defineQUERY_KEY) {
-          const previousValueDelete = queryClient.getQueryData([
-            defineQUERY_KEY,
-          ]);
+        if (query_key) {
+          const previousValueDelete = queryClient.getQueryData([query_key]);
           console.log('previousValueDelete');
           // queryClient.setQueryData([defineQUERY_KEY], (old) => [...old, newTodo]);
         }

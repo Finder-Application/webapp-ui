@@ -1,10 +1,35 @@
-import { IFormatOptionQuery } from '@/utils/getPagiantion.util';
 import { UseMutationOptions, UseQueryOptions } from 'react-query';
-import { QUERY_KEY, RESOURCE } from './constants';
+import { QUERY_KEY, FEATURE } from './constants';
+enum Operator {
+  IsNull = 'ISNULL',
+  ILike = 'ILIKE',
+  Like = 'LIKE',
+  Equal = 'EQUAL',
+  MoreThanOrEqual = 'MORETHANOREQUAL',
+  MoreThan = 'MORETHAN',
+  LessThanOrEqual = 'LESSTHANOREQUAL',
+  LessThan = 'LESSTHAN',
+  Not = 'NOT',
+}
 
-export interface Pagination<T> {
-  data: T[];
-  meta: Meta;
+interface Filter<Field> {
+  field: keyof Field;
+  operator: Operator;
+  value: string;
+}
+
+export interface IParamsDefault<F = {}> {
+  page?: number;
+  take?: number;
+  order?: {
+    field: string;
+    direction: 'ASC' | 'DESC';
+  };
+  filter?: Filter<F>[];
+  optionKey?: {
+    key: string;
+    value: string;
+  };
 }
 
 export interface Meta {
@@ -16,50 +41,50 @@ export interface Meta {
   hasNextPage: boolean;
 }
 
+export interface ResponseSchema<T> {
+  data: T[];
+  meta: Meta;
+}
+
 export interface IBaseUseQuery<T> {
   dependencies: [any];
   configQuery: UseQueryOptions<T>;
-  defineQUERY_KEY: QUERY_KEY;
-  query: IFormatOptionQuery;
+  query_key: QUERY_KEY;
+  params: IParamsDefault;
   configApi: {
-    resource: RESOURCE;
+    resource: FEATURE;
     isPublic?: boolean;
   };
 }
 
-export interface IBaseUseInfinities {
-  defineQUERY_KEY: QUERY_KEY;
-  query: IFormatOptionQuery;
+export interface IBaseUseInfinities<Params> {
+  query_key: QUERY_KEY;
+  params: Params;
   configApi: {
-    resource: RESOURCE;
+    feature: FEATURE;
     isPublic?: boolean;
   };
 }
 
-export interface IBaseUseMutationDelete<T> {
-  configQuery: UseMutationOptions<T>;
-  configApi: {
-    resource: RESOURCE;
-    itemId: string;
-  };
-  defineQUERY_KEY?: QUERY_KEY;
+interface ConfigApi<Data> {
+  feature: FEATURE;
+  data: Data;
+  id: string;
+}
+interface BaseMMutation<Response, Key extends string = '', Data = {}> {
+  configQuery: UseMutationOptions<Response>;
+  configApi: Omit<ConfigApi<Data>, Key>;
+  query_key?: QUERY_KEY;
 }
 
-export interface IBaseUseMutationUpdate<TUpdate, TResponse> {
-  configQuery: UseMutationOptions<TResponse>;
-  configApi: {
-    resource: RESOURCE;
-    itemId: string;
-    dataUpdate: TUpdate;
-  };
-  defineQUERY_KEY?: QUERY_KEY;
-}
-
-export interface IBaseUseMutationCreate<TCreate, TResponse> {
-  configQuery: UseMutationOptions<TResponse>;
-  configApi: {
-    resource: RESOURCE;
-    dataCreate: TCreate;
-  };
-  defineQUERY_KEY?: QUERY_KEY;
-}
+export type IBaseUseMutationDelete<Response> = BaseMMutation<Response, 'data'>;
+export type IBaseUseMutationUpdate<TUpdate, TResponse> = BaseMMutation<
+  TUpdate,
+  '',
+  TResponse
+>;
+export type IBaseUseMutationCreate<TCreate, TResponse> = BaseMMutation<
+  TResponse,
+  '',
+  TCreate
+>;
