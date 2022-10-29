@@ -28,7 +28,7 @@ axiosClient.interceptors.response.use(
       if (token) {
         StorageUtils.set('token', token);
       }
-      return response.data.data || response.data;
+      return response.data;
     }
     return response;
   },

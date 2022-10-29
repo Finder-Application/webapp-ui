@@ -1,15 +1,32 @@
 import { ButtonFinder, PostList } from '@/components';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
+import { useQueryPosts } from '@/hooks/post/queries';
+import { Operator } from '@/services/common/types';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
 import { Select } from 'antd';
 import classNames from 'classnames/bind';
 import toLower from 'lodash/toLower';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Homepage.module.scss';
 const cx = classNames.bind(styles);
 const Homepage = () => {
   const [provinceState, setProvince] = useState('');
+  const postApi = useQueryPosts();
+  const handleCallApi = async () => {
+    const postRes = await postApi.mutateAsync({
+      filter: [
+        {
+          field: 'gender',
+          operator: Operator.Like,
+          value: '1',
+        },
+      ],
+    });
+  };
+  useEffect(() => {
+    handleCallApi();
+  }, []);
   const provinces = GeoUtils.getAllProvinces();
   const provincesFiltered = provinces.filter((province) =>
     toLower(StringUtils.cleanAccents(province.name)).includes(

@@ -1,11 +1,11 @@
 import React from 'react';
-import { TOOL_TIP_zINDEX } from '@/configs';
 import { Tooltip } from 'antd';
 import { TooltipProps } from 'antd/es/tooltip';
 import { UserIcon } from '../Icons';
 
 import './UserAvatar.scss';
 import { ContactInform } from '../PostList/components/PostDetail/ContactInform';
+import { TOOL_TIP_zINDEX } from '@/configs/settings';
 
 type UserAvarProps = {
   userIconColor?: string;

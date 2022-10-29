@@ -14,7 +14,6 @@ import toNumber from 'lodash/toNumber';
 import styles from './PostDetail.module.scss';
 
 import { UserAvatar } from '@/components/UserAvatar';
-import { TOOL_TIP_zINDEX } from '@/configs/constants';
 import { useState } from 'react';
 import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
@@ -25,6 +24,7 @@ import { SharingPopup } from './SharingPopup';
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/configs';
+import { TOOL_TIP_zINDEX } from '@/configs/settings';
 
 const cx = classNames.bind(styles);
 interface PostDetailProps {
