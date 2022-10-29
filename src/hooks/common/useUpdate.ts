@@ -28,7 +28,7 @@ const updateItem = <TUpdate, TResponse>(
 export const useMutationUpdate = <TUpdate, TResponse>(
   option: IBaseUseMutationUpdate<TUpdate, TResponse>
 ) => {
-  const { configApi, configQuery, defineQUERY_KEY } = option;
+  const { configApi, configQuery, defineQueryKey } = option;
 
   const { resource, itemId, dataUpdate } = configApi;
 
@@ -38,12 +38,12 @@ export const useMutationUpdate = <TUpdate, TResponse>(
       ...configQuery,
       onSuccess(data, variables, context) {
         // pls don't care it , thanks
-        if (defineQUERY_KEY) {
+        if (defineQueryKey) {
           const previousValueDelete = queryClient.getQueryData([
-            defineQUERY_KEY,
+            defineQueryKey,
           ]);
           console.log('previousValueDelete');
-          // queryClient.setQueryData([defineQUERY_KEY], (old) => [...old, newTodo]);
+          // queryClient.setQueryData([defineQueryKey], (old) => [...old, newTodo]);
         }
         //
 

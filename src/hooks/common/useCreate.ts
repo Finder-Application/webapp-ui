@@ -25,7 +25,7 @@ const createItem = <TCreate, TResponse>(
 export const useMutationCreate = <TCreate, TResponse>(
   option: IBaseUseMutationCreate<TCreate, TResponse>
 ) => {
-  const { configApi, configQuery, defineQUERY_KEY } = option;
+  const { configApi, configQuery, defineQueryKey } = option;
 
   const { resource, dataCreate } = configApi;
 
@@ -35,12 +35,12 @@ export const useMutationCreate = <TCreate, TResponse>(
       ...configQuery,
       onSuccess(data, variables, context) {
         // pls don't care it , thanks
-        if (defineQUERY_KEY) {
+        if (defineQueryKey) {
           const previousValueDelete = queryClient.getQueryData([
-            defineQUERY_KEY,
+            defineQueryKey,
           ]);
           console.log('previousValueDelete');
-          // queryClient.setQueryData([defineQUERY_KEY], (old) => [...old, newTodo]);
+          // queryClient.setQueryData([defineQueryKey], (old) => [...old, newTodo]);
         }
         //
 

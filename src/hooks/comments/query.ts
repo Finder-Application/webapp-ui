@@ -5,7 +5,7 @@ import { Comment } from './interface';
 
 export const uesGetInfiComments = (query: IFormatOptionQuery) =>
   uesGetInfinities<Comment>({
-    defineQUERY_KEY: QUERY_KEY.PAGINATION_COMMENTS,
+    defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
     query,
     configApi: {
       resource: RESOURCE.COMMENT,

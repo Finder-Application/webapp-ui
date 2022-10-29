@@ -19,7 +19,7 @@ export interface Meta {
 export interface IBaseUseQuery<T> {
   dependencies: [any];
   configQuery: UseQueryOptions<T>;
-  defineQUERY_KEY: QUERY_KEY;
+  defineQueryKey: QUERY_KEY;
   query: IFormatOptionQuery;
   configApi: {
     resource: RESOURCE;
@@ -28,7 +28,7 @@ export interface IBaseUseQuery<T> {
 }
 
 export interface IBaseUseInfinities {
-  defineQUERY_KEY: QUERY_KEY;
+  defineQueryKey: QUERY_KEY;
   query: IFormatOptionQuery;
   configApi: {
     resource: RESOURCE;
@@ -42,7 +42,7 @@ export interface IBaseUseMutationDelete<T> {
     resource: RESOURCE;
     itemId: string;
   };
-  defineQUERY_KEY?: QUERY_KEY;
+  defineQueryKey?: QUERY_KEY;
 }
 
 export interface IBaseUseMutationUpdate<TUpdate, TResponse> {
@@ -52,7 +52,7 @@ export interface IBaseUseMutationUpdate<TUpdate, TResponse> {
     itemId: string;
     dataUpdate: TUpdate;
   };
-  defineQUERY_KEY?: QUERY_KEY;
+  defineQueryKey?: QUERY_KEY;
 }
 
 export interface IBaseUseMutationCreate<TCreate, TResponse> {
@@ -61,5 +61,5 @@ export interface IBaseUseMutationCreate<TCreate, TResponse> {
     resource: RESOURCE;
     dataCreate: TCreate;
   };
-  defineQUERY_KEY?: QUERY_KEY;
+  defineQueryKey?: QUERY_KEY;
 }

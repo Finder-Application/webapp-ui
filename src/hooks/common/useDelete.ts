@@ -25,7 +25,7 @@ const deleteItem = (
 export const useMutationDelete = (
   option: IBaseUseMutationDelete<ResponseDeleteSuccess>
 ) => {
-  const { configApi, configQuery, defineQUERY_KEY } = option;
+  const { configApi, configQuery, defineQueryKey } = option;
 
   const { resource, itemId } = configApi;
 
@@ -33,10 +33,10 @@ export const useMutationDelete = (
     ...configQuery,
     onSuccess(data, variables, context) {
       // pls don't care it , thanks
-      if (defineQUERY_KEY) {
-        const previousValueDelete = queryClient.getQueryData([defineQUERY_KEY]);
+      if (defineQueryKey) {
+        const previousValueDelete = queryClient.getQueryData([defineQueryKey]);
         console.log('previousValueDelete');
-        // queryClient.setQueryData([defineQUERY_KEY], (old) => [...old, newTodo]);
+        // queryClient.setQueryData([defineQueryKey], (old) => [...old, newTodo]);
       }
       //
       toast.success('Delete Success!');

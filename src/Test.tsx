@@ -4,7 +4,7 @@ import { QUERY_KEY, RESOURCE } from './hooks/constants';
 
 export const Test = () => {
   const { data, fetchNextPage, hasNextPage } = uesGetInfinities({
-    defineQUERY_KEY: QUERY_KEY.PAGINATION_POSTS,
+    defineQueryKey: QUERY_KEY.PAGINATION_POSTS,
     query: {
       page: 1,
       take: 5,

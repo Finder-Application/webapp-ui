@@ -30,11 +30,11 @@
 // export const uesGetPagination = <T>(
 //   config: IBaseUseQuery<T>
 // ): UseQueryResult<T> => {
-//   const { dependencies, defineQUERY_KEY, configQuery, query, configApi } =
+//   const { dependencies, defineQueryKey, configQuery, query, configApi } =
 //     config;
 
 //   const response = useQuery<T>(
-//     [defineQUERY_KEY, ...dependencies],
+//     [defineQueryKey, ...dependencies],
 //     () => getPagination<T>(query, configApi.resource, configApi.isPublic),
 //     {
 //       ...configQuery,

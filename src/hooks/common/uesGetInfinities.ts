@@ -20,10 +20,10 @@ const getPagination = <T>(
 export const uesGetInfinities = <T>(
   config: IBaseUseInfinities
 ): UseInfiniteQueryResult<Pagination<T>> => {
-  const { defineQUERY_KEY, query, configApi } = config;
+  const { defineQueryKey, query, configApi } = config;
 
   return useInfiniteQuery<Pagination<T>>(
-    [defineQUERY_KEY],
+    [defineQueryKey],
     async ({ pageParam = 1 }) => {
       const overrideQuery = {
         ...query,
