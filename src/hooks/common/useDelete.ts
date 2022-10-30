@@ -32,19 +32,9 @@ export const useMutationDelete = (
   return useMutation(({ id }) => deleteItem(resource, id), {
     ...configMutation,
     onSuccess(data, variables, context) {
-      // pls don't care it , thanks
       if (defineQueryKey) {
-        const previousValueDelete = queryClient.getQueriesData([
-          defineQueryKey,
-        ]);
-
-        const dataLate = previousValueDelete[previousValueDelete.length - 1];
-
-        console.log('previousValueDelete', dataLate);
-
-        // queryClient.setQueryData([defineQueryKey], (old) => [...old, newTodo]);
+        queryClient.refetchQueries([defineQueryKey]);
       }
-      //
       toast.success('Delete Success!');
     },
     onError: (error) => {

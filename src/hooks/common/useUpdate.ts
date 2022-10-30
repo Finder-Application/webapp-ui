@@ -43,16 +43,9 @@ export const useMutationUpdate = <TUpdate, TResponse>(
     {
       ...configMutation,
       onSuccess(data, variables, context) {
-        // pls don't care it , thanks
         if (defineQueryKey) {
-          const previousValueDelete = queryClient.getQueryData([
-            defineQueryKey,
-          ]);
-          console.log('previousValueDelete');
-          // queryClient.setQueryData([defineQueryKey], (old) => [...old, newTodo]);
+          queryClient.refetchQueries([defineQueryKey]);
         }
-        //
-
         toast.success('Update Success!');
       },
       onError: (error) => {
