@@ -72,6 +72,7 @@ export const CommentTooltipButton = (
               'post-detail__interaction-items__item__comments-count'
             )}
           >
+            {/* TODO: change thi in the api response get all post */}
             48
           </div>
           <CommentIcon width={15} height={15} />
@@ -219,9 +220,12 @@ export const PostDetail = (props: PostDetailProps) => {
           </div>
         </div>
       </div>
+
       <CommentDrawer
         visible={showCommentDrawer}
         onClose={onCloseCommentDrawer}
+        // fake data postId=21 for show list comment
+        postId={21}
       />
     </Drawer>
   );

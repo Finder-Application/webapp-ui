@@ -1,12 +1,13 @@
 import { UserAvatar } from '@/components/UserAvatar';
 import { Button, Input } from 'antd';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 const { TextArea } = Input;
 
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { AttachIcon } from '@/components/Icons';
 import classNames from 'classnames';
 import styles from './CommentInput.scss';
+import { useCreateComment, useCreateSubComment } from '@/hooks/comments/query';
 
 const cx = classNames.bind(styles);
 
@@ -16,21 +17,47 @@ export enum CommentInputType {
 }
 type CommentInputProps = {
   type?: CommentInputType;
+  postId: number;
+  repFor?: number;
 };
 
 export const CommentInput = (
   props: CommentInputProps & React.HTMLProps<HTMLDivElement>
 ) => {
-  const { type = CommentInputType.INPUT } = props;
+  const { type = CommentInputType.INPUT, postId, repFor } = props;
 
   const isInReply = type === CommentInputType.REPLY;
   const attachIconSize = isInReply ? 18 : 20;
   const userAvatarIconSize = isInReply ? 20 : 30;
 
   const inputImageFile = useRef<HTMLInputElement | null>(null);
+  const [contentComment, setContentComment] = useState('');
+
+  const { mutate, isLoading } = useCreateComment();
+
+  const { mutate: mutateSubComment, isLoading: isSubLoading } =
+    useCreateSubComment();
 
   const onUploadFile = () => {
     inputImageFile?.current?.click();
+  };
+
+  const onComment = () => {
+    repFor
+      ? mutateSubComment({
+          dataCreate: {
+            postId: +postId,
+            repFor,
+            content: contentComment,
+          },
+        })
+      : mutate({
+          dataCreate: {
+            postId: +postId,
+            content: contentComment,
+          },
+        });
+    setContentComment('');
   };
 
   return (
@@ -53,6 +80,8 @@ export const CommentInput = (
               placeholder='Give a comment...'
               allowClear
               autoSize
+              value={contentComment}
+              onChange={(e) => setContentComment(e.target.value)}
             />
             <hr className='mx-2 mb-1' />
             <div className='d-flex flex-row justify-content-end align-items-center mr-2 mb-2'>
@@ -81,6 +110,9 @@ export const CommentInput = (
                     isInReply &&
                       'comment-input-container__comment-btn--reply-mode'
                   )}
+                  disabled={!contentComment.trim()}
+                  onClick={onComment}
+                  loading={isLoading || isSubLoading}
                 >
                   Comment
                 </ButtonFinder>
@@ -91,6 +123,9 @@ export const CommentInput = (
             <div className='d-flex flex-row justify-content-end mt-3'>
               <ButtonFinder
                 className={cx('comment-input-container__comment-btn')}
+                disabled={!contentComment.trim()}
+                onClick={onComment}
+                loading={isLoading || isSubLoading}
               >
                 Comment
               </ButtonFinder>

@@ -40,4 +40,5 @@ export interface IBaseUseMutation<TResponse, TError, TVariables> {
   configMutation?: UseMutationOptions<TResponse, TError, TVariables>;
   resource: RESOURCE;
   defineQueryKey?: QUERY_KEY;
+  showToast?: boolean;
 }

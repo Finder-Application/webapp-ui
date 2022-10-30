@@ -18,6 +18,10 @@
     }
   }
 
+  &__btn{
+    cursor: pointer;
+  }
+
   &__close-button {
     position: absolute;
     top: 2em;
@@ -40,4 +44,6 @@
       right: -50em;
     }
   }
+
+   
 }

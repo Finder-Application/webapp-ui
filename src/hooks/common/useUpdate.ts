@@ -18,10 +18,9 @@ const updateItem = <TUpdate, TResponse>(
   itemId: string,
   dataUpdate: TUpdate
 ): Promise<TResponse> => {
-  const baseUrl = `/api/private/${resource}`;
+  const baseUrl = `/api/private/${resource}/${itemId}`;
   return axiosClient.delete(baseUrl, {
-    params: itemId,
-    data: dataUpdate,
+    ...dataUpdate,
   });
 };
 

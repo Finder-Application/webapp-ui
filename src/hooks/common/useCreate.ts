@@ -18,14 +18,14 @@ const createItem = <TCreate, TResponse>(
 ): Promise<TResponse> => {
   const baseUrl = `/api/private/${resource}`;
   return axiosClient.post(baseUrl, {
-    data: dataCreate,
+    ...dataCreate,
   });
 };
 
-export const useMutationCreate = <TCreate, TResponse>(
+export const useMutationCreate = <TResponse, TError, TCreate>(
   option: IBaseUseMutation<
     TResponse,
-    unknown,
+    TError,
     {
       dataCreate: TCreate;
     }

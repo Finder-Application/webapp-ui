@@ -21,10 +21,16 @@
   }
 
   &__reply {
-    cursor: pointer;
+    &--pointer{
+      cursor: pointer;
+    }
     &__reply-text {
-      font-size: 0.8rem;
+      font-size: 0.6rem;
       color: var(--black-opacity-90);
     }
+
+    padding-bottom: 0.5rem;
   }
+
+ 
 }

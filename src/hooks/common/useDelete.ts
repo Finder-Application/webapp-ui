@@ -14,20 +14,20 @@ export interface ResponseDeleteSuccess {
 
 const deleteItem = (
   resource: RESOURCE,
-  itemId: string
+  itemId: number
 ): Promise<ResponseDeleteSuccess> => {
-  const baseUrl = `/api/private/${resource}`;
-  return axiosClient.delete(baseUrl + '/' + itemId);
+  const baseUrl = `/api/private/${resource}/${itemId}`;
+  return axiosClient.delete(baseUrl);
 };
 
 interface TVariables {
-  id: string;
+  id: number;
 }
 
 export const useMutationDelete = (
   option: IBaseUseMutation<ResponseDeleteSuccess, unknown, TVariables>
 ) => {
-  const { resource, configMutation, defineQueryKey } = option;
+  const { resource, configMutation, defineQueryKey, showToast } = option;
 
   return useMutation(({ id }) => deleteItem(resource, id), {
     ...configMutation,
@@ -35,7 +35,7 @@ export const useMutationDelete = (
       if (defineQueryKey) {
         queryClient.refetchQueries([defineQueryKey]);
       }
-      toast.success('Delete Success!');
+      showToast && toast.success('Delete Success!');
     },
     onError: (error) => {
       console.log(error);

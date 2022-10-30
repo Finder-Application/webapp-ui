@@ -13,6 +13,7 @@ axiosClient.interceptors.request.use((config): AxiosRequestConfig<any> => {
   const token = StorageUtils.get('token');
   const contentType =
     data instanceof FormData ? 'multipart/form-data' : 'application/json';
+
   const defaultHeaders = {
     'content-type': contentType,
     authorization: `Bearer ${token}`,
