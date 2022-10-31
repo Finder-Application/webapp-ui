@@ -13,6 +13,7 @@ axiosClient.interceptors.request.use((config): AxiosRequestConfig<any> => {
   const token = StorageUtils.get('token');
   const contentType =
     data instanceof FormData ? 'multipart/form-data' : 'application/json';
+
   const defaultHeaders = {
     'content-type': contentType,
     authorization: `Bearer ${token}`,
@@ -28,7 +29,7 @@ axiosClient.interceptors.response.use(
       if (token) {
         StorageUtils.set('token', token);
       }
-      return response.data.data || response.data;
+      return response.data;
     }
     return response;
   },

@@ -5,6 +5,8 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  cacheDir: '.vite',
+  mode: 'development',
   plugins: [react(), splitVendorChunkPlugin()],
   resolve: {
     alias: {
