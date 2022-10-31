@@ -8,9 +8,9 @@ class GeoUtils {
     return this.country.province;
   }
 
-  static getAllDistricts(id_district: string): District[] {
+  static getAllDistricts(provinceId: string): District[] {
     return this.country.district.filter(
-      (district) => district.idProvince === id_district
+      (district) => district.idProvince === provinceId
     );
   }
   static getAllCommunes(id_district: string): Commune[] {
