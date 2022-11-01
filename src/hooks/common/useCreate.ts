@@ -41,8 +41,7 @@ export const useMutationCreate = <TResponse, TError, TCreate>(
         if (defineQueryKey) {
           queryClient.refetchQueries([defineQueryKey]);
         }
-
-        toast.success('Create Success!');
+        // toast.success('Create Success!');
       },
       onError: (error) => {
         console.log(error);

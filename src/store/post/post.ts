@@ -1,21 +1,31 @@
+import { Descriptor } from '@/hooks/interfaces';
 import create from 'zustand';
 
-interface Address {
+export interface Address {
+  // Region
   province?: string;
+  // State
   district?: string;
 }
-interface CreatePostFormData {
+
+export interface CreatePostFormData {
   hometownAddress?: Address;
   missingAddress?: Address;
+  photos?: File[];
+  descriptors?: Descriptor[];
 }
 interface PostStoreInterface {
-  createPostFormData?: CreatePostFormData;
+  createPostFormData: CreatePostFormData;
   setCreatePostFormData: (data: CreatePostFormData) => void;
   isShowSharingPopup: boolean;
   setIsShowSharingPopup: (isShowSharingPopup: boolean) => void;
 }
 
 export const usePostStore = create<PostStoreInterface>((set) => ({
+  createPostFormData: {
+    photos: [],
+    descriptors: [],
+  },
   setCreatePostFormData: (data) => {
     set((state) => ({
       createPostFormData: { ...state.createPostFormData, ...data },
