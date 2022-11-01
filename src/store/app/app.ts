@@ -5,7 +5,7 @@ interface AppStoreState {
   setIsShowingLoadingModal: (value: boolean) => void;
 }
 export const useAppStore = create<AppStoreState>((set) => ({
-  isShowingLoadingModal: true,
+  isShowingLoadingModal: false,
   setIsShowingLoadingModal: (isShowingLoadingModal: boolean) =>
     set({
       isShowingLoadingModal,
