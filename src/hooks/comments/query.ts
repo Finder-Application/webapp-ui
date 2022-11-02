@@ -1,9 +1,8 @@
-import { IFormatOptionQuery } from '@/utils/getPagiantion.util';
-import { uesGetInfinities } from '../common/uesGetInfinities';
 import { useMutationCreate } from '../common/useCreate';
 import { useMutationDelete } from '../common/useDelete';
-import { QUERY_KEY, FEATURE } from '../constants';
-import { IBaseUseMutation } from '../interfaces';
+import { useGetInfinities } from '../common/useGetInfinities';
+import { FEATURE, QUERY_KEY } from '../constants';
+import { IBaseUseMutation, IParamsDefault } from '../interfaces';
 import {
   Comment,
   CreateComment,
@@ -11,10 +10,10 @@ import {
   ResponseCreateComment,
 } from './interface';
 
-export const uesGetInfiComments = (params: IFormatOptionQuery) =>
-  uesGetInfinities<Comment>({
-    defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
-    query,
+export const uesGetInfiComments = (params: IParamsDefault) =>
+  useGetInfinities<Comment>({
+    query_key: QUERY_KEY.PAGINATION_COMMENTS,
+    params,
     configApi: {
       feature: FEATURE.COMMENT,
       isPublic: true,
@@ -24,7 +23,7 @@ export const uesGetInfiComments = (params: IFormatOptionQuery) =>
 export const useDeleteComment = () =>
   useMutationDelete({
     resource: FEATURE.COMMENT,
-    defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
+    query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
 
 export const useCreateComment = (
@@ -38,8 +37,8 @@ export const useCreateComment = (
 ) =>
   useMutationCreate<ResponseCreateComment, unknown, CreateComment>({
     configMutation,
-    resource: RESOURCE.COMMENT,
-    defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
+    resource: FEATURE.COMMENT,
+    query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
 
 export const useCreateSubComment = (
@@ -53,6 +52,6 @@ export const useCreateSubComment = (
 ) =>
   useMutationCreate<ResponseCreateComment, unknown, CreateSubComment>({
     configMutation,
-    resource: RESOURCE.COMMENT,
-    defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
+    resource: FEATURE.COMMENT,
+    query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });

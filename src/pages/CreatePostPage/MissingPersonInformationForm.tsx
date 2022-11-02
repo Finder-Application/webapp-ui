@@ -1,3 +1,4 @@
+import React from 'react';
 import { CalendarIcon2, DropdownIcon } from '@/components/Icons';
 import { Input } from '@/components/Input';
 import { usePostStore } from '@/store/post';
@@ -5,7 +6,6 @@ import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
 import { DatePicker, Form, Select } from 'antd';
 import toLower from 'lodash/toLower';
-import React from 'react';
 import shallow from 'zustand/shallow';
 import { CreatePostFormItemsName, cx } from './CreatePostPage';
 
@@ -52,7 +52,7 @@ export const MissingPersonInformationForm = () => {
               ]}
             >
               <Input
-                width='100%'
+                width='18em'
                 label='Full name'
                 name={CreatePostFormItemsName.FULL_NAME}
               />
@@ -114,7 +114,13 @@ export const MissingPersonInformationForm = () => {
             </div>
           </div>
         </div>
-        <Input width='30%' label='Nick name (optional)' />
+        <Form.Item name={CreatePostFormItemsName.NICK_NAME}>
+          <Input
+            width='18em'
+            label='Nick name (optional)'
+            name={CreatePostFormItemsName.NICK_NAME}
+          />
+        </Form.Item>
       </div>
       <div className={cx('create-post__creating-form__inform-input-container')}>
         <div

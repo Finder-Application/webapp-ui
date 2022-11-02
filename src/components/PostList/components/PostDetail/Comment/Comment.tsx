@@ -18,7 +18,7 @@ type CommentProps = {
 export const CommentCpn = (
   props: CommentProps & React.HTMLProps<HTMLDivElement>
 ) => {
-  const { comment } = props;
+  const { comment, ...CommentProps } = props;
   const [showReply, setShowReply] = useState(false);
 
   const { mutate } = useDeleteComment();
@@ -32,7 +32,7 @@ export const CommentCpn = (
   };
 
   return (
-    <div {...props}>
+    <div {...CommentProps}>
       <div className='d-flex flex-row'>
         <UserAvatar
           user={comment.user}

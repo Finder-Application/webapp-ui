@@ -31,18 +31,17 @@ export const useMutationCreate = <TResponse, TError, TCreate>(
     }
   >
 ) => {
-  const { resource, configMutation, defineQueryKey } = option;
+  const { resource, configMutation, query_key } = option;
 
   return useMutation(
     ({ dataCreate }) => createItem<TCreate, TResponse>(resource, dataCreate),
     {
       ...configMutation,
       onSuccess(data, variables, context) {
-        if (defineQueryKey) {
-          queryClient.refetchQueries([defineQueryKey]);
+        if (query_key) {
+          queryClient.refetchQueries([query_key]);
         }
-
-        toast.success('Create Success!');
+        // toast.success('Create Success!');
       },
       onError: (error) => {
         console.log(error);

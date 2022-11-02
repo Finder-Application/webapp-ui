@@ -24,7 +24,6 @@ export const CommentDrawer = (
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
-
   const { data, fetchNextPage, hasNextPage, isLoading } = uesGetInfiComments({
     take: 20,
     order: {

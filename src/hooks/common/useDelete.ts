@@ -27,7 +27,12 @@ interface TVariables {
 export const useMutationDelete = (
   option: IBaseUseMutation<ResponseDeleteSuccess, unknown, TVariables>
 ) => {
-  const { resource, configMutation, defineQueryKey, showToast } = option;
+  const {
+    resource,
+    configMutation,
+    query_key: defineQueryKey,
+    showToast,
+  } = option;
 
   return useMutation(({ id }) => deleteItem(resource, id), {
     ...configMutation,

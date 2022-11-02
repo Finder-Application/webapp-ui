@@ -24,7 +24,7 @@ export const Test = () => {
 
   const { mutate } = useMutationDelete({
     resource: RESOURCE.COMMENT,
-    defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
+    query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
 
   const test = () => {

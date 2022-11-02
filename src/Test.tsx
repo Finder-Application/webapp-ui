@@ -1,12 +1,12 @@
 import { PostEntity } from './entites/Post';
-import { uesGetInfinities } from './hooks/common/useGetInfinities';
+import { useGetInfinities } from './hooks/common/useGetInfinities';
 import { FEATURE, QUERY_KEY } from './hooks/constants';
 import { Operator } from './services/common/types';
 interface TestParams {
   name: string;
 }
 export const Test = () => {
-  const { data, fetchNextPage, hasNextPage } = uesGetInfinities<
+  const { data, fetchNextPage, hasNextPage } = useGetInfinities<
     any,
     PostEntity
   >({

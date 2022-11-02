@@ -4,13 +4,13 @@ import { FEATURE } from '../constants';
 import {
   IBaseUseInfinities,
   IParamsDefault,
-  ResponseSchema,
+  TResponseList,
 } from '../interfaces';
-const infinitiesApi = <T, P>(
+const getInfinitiesApi = <T, P>(
   params: P | IParamsDefault,
   feature: FEATURE,
   isPublic?: boolean
-): Promise<ResponseSchema<T>> => {
+): Promise<TResponseList<T>> => {
   const baseUrl = `/api/${isPublic ? 'public' : 'private'}/${feature}`;
   if ('filter' in params) {
     params = params as IParamsDefault;
@@ -27,18 +27,22 @@ const infinitiesApi = <T, P>(
   });
 };
 
-export const uesGetInfinities = <T, E, Params = IParamsDefault<E>>(
+export const useGetInfinities = <
+  TResponse,
+  Entity = any,
+  Params = IParamsDefault<Entity>
+>(
   config: IBaseUseInfinities<Params>
-): UseInfiniteQueryResult<ResponseSchema<T>> => {
+): UseInfiniteQueryResult<TResponseList<TResponse>> => {
   const {
-    query_key: defineQUERY_KEY,
+    query_key,
     params,
     configApi: { feature: resource, isPublic },
   } = config;
 
-  return useInfiniteQuery<ResponseSchema<T>>(
-    [defineQUERY_KEY],
-    async () => infinitiesApi<T, Params>(params, resource, isPublic),
+  return useInfiniteQuery<TResponseList<TResponse>>(
+    [query_key],
+    async () => getInfinitiesApi<TResponse, Params>(params, resource, isPublic),
     {
       getNextPageParam: (lastPage) => {
         return lastPage?.meta.hasNextPage ? lastPage.meta.page + 1 : undefined;

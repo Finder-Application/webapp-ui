@@ -6,35 +6,30 @@ import { AsyncImage } from '@/components';
 
 const cx = classNames.bind(styles);
 interface ModalScanImageProps {
-  src: string;
+  images: string[];
   isScanning: boolean;
 }
-const ModalScanImage = ({ src, isScanning }: ModalScanImageProps) => {
-  console.log('🚀 ~ file: ModalScanImage.tsx ~ line 14 ~ src', !!src);
-  console.log(
-    '🚀 ~ file: ModalScanImage.tsx ~ line 14 ~ isScanning',
-    isScanning
-  );
-
-  const rerender = () => {
-    console.log(
-      '🚀 ~ file: ModalScanImage.tsx ~ line 23 ~ rerender ~ rerender'
-    );
-    return null;
-  };
+const ModalScanImage = ({ images, isScanning }: ModalScanImageProps) => {
   return (
     <Modal
-      open={!!src}
+      open={isScanning}
       footer={[]}
       maskClosable={false}
       closable={false}
       closeIcon
+      centered
       className={cx('modal-scan')}
     >
-      <div className={cx('modal-image')}>
-        <AsyncImage src={src} />
-        {rerender()}
-        {isScanning && <div className={'scan'}></div>}
+      <div className='d-flex flex-row justify-content-center'>
+        {images.map((src) => (
+          <div className='d-flex flex-row align-items-center justify-content-center position-relative mr-3'>
+            <div className={cx('image')}>
+              <AsyncImage src={src} width={'14em'} height={'13em'} />
+            </div>
+
+            <div className={cx('scan')}></div>
+          </div>
+        ))}
       </div>
     </Modal>
   );

@@ -33,7 +33,7 @@ export const useMutationUpdate = <TUpdate, TResponse>(
     }
   >
 ) => {
-  const { resource, configMutation, defineQueryKey } = option;
+  const { resource, configMutation, query_key: defineQueryKey } = option;
 
   return useMutation(
     ({ id, dataUpdate }) =>

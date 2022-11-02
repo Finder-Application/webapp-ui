@@ -18,14 +18,14 @@ interface Filter<Field> {
   value: string;
 }
 
-export interface IParamsDefault<F = {}> {
+export interface IParamsDefault<Field = String> {
   page?: number;
   take?: number;
   order?: {
     field: string;
     direction: 'ASC' | 'DESC';
   };
-  filter?: Filter<F>[];
+  filter?: Filter<Field>[];
   optionKey?: {
     key: string;
     value: string;
@@ -41,16 +41,16 @@ export interface Meta {
   hasNextPage: boolean;
 }
 
-export interface ResponseSchema<T> {
+export interface TResponseList<T> {
   data: T[];
   meta: Meta;
 }
 
-export interface IBaseUseQuery<T> {
+export interface IBaseUseQuery<T, Params = {}> {
   dependencies: [any];
   configQuery: UseQueryOptions<T>;
   query_key: QUERY_KEY;
-  params: IParamsDefault;
+  params: IParamsDefault<Params>;
   configApi: {
     resource: FEATURE;
     isPublic?: boolean;
@@ -69,6 +69,6 @@ export interface IBaseUseInfinities<Params> {
 export interface IBaseUseMutation<TResponse, TError, TVariables> {
   configMutation?: UseMutationOptions<TResponse, TError, TVariables>;
   resource: FEATURE;
-  defineQueryKey?: QUERY_KEY;
+  query_key?: QUERY_KEY;
   showToast?: boolean;
 }

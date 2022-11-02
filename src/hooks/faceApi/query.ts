@@ -1,5 +1,5 @@
-import { FaceApiService } from '@/services/faceApi';
 import { useMutation } from 'react-query';
+import { FaceApiService } from './service';
 
 export const useFaceApi = () => {
   const mutation = useMutation((files: File[]) =>
