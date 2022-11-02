@@ -2,7 +2,7 @@ import { axiosClient } from '@/apis';
 import { queryClient } from '@/main';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { RESOURCE } from '../constants';
+import { FEATURE } from '../constants';
 import { IBaseUseMutation } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
@@ -13,7 +13,7 @@ export interface ResponseDeleteSuccess {
 }
 
 const deleteItem = (
-  resource: RESOURCE,
+  resource: FEATURE,
   itemId: number
 ): Promise<ResponseDeleteSuccess> => {
   const baseUrl = `/api/private/${resource}/${itemId}`;

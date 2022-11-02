@@ -1,9 +1,8 @@
 import { IFormatOptionQuery } from '@/utils/getPagiantion.util';
-import { UseMutationOptions } from 'react-query';
 import { uesGetInfinities } from '../common/uesGetInfinities';
 import { useMutationCreate } from '../common/useCreate';
 import { useMutationDelete } from '../common/useDelete';
-import { QUERY_KEY, RESOURCE } from '../constants';
+import { QUERY_KEY, FEATURE } from '../constants';
 import { IBaseUseMutation } from '../interfaces';
 import {
   Comment,
@@ -12,19 +11,19 @@ import {
   ResponseCreateComment,
 } from './interface';
 
-export const uesGetInfiComments = (query: IFormatOptionQuery) =>
+export const uesGetInfiComments = (params: IFormatOptionQuery) =>
   uesGetInfinities<Comment>({
     defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
     query,
     configApi: {
-      resource: RESOURCE.COMMENT,
+      feature: FEATURE.COMMENT,
       isPublic: true,
     },
   });
 
 export const useDeleteComment = () =>
   useMutationDelete({
-    resource: RESOURCE.COMMENT,
+    resource: FEATURE.COMMENT,
     defineQueryKey: QUERY_KEY.PAGINATION_COMMENTS,
   });
 

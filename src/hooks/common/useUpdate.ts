@@ -2,8 +2,7 @@ import { axiosClient } from '@/apis';
 import { queryClient } from '@/main';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import produce from 'immer';
-import { RESOURCE } from '../constants';
+import { FEATURE } from '../constants';
 import { IBaseUseMutation } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
@@ -14,12 +13,12 @@ export interface ResponseDeleteSuccess {
 }
 
 const updateItem = <TUpdate, TResponse>(
-  resource: RESOURCE,
+  resource: FEATURE,
   itemId: string,
   dataUpdate: TUpdate
 ): Promise<TResponse> => {
   const baseUrl = `/api/private/${resource}/${itemId}`;
-  return axiosClient.delete(baseUrl, {
+  return axiosClient.put(baseUrl, {
     ...dataUpdate,
   });
 };
