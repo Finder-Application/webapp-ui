@@ -30,7 +30,9 @@ export const CommentDrawer = (
       field: 'createdAt',
       direction: 'DESC',
     },
-    optionKey: { key: 'id', value: postId.toString() },
+    optionKey: {
+      id: postId.toString(),
+    },
   });
 
   return (

@@ -27,8 +27,7 @@ export interface IParamsDefault<Field = String> {
   };
   filter?: Filter<Field>[];
   optionKey?: {
-    key: string;
-    value: string;
+    [key: string]: string;
   };
 }
 

@@ -1,6 +1,7 @@
 import { User } from '../auth/interface';
 
 export interface ResponseCreateComment {
+  id: number;
   postId: number;
   content: string;
   photo?: string;

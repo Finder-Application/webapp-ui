@@ -27,7 +27,7 @@ export const CommentCpn = (
 
   const onDeleteComment = () => {
     mutate({
-      id: comment.id,
+      id: 1,
     });
   };
 
