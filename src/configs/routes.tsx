@@ -12,6 +12,7 @@ export const ROUTES = {
   guide: '/guide',
   search: '/search',
   createPost: '/create-post',
+  forgotPassword: '/forgot-password',
 };
 
 const publicRoutes: RouteFinder[] = [
@@ -20,6 +21,12 @@ const publicRoutes: RouteFinder[] = [
     title: 'Login',
     layout: AuthLayout,
     page: lazy(() => import('@/pages/LoginPage/LoginPage')),
+  },
+  {
+    path: ROUTES.forgotPassword,
+    title: 'forgot password',
+    layout: AuthLayout,
+    page: lazy(() => import('@/pages/ForgotPasswordPage/ForgotPasswordPage')),
   },
   {
     path: ROUTES.register,
