@@ -24,14 +24,15 @@ export const CommentDrawer = (
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
-
   const { data, fetchNextPage, hasNextPage, isLoading } = uesGetInfiComments({
     take: 20,
     order: {
       field: 'createdAt',
       direction: 'DESC',
     },
-    optionKey: { key: 'id', value: postId.toString() },
+    optionKey: {
+      id: postId.toString(),
+    },
   });
 
   return (

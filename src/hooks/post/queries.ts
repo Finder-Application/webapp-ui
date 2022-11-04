@@ -1,5 +1,5 @@
 import { useMutationCreate } from '../common/useCreate';
-import { RESOURCE } from '../constants';
+import { FEATURE } from '../constants';
 import { IBaseUseMutation } from '../interfaces';
 import { Address, CreatePostResponse, FaceDescriptor } from './interface';
 
@@ -28,5 +28,5 @@ export const useCreatePost = (
 ) =>
   useMutationCreate<CreatePostResponse, unknown, CreatePostBody>({
     configMutation,
-    resource: RESOURCE.POST,
+    resource: FEATURE.POST,
   });

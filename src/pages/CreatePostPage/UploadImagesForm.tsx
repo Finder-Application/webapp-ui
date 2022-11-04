@@ -7,8 +7,8 @@ import { usePostStore } from '@/store/post';
 import shallow from 'zustand/shallow';
 import { AxiosError } from 'axios';
 import ModalScanImage from './components/ModalScanImage';
-import { getBase64 } from '@/utils/helpers';
 import { useFaceApi } from '@/hooks/faceApi/query';
+import FileUtils from '@/utils/File.utils';
 
 export const UploadImagesForm = () => {
   const faceDetect = useFaceApi();
@@ -59,7 +59,9 @@ export const UploadImagesForm = () => {
         setIsScanningFace(true);
 
         const base64List = await Promise.all(
-          [...e.target.files].map(async (file) => await getBase64(file))
+          [...e.target.files].map(
+            async (file) => await FileUtils.toBase64(file)
+          )
         );
         setCurrentScannedImage((state) => [...state, ...base64List]);
 

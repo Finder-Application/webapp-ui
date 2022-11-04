@@ -2,7 +2,7 @@ import { axiosClient } from '@/apis';
 import { queryClient } from '@/main';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { RESOURCE } from '../constants';
+import { FEATURE } from '../constants';
 import { IBaseUseMutation } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
@@ -13,7 +13,7 @@ export interface ResponseDeleteSuccess {
 }
 
 const createItem = <TCreate, TResponse>(
-  resource: RESOURCE,
+  resource: FEATURE,
   dataCreate: TCreate
 ): Promise<TResponse> => {
   const baseUrl = `/api/private/${resource}`;
@@ -31,15 +31,15 @@ export const useMutationCreate = <TResponse, TError, TCreate>(
     }
   >
 ) => {
-  const { resource, configMutation, defineQueryKey } = option;
+  const { resource, configMutation, query_key } = option;
 
   return useMutation(
     ({ dataCreate }) => createItem<TCreate, TResponse>(resource, dataCreate),
     {
       ...configMutation,
       onSuccess(data, variables, context) {
-        if (defineQueryKey) {
-          queryClient.refetchQueries([defineQueryKey]);
+        if (query_key) {
+          queryClient.refetchQueries([query_key]);
         }
         // toast.success('Create Success!');
       },

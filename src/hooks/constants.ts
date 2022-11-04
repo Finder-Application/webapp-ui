@@ -1,4 +1,4 @@
-export enum RESOURCE {
+export enum FEATURE {
   POST = 'posts',
   COMMENT = 'comments',
 }

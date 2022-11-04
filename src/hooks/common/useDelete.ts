@@ -2,7 +2,7 @@ import { axiosClient } from '@/apis';
 import { queryClient } from '@/main';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { RESOURCE } from '../constants';
+import { FEATURE } from '../constants';
 import { IBaseUseMutation } from '../interfaces';
 
 export interface ResponseDeleteSuccess {
@@ -13,7 +13,7 @@ export interface ResponseDeleteSuccess {
 }
 
 const deleteItem = (
-  resource: RESOURCE,
+  resource: FEATURE,
   itemId: number
 ): Promise<ResponseDeleteSuccess> => {
   const baseUrl = `/api/private/${resource}/${itemId}`;
@@ -27,7 +27,12 @@ interface TVariables {
 export const useMutationDelete = (
   option: IBaseUseMutation<ResponseDeleteSuccess, unknown, TVariables>
 ) => {
-  const { resource, configMutation, defineQueryKey, showToast } = option;
+  const {
+    resource,
+    configMutation,
+    query_key: defineQueryKey,
+    showToast,
+  } = option;
 
   return useMutation(({ id }) => deleteItem(resource, id), {
     ...configMutation,

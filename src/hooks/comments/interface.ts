@@ -1,5 +1,4 @@
 import { User } from '../auth/interface';
-import { Pagination } from '../interfaces';
 
 export interface ResponseCreateComment {
   id: number;
