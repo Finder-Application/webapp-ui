@@ -18,7 +18,7 @@ interface Filter<Field> {
   value: string;
 }
 
-export interface IParamsDefault<Field = String> {
+export interface IParamsDefault<Field = {}> {
   page?: number;
   take?: number;
   order?: {

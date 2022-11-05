@@ -1,4 +1,5 @@
 import { ButtonFinder, PostList } from '@/components';
+import { DropdownIcon } from '@/components/Icons';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
@@ -7,15 +8,15 @@ import classNames from 'classnames/bind';
 import toLower from 'lodash/toLower';
 import { useState } from 'react';
 import styles from './Homepage.module.scss';
+const { Option } = Select;
+
 const cx = classNames.bind(styles);
 const Homepage = () => {
-  const [provinceState, setProvince] = useState('');
+  const [provinceState, setProvince] = useState<string>();
+  const [genderFilter, setGenderFilter] = useState();
   const provinces = GeoUtils.getAllProvinces();
-  const provincesFiltered = provinces.filter((province) =>
-    toLower(StringUtils.cleanAccents(province.name)).includes(
-      toLower(StringUtils.cleanAccents(provinceState))
-    )
-  );
+
+  console.log('genderFilter: ', genderFilter);
   return (
     <div className={cx('homepage')}>
       <div className={cx('title')}>
@@ -25,7 +26,7 @@ const Homepage = () => {
         <div className={cx('search')}>
           <Select
             className={cx('select')}
-            defaultValue={provinceState}
+            placeholder='Select region'
             showSearch
             onChange={(value) => {
               setProvince(value.trim());
@@ -35,7 +36,6 @@ const Homepage = () => {
               setProvince(value.trim());
             }}
           >
-            <Select.Option value=''>Please choose province</Select.Option>
             {provinces.map((province, index) => (
               <Select.Option key={index} value={province.name}>
                 {province.name}
@@ -43,25 +43,16 @@ const Homepage = () => {
             ))}
           </Select>
           <Select
-            className={cx('select')}
-            defaultValue={provinceState}
-            showSearch
-            onChange={(value) => {
-              setProvince(value.trim());
-            }}
-            value={provinceState}
-            onSearch={(value) => {
-              setProvince(value.trim());
-            }}
+            value={genderFilter}
+            placeholder='Gender'
+            onChange={(value) => setGenderFilter(value)}
+            style={{ width: 120 }}
+            suffixIcon={<DropdownIcon width={10} height={10} />}
           >
-            <Select.Option value=''>Please choose province</Select.Option>
-            {provinces.map((province, index) => (
-              <Select.Option key={index} value={province.name}>
-                {province.name}
-              </Select.Option>
-            ))}
+            <Option value={false}>Male</Option>
+            <Option value={true}>Female</Option>
           </Select>
-          <Select
+          {/* <Select
             className={cx('select ml-2')}
             defaultValue={provinceState}
             showSearch
@@ -79,20 +70,24 @@ const Homepage = () => {
                 {province.name}
               </Select.Option>
             ))}
-          </Select>
+          </Select> */}
         </div>
 
         <ButtonFinder
           icon={<RefreshIcon />}
           className={cx('btn-reset')}
           type='primary'
+          onClick={() => {
+            setProvince(undefined);
+            setGenderFilter(undefined);
+          }}
         >
           Reset Filter
         </ButtonFinder>
       </div>
 
       <div className={cx('mt-4')}>
-        <PostList />
+        <PostList filter={{ gender: genderFilter, region: provinceState }} />
       </div>
     </div>
   );

@@ -2,14 +2,27 @@ import { AsyncImage, ButtonFinder } from '@/components';
 import { Tag } from 'antd';
 import classNames from 'classnames/bind';
 import capitalize from 'lodash/capitalize';
-import React from 'react';
+import React, { memo } from 'react';
 import { PostDetail } from '../PostDetail';
 import styles from './Post.module.scss';
 import { FcOvertime } from 'react-icons/fc';
+import { Post as PostInterface } from '@/hooks/post/interface';
 
 const cx = classNames.bind(styles);
 const random = Math.floor(Math.random() * 10) % 2 === 0;
-export const Post = () => {
+
+type Props = {
+  postItem: PostInterface;
+};
+
+export const Post = memo((props: Props) => {
+  const { postItem } = props;
+
+  const ownerName =
+    postItem.owner.firstName ||
+    '' + ' ' + postItem.owner.middleName ||
+    '' + ' ' + postItem.owner.latsName ||
+    '';
   const state = random ? 'finding' : 'found';
   const [isHover, setIsHover] = React.useState(false);
   const [detailVisible, setDetailVisible] = React.useState(false);
@@ -25,9 +38,7 @@ export const Post = () => {
   const renderSuggestViewDetail = () => {
     return (
       <div className={cx('detail')}>
-        <div className={cx('detail-text')}>
-          Lorem Ipsum is simply dummy text of the printing
-        </div>
+        <div className={cx('detail-text')}>{postItem.title}</div>
 
         <ButtonFinder
           className={cx('w-100 mt-4')}
@@ -47,7 +58,7 @@ export const Post = () => {
     return (
       <>
         <div className={cx('card__image', 'col-5 h-100 p-0')}>
-          <AsyncImage src='https://picsum.photos/200' />
+          <AsyncImage src={postItem.photos[0]} />
         </div>
         <div className={cx('card__info', 'col-7 h-100')}>
           <Tag
@@ -57,24 +68,24 @@ export const Post = () => {
           </Tag>
           <div className={cx('card__info-content')}>
             <div className={cx('content-item')}>
-              <span>First name: </span>
-              Nguyen Tat Van
+              <span>FullName: </span>
+              {postItem.fullName}
             </div>
             <div className={cx('content-item')}>
               <span>Nick name: </span>
-              Cu Teo
+              {postItem.nickname}
             </div>
             <div className={cx('content-item')}>
               <span>Date Of Birth: </span>
-              Nguyen Tat Van
+              {postItem.dateOfBirth}
             </div>
             <div className={cx('content-item')}>
               <span>Gender: </span>
-              Male
+              {postItem.gender ? 'Female' : 'Male'}
             </div>
             <div className={cx('content-item')}>
               <span>Hometown: </span>
-              Quang Tri
+              {postItem.hometown.region}
             </div>
           </div>
         </div>
@@ -97,15 +108,15 @@ export const Post = () => {
           )}
         >
           <AsyncImage
-            src='https://picsum.photos/200/300'
+            src={postItem.owner.avatar}
             className={cx('user__avatar')}
             avatar
           />
-          Nguyen Van Nam
+          {ownerName}
         </div>
         <div className={cx('created-at', 'd-flex align-items-center')}>
           <FcOvertime />
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{new Date(postItem.updatedAt).toLocaleDateString()}</span>
         </div>
       </div>
     );
@@ -126,4 +137,4 @@ export const Post = () => {
       )}
     </div>
   );
-};
+});
