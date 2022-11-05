@@ -38,7 +38,7 @@ export const useGetInfinities = <
   } = config;
 
   return useInfiniteQuery<TResponseList<TResponse>>(
-    [query_key],
+    [query_key, params],
     async () => getInfinitiesApi<TResponse, Params>(params, resource, isPublic),
     {
       getNextPageParam: (lastPage) => {

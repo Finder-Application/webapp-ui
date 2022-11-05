@@ -33,6 +33,25 @@ export interface Address {
   hamlet: string;
 }
 
+export interface Post {
+  hometown: Address;
+  missingAddress: Address;
+  id: number;
+  userId: number;
+  title: string;
+  fullName: string;
+  nickname: string;
+  dateOfBirth: string;
+  gender: number;
+  relevantPosts?: any;
+  photos: string[];
+  relationship?: any;
+  description: string;
+  shareCount: number;
+  updatedAt: Date;
+  createdAt: Date;
+  owner: User;
+}
 export interface Descriptor {
   0: number;
   1: number;
