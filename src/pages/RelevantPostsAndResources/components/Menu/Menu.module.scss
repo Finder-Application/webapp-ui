@@ -1,0 +1,21 @@
+.menu {
+  width: 20%;
+  &__item {
+    width: 20em;
+    padding: 1em 2em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    background-color: var(--grey-19);
+    margin-bottom: 2em;
+
+    &:hover {
+      background-color: var(--grey-6-opacity-38);
+    }
+    &--active {
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+      background-color: var(--white);
+      font-weight: 500;
+    }
+  }
+}

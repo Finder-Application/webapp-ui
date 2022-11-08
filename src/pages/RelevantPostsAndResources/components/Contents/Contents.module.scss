@@ -1,0 +1,41 @@
+.content {
+  margin-bottom: 10em;
+
+  &__relevant-resources {
+    &__item {
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+      border-radius: 11px;
+      margin-bottom: 4em;
+      transition: 0.2s all ease-in;
+      height: 15em;
+
+      &:hover {
+        box-shadow: 2px 4px 25px rgba(0, 0, 0, 0.1);
+        background-color: var(--white);
+
+        .content__relevant-resources__item__image {
+          border-radius: 11px 0 0 11px;
+        }
+      }
+
+      &__image {
+        border-radius: 11px;
+        transition: 0.2s all ease-in;
+        height: 15em;
+        width: 20em;
+      }
+
+      &__published-date {
+        color: var(--grey-4);
+      }
+    }
+  }
+
+  &__load-more-btn {
+    background-color: var(--grey-9);
+    padding: 0.8em 3em;
+    border-radius: 12px;
+  }
+}
