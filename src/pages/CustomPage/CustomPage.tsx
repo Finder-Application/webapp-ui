@@ -6,7 +6,7 @@ import styles from './CustomPage.module.scss';
 
 const cx = classNames.bind(styles);
 export const CustomPage = (props: RouteFinder) => {
-  const { pageY } = useWindowScroll();
+  // const { pageY } = useWindowScroll();
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);

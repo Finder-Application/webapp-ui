@@ -41,14 +41,13 @@ export const Post = memo((props: Props) => {
         <div className={cx('detail-text')}>{postItem.title}</div>
 
         <ButtonFinder
-          className={cx('w-100 mt-4')}
-          type='primary'
+          className={cx('detail__detail-btn', 'w-100 mt-4')}
           onClick={showPostDetail}
         >
-          Detail{' '}
+          Detail
         </ButtonFinder>
-        <ButtonFinder className={cx('w-100 mt-4')} type='default'>
-          Contact{' '}
+        <ButtonFinder className={cx('detail__contact-btn', 'w-100 mt-4')}>
+          Contact
         </ButtonFinder>
       </div>
     );

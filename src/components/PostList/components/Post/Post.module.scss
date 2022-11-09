@@ -70,6 +70,7 @@
       animation: fadeInUp 0.45s ease-in both;
 
       padding: var(--default-margin);
+      padding-top: 3em;
       background: linear-gradient(
         180deg,
         rgb(0 0 0 / 0%) 0%,
@@ -82,12 +83,20 @@
         color: var(--white);
         font-size: 1.2rem;
       }
-      button {
-        border-radius: 15px;
-        padding: 0.25rem 1rem;
-        &:first-child {
-          margin-right: 1rem;
-        }
+
+      &__detail-btn {
+        font-weight: 500;
+        color: var(--black);
+        border-radius: 5px;
+        background-color: var(--light-blue-1);
+        border: none;
+      }
+
+      &__contact-btn {
+        background-color: var(--grey-20);
+        font-weight: 500;
+        color: var(--white);
+        border: none;
       }
     }
   }

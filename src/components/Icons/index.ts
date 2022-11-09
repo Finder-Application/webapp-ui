@@ -27,3 +27,6 @@ export * from './TickIcon';
 export * from './PlusIcon';
 export * from './TrashIcon';
 export * from './ColoringGoogleIcon';
+export * from './ArrowLeft';
+export * from './EarthIcon';
+export * from './PostIcon';
