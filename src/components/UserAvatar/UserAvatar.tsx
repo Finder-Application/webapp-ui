@@ -3,12 +3,10 @@ import { TOOL_TIP_zINDEX } from '@/configs';
 import { Avatar, Tooltip } from 'antd';
 import { TooltipProps } from 'antd/es/tooltip';
 import { UserIcon } from '../Icons';
-
 import './UserAvatar.scss';
 import { ContactInform } from '../PostList/components/PostDetail/ContactInform';
 import { User } from '@/hooks/auth/interface';
 import { formatUserName } from '@/utils/format.util';
-
 type UserAvarProps = {
   userIconColor?: string;
   svgProps?: React.SVGProps<SVGSVGElement>;

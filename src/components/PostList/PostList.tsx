@@ -1,11 +1,8 @@
 import { constants } from '@/configs';
 import { useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
-import { Operator } from '@/services/common/types';
-import { uuid } from '@/utils/helpers';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { AsyncImage } from '../AsyncImage';
 import { NoResultsFound } from '../NoResult';
 import { Post as PostComponent } from './components/Post/Post';
 import { PostLoading } from './components/PostLoading';
