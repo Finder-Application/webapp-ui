@@ -13,6 +13,7 @@ export const ROUTES = {
   search: '/search',
   createPost: '/create-post',
   forgotPassword: '/forgot-password',
+  relevantPostsAndResources: '/relevantPostsAndResources',
 };
 
 const publicRoutes: RouteFinder[] = [
@@ -58,6 +59,14 @@ const publicRoutes: RouteFinder[] = [
     path: ROUTES.search,
     page: lazy(() => import('@/pages/ReSearchPage/ReSearchPage')),
     title: 'Search',
+  },
+  {
+    path: ROUTES.relevantPostsAndResources,
+    page: lazy(
+      () =>
+        import('@/pages/RelevantPostsAndResources/RelevantPostsAndResources')
+    ),
+    title: 'Relevant posts and resources',
   },
 ];
 

@@ -90,7 +90,10 @@ const Header = () => {
         </div>
 
         <NotificationIcon className='m-4' />
-        <UserIcon />
+        <UserIcon
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate(ROUTES.relevantPostsAndResources)}
+        />
         <ButtonFinder
           className={cx('header__right__upload-btn')}
           onClick={() => navigate(ROUTES.createPost)}
