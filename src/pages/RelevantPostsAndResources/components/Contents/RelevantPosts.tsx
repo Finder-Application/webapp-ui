@@ -22,6 +22,7 @@ export const RelevantPosts = (props: Props) => {
       commune: 'Phong Phu',
       hamlet: '',
     },
+    missingTime: new Date(),
     id: 1,
     userId: 123,
     title: 'A documentary film will be made of the rehearsal process',
@@ -38,8 +39,11 @@ export const RelevantPosts = (props: Props) => {
       avatar: 'https://ychef.files.bbci.co.uk/976x549/p0b4bchd.jpg',
       uuid: '1234',
       middleName: '',
-      latsName: '',
+      lastName: '',
       firstName: 'Nguyen Dinh Thang',
+      address: '',
+      email: '',
+      phone: '',
     },
   };
   return (

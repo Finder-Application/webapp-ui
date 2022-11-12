@@ -3,7 +3,7 @@ import { User } from '../auth/interface';
 export interface CreatePostResponse {
   id: number;
   firstName: string;
-  latsName: string;
+  lastName: string;
   dateOfBirth: Date;
   gender: true;
   lostAddress: string;

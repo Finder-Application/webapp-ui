@@ -67,6 +67,8 @@ const CreatePostPage = () => {
 
   const [form] = Form.useForm();
 
+  console.log('createPostFormData: ', createPostFormData);
+
   const onFormSubmit = useCallback(async () => {
     await form
       .validateFields()
@@ -104,6 +106,7 @@ const CreatePostPage = () => {
             []
           );
 
+        console.log('descriptors: ', descriptors);
         const getFormValue = (key: CreatePostFormItemsName) => {
           return form.getFieldValue(key);
         };
