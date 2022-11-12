@@ -97,30 +97,28 @@ export const UploadImagesForm = () => {
                   if (file) {
                     imageFiles.push(file);
                   }
-                  if (index === filesAmount - 1) {
-                    if (
-                      files.length > 4 ||
-                      images.length > 5 ||
-                      images.length + files.length > 5
-                    ) {
-                      toast.error('Maximum number of files is 5');
-                    } else {
-                      const descriptor = value[0];
+                  if (
+                    files.length > 4 ||
+                    images.length > 5 ||
+                    images.length + files.length > 5
+                  ) {
+                    toast.error('Maximum number of files is 5');
+                  } else {
+                    const descriptor = value[0];
 
-                      descriptors.push(descriptor);
+                    descriptors.push(descriptor);
 
-                      setFiles([...files].concat(images));
-                      setCreatePostFormData({
-                        photos: [
-                          ...(createPostFormData?.photos ?? []),
-                          ...imageFiles,
-                        ],
-                        descriptors: [
-                          ...(createPostFormData?.descriptors ?? []),
-                          ...descriptors,
-                        ],
-                      });
-                    }
+                    setFiles([...files].concat(images));
+                    setCreatePostFormData({
+                      photos: [
+                        ...(createPostFormData?.photos ?? []),
+                        ...imageFiles,
+                      ],
+                      descriptors: [
+                        ...(createPostFormData?.descriptors ?? []),
+                        ...descriptors,
+                      ],
+                    });
                   }
                 };
               })
