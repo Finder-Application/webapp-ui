@@ -32,7 +32,7 @@ export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
               {user ? formatUserName({ user }) : 'Jamin le'}
             </div>
           </div>
-          <ContactInform className='text-dark' />
+          <ContactInform owner={user} className='text-dark' />
         </div>
       }
       trigger='hover'

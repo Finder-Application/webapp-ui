@@ -1,4 +1,8 @@
 .image-slider {
+  .image {
+    width: 16em;
+    height: 10em;
+  }
   .slide {
     transform: scale(0.9);
     transition: transform 300ms;

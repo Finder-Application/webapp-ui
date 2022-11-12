@@ -55,8 +55,8 @@ export const AsyncImage = React.forwardRef((props: Props, ref) => {
     <ImageAntd
       preview={preview}
       alt={alt}
-      {...imageProps}
       className={cx(AsyncImageClassName)}
+      {...imageProps}
     />
   ) : (
     renderLoading()

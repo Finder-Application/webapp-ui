@@ -7,6 +7,7 @@ import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import.meta.hot;
 
 function App() {
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>

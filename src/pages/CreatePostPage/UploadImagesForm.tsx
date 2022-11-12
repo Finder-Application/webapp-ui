@@ -9,6 +9,7 @@ import { AxiosError } from 'axios';
 import ModalScanImage from './components/ModalScanImage';
 import { useFaceApi } from '@/hooks/faceApi/query';
 import FileUtils from '@/utils/File.utils';
+import { Descriptor } from '@/hooks/interfaces';
 
 export const UploadImagesForm = () => {
   const faceDetect = useFaceApi();
@@ -55,6 +56,7 @@ export const UploadImagesForm = () => {
         let filesAmount = e.target.files.length;
         let images: string[] = [];
         let imageFiles: File[] = [];
+        let descriptors: Descriptor[] = [];
 
         setIsScanningFace(true);
 
@@ -91,6 +93,7 @@ export const UploadImagesForm = () => {
                   if (!images.includes(base64)) {
                     images.push(base64);
                   }
+
                   if (file) {
                     imageFiles.push(file);
                   }
@@ -102,7 +105,9 @@ export const UploadImagesForm = () => {
                     ) {
                       toast.error('Maximum number of files is 5');
                     } else {
-                      const descriptors = value.data.data;
+                      const descriptor = value[0];
+
+                      descriptors.push(descriptor);
 
                       setFiles([...files].concat(images));
                       setCreatePostFormData({

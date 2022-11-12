@@ -1,4 +1,6 @@
+import { axiosClient } from '@/apis';
 import { PostEntity } from '@/entites/Post';
+import { useQuery } from 'react-query';
 import { useMutationCreate } from '../common/useCreate';
 import { useGetInfinities } from '../common/useGetInfinities';
 import { QUERY_KEY, FEATURE } from '../constants';
@@ -41,4 +43,10 @@ export const useGetPosts = (params: IParamsDefault) =>
       feature: FEATURE.POST,
       isPublic: true,
     },
+  });
+
+export const useGetPostDetail = (params: { id: number }) =>
+  useQuery(['GET_POST_DETAIL', params.id], async () => {
+    const data: Post = await axiosClient.get(`/api/private/posts/${params.id}`);
+    return data;
   });
