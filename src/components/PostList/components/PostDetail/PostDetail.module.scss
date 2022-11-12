@@ -92,15 +92,14 @@
   }
   :global(.slick-slide) {
     transform: translate(40%, 0);
-    max-width: 35%;
     img {
       display: block;
-      width: 17em;
-      height: 12em;
+      width: 16em;
+      height: 10em;
       border-radius: 1em;
       object-fit: cover;
     }
-    @media only screen and (min-width: 1865px) {
+    @media only screen and (min-width: 1745px) {
       img {
         width: 21em;
         height: 15em;

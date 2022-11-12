@@ -47,7 +47,7 @@ export const PostList = (props: PostListProps) => {
         {Array.from({ length: constants.RENDERED_POST_SIZE }).map(
           (_, index) => (
             <div key={index} className='col-xl-3 col-lg-4'>
-              <PostLoading key={index} index={index} />
+              <PostLoading index={index} />
             </div>
           )
         )}
@@ -89,12 +89,11 @@ export const PostList = (props: PostListProps) => {
         loader={renderLoadingListPost()}
       >
         <div className='row flex-wrap justify-content-start align-items-center'>
-          {filteredPost.length > 0 &&
-            filteredPost.map((post, index) => (
-              <div key={post.id.toString()} className='col-xl-3 col-lg-4'>
-                <PostComponent postItem={post} key={post.id.toString()} />
-              </div>
-            ))}
+          {filteredPost.map((post, index) => (
+            <div key={post.id.toString()} className='col-xl-3 col-lg-4'>
+              <PostComponent postItem={post} />
+            </div>
+          ))}
         </div>
       </InfiniteScroll>
       {data && filteredPost.length === 0 && !hasNextPage && <NoResultsFound />}

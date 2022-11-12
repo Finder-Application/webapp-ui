@@ -1,6 +1,14 @@
+import { User } from '@/hooks/auth/interface';
 import React from 'react';
 
-export const ContactInform = (props: React.HTMLProps<HTMLDivElement>) => {
+type Props = {
+  owner?: User;
+};
+export const ContactInform = (
+  props: React.HTMLProps<HTMLDivElement> & Props
+) => {
+  const { owner } = props;
+
   const renderInfoDetail = (label: string, value: string) => {
     return (
       <div className='my-2'>
@@ -12,10 +20,10 @@ export const ContactInform = (props: React.HTMLProps<HTMLDivElement>) => {
 
   return (
     <div {...props}>
-      {renderInfoDetail('Living place', ' K02/30 Son Tra')}
-      {renderInfoDetail('Office address', '254 Nguyen Van Linh')}
-      {renderInfoDetail('Email', 'finder@gmail.com')}
-      {renderInfoDetail('Phone', '0342801091')}
+      {renderInfoDetail('Living place', owner?.address || '')}
+      {/* {renderInfoDetail('Office address', '254 Nguyen Van Linh')} */}
+      {renderInfoDetail('Email', owner?.email || '')}
+      {renderInfoDetail('Phone', owner?.phone || '')}
     </div>
   );
 };

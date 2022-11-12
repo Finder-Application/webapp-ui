@@ -1,6 +1,7 @@
 import { ButtonFinder, PostList } from '@/components';
 import { DropdownIcon } from '@/components/Icons';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
+import { PostDetailPlaceholder } from '@/components/PostList/components/PostDetail/PostDetailPlaceholder';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
 import { Select } from 'antd';
@@ -16,7 +17,6 @@ const Homepage = () => {
   const [genderFilter, setGenderFilter] = useState();
   const provinces = GeoUtils.getAllProvinces();
 
-  console.log('genderFilter: ', genderFilter);
   return (
     <div className={cx('homepage')}>
       <div className={cx('title')}>

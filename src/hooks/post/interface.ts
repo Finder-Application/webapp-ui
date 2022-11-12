@@ -1,10 +1,4 @@
-export interface User {
-  firstName: string;
-  latsName: string;
-  middleName: string;
-  avatar: string;
-  uuid: string;
-}
+import { User } from '../auth/interface';
 
 export interface CreatePostResponse {
   id: number;
@@ -50,6 +44,7 @@ export interface Post {
   shareCount: number;
   updatedAt: Date;
   createdAt: Date;
+  missingTime: Date;
   owner: User;
 }
 export interface Descriptor {

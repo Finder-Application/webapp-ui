@@ -2,7 +2,7 @@ import { ButtonFinder } from '@/components';
 import { LoadingModal } from '@/components/LoadingModal';
 import { useCreateNetworkImageUrl } from '@/hooks/networkImage/query';
 import { useCreatePost } from '@/hooks/post';
-import { FaceDescriptor } from '@/hooks/post/interface';
+import { Descriptor, FaceDescriptor } from '@/hooks/post/interface';
 import { useAppStore } from '@/store/app';
 import { usePostStore } from '@/store/post';
 import GeoUtils from '@/utils/Geo.utils';
@@ -77,6 +77,7 @@ const CreatePostPage = () => {
         }
 
         setIsShowingLoadingModal(true);
+
         const networkImageUrls = await netWorkImageUrl
           .mutateAsync(createPostFormData?.photos ?? [])
           .then((value) => {
@@ -84,15 +85,24 @@ const CreatePostPage = () => {
           });
 
         const descriptors: FaceDescriptor[] | undefined =
-          createPostFormData?.descriptors?.map((descriptor, index) => {
-            const url = networkImageUrls[index];
-            const id = url.slice(networkImageUrls[index].indexOf('img-'));
-
-            return {
-              id: id,
-              descriptor: descriptor,
-            };
-          });
+          createPostFormData?.descriptors?.reduce(
+            (
+              prev: { id: string; descriptor: Descriptor }[],
+              descriptor,
+              index
+            ) => {
+              const url: string = networkImageUrls[index];
+              if (url) {
+                const id = url?.slice(networkImageUrls[index].indexOf('img-'));
+                return prev.concat({
+                  id: id,
+                  descriptor: descriptor,
+                });
+              }
+              return prev;
+            },
+            []
+          );
 
         const getFormValue = (key: CreatePostFormItemsName) => {
           return form.getFieldValue(key);
@@ -133,16 +143,15 @@ const CreatePostPage = () => {
           })
           .then(() => {
             toast.success('Create Post successfully!');
+            // form.resetFields();
+            // setCreatePostFormData({
+            //   descriptors: [],
+            //   photos: [],
+            // });
           })
           .catch(() => {
             toast.error('Failed to create Post!');
           });
-
-        form.resetFields();
-        setCreatePostFormData({
-          descriptors: [],
-          photos: [],
-        });
       })
       .catch((errors) => {
         // Errors in the fields

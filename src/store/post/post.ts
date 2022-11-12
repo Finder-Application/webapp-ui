@@ -1,4 +1,5 @@
 import { Descriptor } from '@/hooks/interfaces';
+import { Post } from '@/hooks/post/interface';
 import create from 'zustand';
 
 export interface Address {
@@ -19,9 +20,13 @@ interface PostStoreInterface {
   setCreatePostFormData: (data: CreatePostFormData) => void;
   isShowSharingPopup: boolean;
   setIsShowSharingPopup: (isShowSharingPopup: boolean) => void;
+  selectedPost?: Post;
+  setSelectedPost: (value: Post) => void;
 }
 
 export const usePostStore = create<PostStoreInterface>((set) => ({
+  selectedPost: undefined,
+  setSelectedPost: (value) => set({ selectedPost: value }),
   createPostFormData: {
     photos: [],
     descriptors: [],

@@ -4,4 +4,7 @@ export interface User {
   middleName: string;
   avatar: string;
   uuid: string;
+  email: string;
+  phone: string;
+  address: string;
 }

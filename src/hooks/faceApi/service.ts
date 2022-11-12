@@ -14,14 +14,14 @@ export class FaceApiService {
     await Promise.all(
       files.map(async (file) => {
         const fileResized = await FileUtils.resizeFile(file);
-        requestData.set('files', fileResized);
+        requestData.append('files', fileResized);
       })
     );
-    const response = await axiosClient.post<FaceDetectionResponse>(
+    const response: FaceDetectionResponse = await axiosClient.post(
       this.baseURL + '/detect',
       requestData
     );
 
-    return response;
+    return response.data;
   }
 }

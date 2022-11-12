@@ -7,6 +7,7 @@ import { PostDetail } from '../PostDetail';
 import styles from './Post.module.scss';
 import { FcOvertime } from 'react-icons/fc';
 import { Post as PostInterface } from '@/hooks/post/interface';
+import { usePostStore } from '@/store/post';
 
 const cx = classNames.bind(styles);
 const random = Math.floor(Math.random() * 10) % 2 === 0;
@@ -18,10 +19,12 @@ type Props = {
 export const Post = memo((props: Props) => {
   const { postItem } = props;
 
+  const setSelectedPost = usePostStore((state) => state.setSelectedPost);
+
   const ownerName =
     postItem.owner.firstName ||
     '' + ' ' + postItem.owner.middleName ||
-    '' + ' ' + postItem.owner.latsName ||
+    '' + ' ' + postItem.owner.lastName ||
     '';
   const state = random ? 'finding' : 'found';
   const [isHover, setIsHover] = React.useState(false);
@@ -33,6 +36,7 @@ export const Post = memo((props: Props) => {
 
   const showPostDetail = () => {
     setDetailVisible(true);
+    setSelectedPost(postItem);
   };
 
   const renderSuggestViewDetail = () => {
@@ -132,7 +136,11 @@ export const Post = memo((props: Props) => {
       </div>
       {renderBottom()}
       {detailVisible && (
-        <PostDetail isVisible={detailVisible} onClose={onClosePostDetail} />
+        <PostDetail
+          id={postItem.id}
+          isVisible={detailVisible}
+          onClose={onClosePostDetail}
+        />
       )}
     </div>
   );

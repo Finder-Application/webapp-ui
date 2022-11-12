@@ -77,9 +77,18 @@ export const ImageSlider = ({ images, slidesToShow = 3 }: ImageSliderProps) => {
         <div className={cx(isActive ? 'activeSlide' : 'slide')} key={image?.id}>
           <div className='slideWrapper'>
             {isActive ? (
-              <AsyncImage preview={true} src={image?.src} alt={image?.alt} />
+              <AsyncImage
+                preview={true}
+                src={image?.src}
+                alt={image?.alt}
+                className={cx('image')}
+              />
             ) : (
-              <AsyncImage src={image?.src} alt={image?.alt} />
+              <AsyncImage
+                className={cx('image')}
+                src={image?.src}
+                alt={image?.alt}
+              />
             )}
           </div>
         </div>
