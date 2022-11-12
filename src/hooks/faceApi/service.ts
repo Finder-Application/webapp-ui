@@ -11,12 +11,9 @@ export class FaceApiService {
 
   static async detectImages(files: File[]) {
     const requestData = new FormData();
-    await Promise.all(
-      files.map(async (file) => {
-        const fileResized = await FileUtils.resizeFile(file);
-        requestData.append('files', fileResized);
-      })
-    );
+    files.forEach(async (file) => {
+      requestData.append('files', file);
+    });
     const response: FaceDetectionResponse = await axiosClient.post(
       this.baseURL + '/detect',
       requestData
