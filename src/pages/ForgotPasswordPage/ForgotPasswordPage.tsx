@@ -1,12 +1,17 @@
+import { ROUTES } from '@/configs';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormEmail from './component/FormEmail/FormEmail';
 import NewPassword from './component/NewPassword/NewPassword';
 import styles from './ForgotPasswordPage.module.scss';
 const cx = classNames.bind(styles);
 
 const ForgotPasswordPage = () => {
-  const [login, setLogin] = useState(false);
+  const [isFormChangePw, setIsFormChangePw] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const navigate = useNavigate();
 
   return (
     <div className={cx('forgot-password')}>
@@ -26,13 +31,21 @@ const ForgotPasswordPage = () => {
               'forgot-password__header--sign-up-link',
               'text-right'
             )}
+            onClick={() => navigate(ROUTES.register)}
           >
             Sign up
           </div>
         </div>
       </div>
-      {/* <FormEmail /> */}
-      <NewPassword />
+      {!isFormChangePw ? (
+        <FormEmail
+          email={email}
+          setEmail={setEmail}
+          onSendOtp={() => setIsFormChangePw(true)}
+        />
+      ) : (
+        <NewPassword email={email} onBack={() => setIsFormChangePw(false)} />
+      )}
     </div>
   );
 };

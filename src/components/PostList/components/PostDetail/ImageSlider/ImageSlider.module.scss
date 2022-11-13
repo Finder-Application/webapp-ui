@@ -1,4 +1,6 @@
 .image-slider {
+  :global(.slick-track) {
+  }
   .image {
     width: 16em;
     height: 10em;

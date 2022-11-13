@@ -36,6 +36,7 @@ const LoginPage = () => {
   const handleSubmit = () => {
     mutationLogin.mutate(formState);
   };
+
   return (
     <div className={cx('login-page')}>
       <div className={cx('header', 'd-flex justify-content-between')}>
@@ -79,7 +80,10 @@ const LoginPage = () => {
         />
       </div>
 
-      <div className={cx('d-flex justify-content-end', 'forgot-password')}>
+      <div
+        className={cx('d-flex justify-content-end', 'forgot-password')}
+        onClick={() => navigate(ROUTES.forgotPassword)}
+      >
         Forgot Password
       </div>
 

@@ -14,6 +14,7 @@ export const ROUTES = {
   createPost: '/create-post',
   forgotPassword: '/forgot-password',
   relevantPostsAndResources: '/relevantPostsAndResources',
+  yourPosts: '/yourPosts',
 };
 
 const publicRoutes: RouteFinder[] = [
@@ -71,6 +72,11 @@ const privateRoutes: RouteFinder[] = [
         import('@/pages/RelevantPostsAndResources/RelevantPostsAndResources')
     ),
     title: 'Relevant posts and resources',
+  },
+  {
+    path: ROUTES.yourPosts,
+    page: lazy(() => import('@/pages/YourPosts/YourPosts')),
+    title: 'Your Posts',
   },
 ];
 

@@ -3,6 +3,12 @@ export interface LoginDto {
   password: string;
 }
 
+export interface ChangePwDto {
+  email: string;
+  password: string;
+  otp: number;
+}
+
 export interface User {
   firstName: string;
   lastName: string;
