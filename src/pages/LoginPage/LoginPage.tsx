@@ -1,14 +1,14 @@
 import { ButtonFinder } from '@/components';
 import { ROUTES } from '@/configs';
-import { useLoginApi } from '@/hooks/query/useLoginApi';
-import { ValidateUtils } from '@/utils/Validate.utils';
+import { useLogin } from '@/hooks/auth/query';
 import { Input } from 'antd';
 import classNames from 'classnames/bind';
 import React from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import StorageUtils from '@/utils/Storage.utils';
 import styles from './LoginPage.module.scss';
+
 const cx = classNames.bind(styles);
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,14 @@ const LoginPage = () => {
     password: '',
   });
   const toggleShowPassword = () => setShowPassword(!showPassword);
-  const mutationLogin = useLoginApi();
+  const mutationLogin = useLogin({
+    onSuccess(data, variables, context) {
+      StorageUtils.set('token', data.token.accessToken);
+
+      console.log(StorageUtils.get('token'));
+      navigate(ROUTES.home);
+    },
+  });
   const updateFormState = (key: keyof typeof formState, value: string) => {
     setFormState((state) => ({
       ...state,
@@ -26,18 +33,10 @@ const LoginPage = () => {
     }));
   };
 
-  React.useEffect(() => {
-    if (mutationLogin.isSuccess) {
-      // navigate(ROUTES.home);
-    }
-    if (mutationLogin.isError) {
-      toast.error('Please Login again');
-    }
-  }, [mutationLogin.isSuccess, mutationLogin.isError]);
-
   const handleSubmit = () => {
     mutationLogin.mutate(formState);
   };
+
   return (
     <div className={cx('login-page')}>
       <div className={cx('header', 'd-flex justify-content-between')}>
@@ -81,7 +80,10 @@ const LoginPage = () => {
         />
       </div>
 
-      <div className={cx('d-flex justify-content-end', 'forgot-password')}>
+      <div
+        className={cx('d-flex justify-content-end', 'forgot-password')}
+        onClick={() => navigate(ROUTES.forgotPassword)}
+      >
         Forgot Password
       </div>
 

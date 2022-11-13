@@ -1,9 +1,14 @@
 import { ROUTES } from '@/configs';
 import { useGetMe } from '@/hooks/auth/query';
+import { Spin } from 'antd';
 import { Navigate, Outlet } from 'react-router-dom';
 
 export const PrivateOutletRoute = () => {
-  const [auth] = useGetMe();
+  const { data, isLoading } = useGetMe();
 
-  return auth ? <Outlet /> : <Navigate to={ROUTES.login} />;
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  return data ? <Outlet /> : <Navigate to={ROUTES.login} />;
 };

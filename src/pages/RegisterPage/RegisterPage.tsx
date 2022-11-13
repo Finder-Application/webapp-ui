@@ -6,6 +6,10 @@ import classNames from 'classnames/bind';
 import React from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import GoogleLogin, {
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from 'react-google-login';
 import styles from './RegisterPage.module.scss';
 const cx = classNames.bind(styles);
 
@@ -21,6 +25,12 @@ const RegisterPage = () => {
 
   const onFinish = (values: any) => {
     console.log(values);
+  };
+
+  const responseGoogle = (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    console.log(response);
   };
 
   return (
@@ -140,10 +150,22 @@ const RegisterPage = () => {
           <p className='mb-0'>or</p>
           <hr className='my-0' style={{ width: '12rem' }} />
         </div>
-        <ButtonFinder className={cx('w-100', 'btn-google')}>
-          <ColoringGoogleIcon className='mr-3' width={25} height={25} />
-          Sign up with Google
-        </ButtonFinder>
+
+        <GoogleLogin
+          clientId='894609161760-1btovlg15pcuoedtfanpkogtahetsdq7.apps.googleusercontent.com'
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          isSignedIn={true}
+          render={(renderProps) => (
+            <ButtonFinder
+              className={cx('w-100', 'btn-google')}
+              onClick={renderProps.onClick}
+            >
+              <ColoringGoogleIcon className='mr-3' width={25} height={25} />
+              Sign up with Google
+            </ButtonFinder>
+          )}
+        />
       </div>
     </Form>
   );
