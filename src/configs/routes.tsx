@@ -50,15 +50,19 @@ const publicRoutes: RouteFinder[] = [
     page: React.lazy(() => import('@/pages/Homepage/Homepage')),
     title: 'Guild Lines',
   },
-  {
-    path: ROUTES.createPost,
-    page: React.lazy(() => import('@/pages/CreatePostPage/CreatePostPage')),
-    title: 'Create Post',
-  },
+
   {
     path: ROUTES.search,
     page: lazy(() => import('@/pages/ReSearchPage/ReSearchPage')),
     title: 'Search',
+  },
+];
+
+const privateRoutes: RouteFinder[] = [
+  {
+    path: ROUTES.createPost,
+    page: React.lazy(() => import('@/pages/CreatePostPage/CreatePostPage')),
+    title: 'Create Post',
   },
   {
     path: ROUTES.relevantPostsAndResources,
@@ -69,7 +73,5 @@ const publicRoutes: RouteFinder[] = [
     title: 'Relevant posts and resources',
   },
 ];
-
-const privateRoutes: RouteFinder[] = [];
 
 export { publicRoutes, privateRoutes };

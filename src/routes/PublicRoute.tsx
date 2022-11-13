@@ -3,6 +3,6 @@ import { useGetMe } from '@/hooks/auth/query';
 import { Navigate, Outlet } from 'react-router-dom';
 
 export const PublicOutletRoute = () => {
-  const [auth] = useGetMe();
-  return auth ? <Navigate to={ROUTES.home} /> : <Outlet />;
+  // const [auth] = useGetMe();
+  return <Outlet />;
 };
