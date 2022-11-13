@@ -76,7 +76,12 @@
   }
 
   &__main-content {
-    padding-left: 8em;
+    padding-left: 4em;
+    transition: 0.2s all ease-in-out;
+
+    &__active {
+      padding-left: 3em;
+    }
   }
 
   :global(.ant-tooltip-arrow-content) {

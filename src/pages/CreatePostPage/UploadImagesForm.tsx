@@ -105,6 +105,7 @@ export const UploadImagesForm = () => {
                     toast.error('Maximum number of files is 5');
                   } else {
                     const descriptor = value[0];
+                    console.log('descriptor: ', descriptor);
 
                     descriptors.push(descriptor);
 

@@ -1,8 +1,8 @@
 import { AsyncImage } from '@/components';
 import { CalendarIcon2 } from '@/components/Icons';
+import { LoadMoreBtn } from '@/components/LoadMoreButton';
 import React from 'react';
 import { cx } from './Contents';
-import { LoadMoreBtn } from './LoadMoreBtn';
 
 type Props = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
