@@ -153,7 +153,7 @@ export const PostDetail = (props: PostDetailProps) => {
       onClose={onClose}
       headerStyle={{ display: 'none' }}
     >
-      {!data && isLoading ? (
+      {!data || isLoading ? (
         <PostDetailPlaceholder />
       ) : (
         <>
@@ -175,8 +175,13 @@ export const PostDetail = (props: PostDetailProps) => {
             />
             <ShareToolTipButton onClick={showSharingPopupModal} />
           </div>
-          <div className={cx('post-detail__main-content')}>
-            <div className='col-9'>
+          <div
+            className={cx(
+              'post-detail__main-content',
+              showCommentDrawer && 'post-detail__main-content__active'
+            )}
+          >
+            <div className={showCommentDrawer ? 'col-9' : 'col-10'}>
               <h1 className='font-weight-bold'>{data?.title}</h1>
               <hr />
               <div className='mt-4 mb-5 d-flex flex-row align-items-center'>

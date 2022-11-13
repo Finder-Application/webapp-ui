@@ -1,7 +1,7 @@
 import { Post as PostComponent } from '@/components';
+import { LoadMoreBtn } from '@/components/LoadMoreButton';
 import { Post } from '@/hooks/post/interface';
 import React from 'react';
-import { LoadMoreBtn } from './LoadMoreBtn';
 
 type Props = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,

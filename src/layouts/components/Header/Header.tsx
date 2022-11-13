@@ -1,14 +1,24 @@
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { FinderLogo } from '@/components/FinderLogo';
-import { NotificationIcon, SearchIcon, UserIcon } from '@/components/Icons';
+import {
+  EditProfileIcon,
+  SearchIcon,
+  SettingIcon,
+  SignOutIcon,
+  UserIcon,
+  UserProfileIcon,
+  YourPostsIcon,
+} from '@/components/Icons';
+import { ROUTES } from '@/configs';
 import { useOnClickOutside } from '@/hooks';
+import { Dropdown, MenuProps } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Notification } from './Notification';
+
 import styles from './Header.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/configs';
-const cx = classNames.bind(styles);
+export const cx = classNames.bind(styles);
 const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
@@ -64,6 +74,59 @@ const Header = () => {
     );
   };
 
+  const userDropdowns = [
+    {
+      title: 'Profile',
+      icon: UserProfileIcon,
+    },
+    {
+      title: 'Edit Profile',
+      icon: EditProfileIcon,
+    },
+    {
+      title: 'Your Posts',
+      icon: YourPostsIcon,
+      onClick: () => navigate(ROUTES.yourPosts),
+    },
+    {
+      title: 'Account Settings',
+      icon: SettingIcon,
+    },
+    {
+      title: 'Sign out',
+      icon: SignOutIcon,
+    },
+  ];
+
+  const userDropdownItems: MenuProps['items'] = userDropdowns.map(
+    (item, index) => {
+      const Icon = item.icon;
+      return {
+        key: index,
+        label: (
+          <div
+            className={cx(
+              'header__user-dropdown__item',
+              index !== userDropdowns.length - 1 &&
+                'header__user-dropdown__item__last-item'
+            )}
+            onClick={item.onClick}
+          >
+            <Icon className={cx('header__user-dropdown__item__icon', 'mr-3')} />
+            <span>{item.title}</span>
+          </div>
+        ),
+      };
+    }
+  );
+
+  const notificationDropdown: MenuProps['items'] = [
+    {
+      key: 1,
+      label: <div>Notifications</div>,
+    },
+  ];
+
   return (
     <div className={headerClassName}>
       <NavLink to='/'>
@@ -89,11 +152,16 @@ const Header = () => {
           )}
         </div>
 
-        <NotificationIcon className='m-4' />
-        <UserIcon
-          style={{ cursor: 'pointer' }}
-          onClick={() => navigate(ROUTES.relevantPostsAndResources)}
-        />
+        <Notification />
+        <Dropdown
+          menu={{ items: userDropdownItems }}
+          placement='bottomLeft'
+          arrow
+          overlayClassName={cx('header__user-dropdown')}
+        >
+          <UserIcon style={{ cursor: 'pointer' }} />
+        </Dropdown>
+
         <ButtonFinder
           className={cx('header__right__upload-btn')}
           onClick={() => navigate(ROUTES.createPost)}
