@@ -6,9 +6,15 @@ import {
   UserProfileIcon,
 } from '@/components/Icons';
 import { LoadMoreBtn } from '@/components/LoadMoreButton';
+import { PostListLoadingPlaceHolder } from '@/components/PostListLoadingPlaceHolder';
 import { ROUTES } from '@/configs';
+import { useGetPosts } from '@/hooks/post';
+import { Post } from '@/hooks/post/interface';
+import { Operator } from '@/services/common/types';
+import { usePostStore } from '@/store/post';
+import { useUserStore } from '@/store/user';
 import classNames from 'classnames/bind';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './YourPosts.module.scss';
@@ -17,25 +23,67 @@ const cx = classNames.bind(styles);
 const YourPosts = () => {
   const navigate = useNavigate();
 
-  const YourPost = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const user = useUserStore((state) => state.user);
+  const setYourSelectedPost = usePostStore(
+    (state) => state.setYourSelectedPost
+  );
+
+  const { data, fetchNextPage, hasNextPage, isLoading, isSuccess } =
+    useGetPosts({
+      take: 8,
+      // page: currentPage,
+      filter: [
+        {
+          operator: Operator.Equal,
+          field: 'userId',
+          // TODO: The user current does not have the userId, only has uuid, replace it when we have userId
+          value: '1',
+        },
+      ],
+      optionKey: {
+        page: currentPage.toString(),
+      },
+    });
+
+  useEffect(() => {
+    if (data && isSuccess) {
+      const postsFromData = data.pages
+        .flatMap((page) => {
+          return page.data;
+        })
+        .filter((item) => !posts.some((post) => post.id === item.id));
+
+      setPosts((state) => [...state, ...postsFromData]);
+    }
+  }, [isLoading, isSuccess]);
+
+  const YourPost = (props: { post: Post }) => {
+    const { post } = props;
+
     return (
       <div className={cx('your-posts__body__your-post')}>
         <div
           className={cx('your-posts__body__your-post__image-container')}
-          onClick={() => navigate(ROUTES.relevantPostsAndResources)}
+          onClick={() => {
+            setYourSelectedPost(post);
+            navigate(ROUTES.relevantPostsAndResources);
+          }}
         >
           <AsyncImage
             className={cx(
               'your-posts__body__your-post__image-container__image'
             )}
-            src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'
+            src={post.photos[0]}
           />
         </div>
 
         <div className='d-flex flex-row align-items-center justify-content-between mt-2'>
           <div className='d-flex flex-row align-items-center'>
             <UserProfileIcon className='mr-2' />
-            Robert Downey
+            {post.fullName}
           </div>
           <div className='d-flex flex-row align-items-center'>
             <div className='d-flex flex-row align-items-center'>
@@ -52,15 +100,20 @@ const YourPosts = () => {
       </div>
     );
   };
+
+  const filteredPost = posts.filter((post, index) => {
+    // Filter duplicates items
+    return posts.indexOf(post) === index;
+  });
   return (
     <div className={cx('your-posts')}>
       <div className={cx('your-posts__header')}>
         <div className='d-flex flex-column align-items-center justify-content-center'>
           <AsyncImage
             className={cx('your-posts__header__avatar')}
-            src='https://image.cnbcfm.com/api/v1/image/106689818-1599150563582-musk.jpg?v=1653411695'
+            src={user?.avatar}
           />
-          <h4 className='mt-2'>Jaminle D</h4>
+          <h4 className='mt-2'>{user?.firstName}</h4>
           <div className={cx('your-posts__header__edit')}>
             Edit Profile <ChevronRightIcon className='ml-2' />
           </div>
@@ -68,12 +121,21 @@ const YourPosts = () => {
       </div>
       <hr />
       <div className={cx('your-posts__body')}>
-        {Array(10)
-          .fill(null)
-          .map(() => (
-            <YourPost />
+        {filteredPost.map((post) => {
+          return <YourPost key={post.id} post={post} />;
+        })}
+
+        {hasNextPage &&
+          (isLoading ? (
+            <PostListLoadingPlaceHolder />
+          ) : (
+            <LoadMoreBtn
+              onClick={() => {
+                fetchNextPage();
+                setCurrentPage((state) => state + 1);
+              }}
+            />
           ))}
-        <LoadMoreBtn />
       </div>
     </div>
   );

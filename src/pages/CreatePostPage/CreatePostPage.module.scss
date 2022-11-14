@@ -47,7 +47,7 @@
     }
     &__title-input {
       border-bottom: 1px solid var(--grey-11) !important;
-      font-size: 2rem;
+      font-size: 2rem !important;
       font-weight: 600;
 
       &::placeholder {
