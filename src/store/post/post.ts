@@ -22,11 +22,15 @@ interface PostStoreInterface {
   setIsShowSharingPopup: (isShowSharingPopup: boolean) => void;
   selectedPost?: Post;
   setSelectedPost: (value: Post) => void;
+  yourSelectedPost?: Post;
+  setYourSelectedPost: (value: Post) => void;
 }
 
 export const usePostStore = create<PostStoreInterface>((set) => ({
   selectedPost: undefined,
   setSelectedPost: (value) => set({ selectedPost: value }),
+  yourSelectedPost: undefined,
+  setYourSelectedPost: (value) => set({ yourSelectedPost: value }),
   createPostFormData: {
     photos: [],
     descriptors: [],

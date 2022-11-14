@@ -35,7 +35,7 @@ export const useCreatePost = (
     resource: FEATURE.POST,
   });
 
-export const useGetPosts = (params: IParamsDefault) =>
+export const useGetPosts = (params: IParamsDefault<PostEntity>) =>
   useGetInfinities<Post, PostEntity>({
     query_key: QUERY_KEY.PAGINATION_POSTS,
     params,
