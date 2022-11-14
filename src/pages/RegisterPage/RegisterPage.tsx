@@ -9,13 +9,35 @@ import { useNavigate } from 'react-router-dom';
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
+  GoogleLogout,
+  useGoogleLogin,
 } from 'react-google-login';
 import styles from './RegisterPage.module.scss';
+import { useRegisterMutation } from '@/hooks/auth/query';
+import { RegisterDto } from '@/hooks/auth/interface';
 const cx = classNames.bind(styles);
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+
+  const { mutate: register, isLoading } = useRegisterMutation({
+    onSuccess: () => {
+      navigate(ROUTES.home);
+    },
+  });
+
+  const { signIn } = useGoogleLogin({
+    scope: 'profile email',
+    clientId:
+      '894609161760-1btovlg15pcuoedtfanpkogtahetsdq7.apps.googleusercontent.com',
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onFailure: (res) => {
+      console.log(res);
+    },
+  });
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -23,14 +45,10 @@ const RegisterPage = () => {
 
   const handleSubmit = () => {};
 
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
-
-  const responseGoogle = (
-    response: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    console.log(response);
+  const onFinish = (values: RegisterDto) => {
+    register({
+      ...values,
+    });
   };
 
   return (
@@ -77,9 +95,9 @@ const RegisterPage = () => {
           )}
         >
           <div className='w-50'>
-            <div className={cx('label')}>Username</div>
+            <div className={cx('label')}>First name</div>
             <Form.Item
-              name={'username'}
+              name={'firstName'}
               rules={[
                 {
                   required: true,
@@ -91,19 +109,13 @@ const RegisterPage = () => {
             </Form.Item>
           </div>
           <div>
-            <div className={cx('label')}>Contact phone number </div>
+            <div className={cx('label')}>Last name</div>
             <Form.Item
-              name={'contact'}
+              name={'lastName'}
               rules={[
                 {
                   required: true,
                   message: `Phone number is required`,
-                },
-                {
-                  pattern: new RegExp(
-                    /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
-                  ),
-                  message: `Phone number is invalid`,
                 },
               ]}
             >
@@ -141,6 +153,7 @@ const RegisterPage = () => {
           htmlType='submit'
           className={cx('w-100', 'btn-register')}
           onClick={handleSubmit}
+          loading={isLoading}
         >
           Register
         </ButtonFinder>
@@ -151,21 +164,19 @@ const RegisterPage = () => {
           <hr className='my-0' style={{ width: '12rem' }} />
         </div>
 
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId='894609161760-1btovlg15pcuoedtfanpkogtahetsdq7.apps.googleusercontent.com'
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           isSignedIn={true}
-          render={(renderProps) => (
-            <ButtonFinder
-              className={cx('w-100', 'btn-google')}
-              onClick={renderProps.onClick}
-            >
-              <ColoringGoogleIcon className='mr-3' width={25} height={25} />
-              Sign up with Google
-            </ButtonFinder>
-          )}
-        />
+          scope='profile'
+          render={(renderProps) => ( */}
+        <ButtonFinder className={cx('w-100', 'btn-google')} onClick={signIn}>
+          <ColoringGoogleIcon className='mr-3' width={25} height={25} />
+          Sign up with Google
+        </ButtonFinder>
+        {/* )}
+        /> */}
       </div>
     </Form>
   );

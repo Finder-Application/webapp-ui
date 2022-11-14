@@ -2,7 +2,13 @@ import { axiosClient } from '@/apis';
 import { AxiosError } from 'axios';
 import { useMutation, UseMutationOptions, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
-import { ChangePwDto, LoginDto, Me, ResponseLogin } from './interface';
+import {
+  ChangePwDto,
+  LoginDto,
+  Me,
+  RegisterDto,
+  ResponseLogin,
+} from './interface';
 
 const baseURL = (isPublic: boolean, url: string) =>
   `api/${isPublic ? 'public' : 'private'}/${url}`;
@@ -43,10 +49,6 @@ export const useGetMe = () => {
     }
   );
 
-  console.log('data', data);
-  console.log('isLoading', isLoading);
-  console.log('isFetching', isFetching);
-
   return { data, isLoading };
 };
 
@@ -56,6 +58,23 @@ export const useChangePwPublic = (
   return useMutation(
     (payload: ChangePwDto) =>
       axiosClient.post(baseURL(true, 'auth/change-pw'), {
+        ...payload,
+      }) as Promise<ResponseLogin>,
+    {
+      onError() {
+        toast.error('Something went wrong!');
+      },
+      ...option,
+    }
+  );
+};
+
+export const useRegisterMutation = (
+  option: UseMutationOptions<ResponseLogin, AxiosError, RegisterDto>
+) => {
+  return useMutation(
+    (payload: RegisterDto) =>
+      axiosClient.post(baseURL(true, 'auth/register'), {
         ...payload,
       }) as Promise<ResponseLogin>,
     {
