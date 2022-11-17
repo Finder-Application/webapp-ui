@@ -151,7 +151,6 @@ const Header = () => {
             <div className={cx('search-result')}></div>
           )}
         </div>
-
         <Notification />
         <Dropdown
           menu={{ items: userDropdownItems }}
@@ -161,7 +160,6 @@ const Header = () => {
         >
           <UserIcon style={{ cursor: 'pointer' }} />
         </Dropdown>
-
         <ButtonFinder
           className={cx('header__right__upload-btn')}
           onClick={() => navigate(ROUTES.createPost)}
