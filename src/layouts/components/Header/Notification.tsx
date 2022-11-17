@@ -1,18 +1,29 @@
 import { NotificationIcon } from '@/components/Icons';
 import { TOOL_TIP_zINDEX } from '@/configs';
-import { Tooltip } from 'antd';
-import React, { useState } from 'react';
+import { IParamsDefault, TResponseList } from '@/hooks/interfaces';
+import { PostNotis, CmtNotis } from '@/hooks/notifications/interface';
+import {
+  uesGetInfiCmtNotis,
+  uesGetInfiPostNotis,
+} from '@/hooks/notifications/query';
+import { useNoti } from '@/hooks/notifications/useNoti';
+import { Avatar, Badge, List, Tooltip } from 'antd';
+import { useState } from 'react';
+import { UseInfiniteQueryResult } from 'react-query';
 import { cx } from './Header';
+import { ContentNotifications } from './PostNotifications';
 
 enum NotificationTab {
-  ALL = 'All',
-  UNREAD = 'Unread',
+  POSTS = 'Posts',
+  COMMENTS = 'Comments',
 }
 
 export const Notification = () => {
   const [currentTab, setCurrentTab] = useState<NotificationTab>(
-    NotificationTab.ALL
+    NotificationTab.POSTS
   );
+
+  const { totalNoti } = useNoti();
 
   const TabItem = (item: NotificationTab) => {
     return (
@@ -37,15 +48,41 @@ export const Notification = () => {
           <h3>Notifications</h3>
 
           <div className='d-flex flex-row align-items-center'>
-            {TabItem(NotificationTab.ALL)}
-            {TabItem(NotificationTab.UNREAD)}
+            {TabItem(NotificationTab.POSTS)}
+            {TabItem(NotificationTab.COMMENTS)}
           </div>
 
-          <div className='d-flex flex-column align-items-center justify-content-center'>
-            {currentTab === NotificationTab.ALL
-              ? 'All Content'
-              : 'Unread Content'}
-          </div>
+          {currentTab === NotificationTab.POSTS ? (
+            <ContentNotifications
+              uesGetInfi={
+                uesGetInfiPostNotis as <PostNotis>(
+                  params: IParamsDefault<{}>
+                ) => UseInfiniteQueryResult<TResponseList<PostNotis>, unknown>
+              }
+              itemRender={(item: PostNotis) => (
+                <List.Item.Meta
+                  avatar={<Avatar src={item.user.avatar} />}
+                  title={item.title}
+                  description={item.content}
+                />
+              )}
+            />
+          ) : (
+            <ContentNotifications
+              uesGetInfi={
+                uesGetInfiCmtNotis as <CmtNotis>(
+                  params: IParamsDefault<{}>
+                ) => UseInfiniteQueryResult<TResponseList<CmtNotis>, unknown>
+              }
+              itemRender={(item: CmtNotis) => (
+                <List.Item.Meta
+                  avatar={<Avatar src={item.user.avatar} />}
+                  // title={item.title}
+                  description={item.content}
+                />
+              )}
+            />
+          )}
         </div>
       }
       trigger='click'
@@ -57,7 +94,9 @@ export const Notification = () => {
       }}
       overlayClassName={cx('header__notification-dropdown')}
     >
-      <NotificationIcon style={{ cursor: 'pointer' }} className='m-4' />
+      <Badge count={totalNoti} overflowCount={999}>
+        <NotificationIcon style={{ cursor: 'pointer' }} className='m-4' />
+      </Badge>
     </Tooltip>
   );
 };

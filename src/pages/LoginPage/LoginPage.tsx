@@ -22,7 +22,6 @@ const LoginPage = () => {
     onSuccess(data, variables, context) {
       StorageUtils.set('token', data.token.accessToken);
 
-      console.log(StorageUtils.get('token'));
       navigate(ROUTES.home);
     },
   });
