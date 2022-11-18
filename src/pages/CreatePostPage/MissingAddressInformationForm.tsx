@@ -1,9 +1,9 @@
-import { CalendarIcon2, DropdownIcon } from '@/components/Icons';
+import { DropdownIcon } from '@/components/Icons';
 import { Input } from '@/components/Input';
 import { usePostStore } from '@/store/post';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
-import { DatePicker, Form, Select } from 'antd';
+import { Form, Select } from 'antd';
 import toLower from 'lodash/toLower';
 import React from 'react';
 import shallow from 'zustand/shallow';
@@ -12,10 +12,15 @@ import { CreatePostFormItemsName, cx } from './CreatePostPage';
 const { Option } = Select;
 
 export const MissingAddressInformationForm = () => {
-  const [createPostFormData, setCreatePostFormData] = usePostStore(
-    (state) => [state.createPostFormData, state.setCreatePostFormData],
-    shallow
-  );
+  const [createPostFormData, setCreatePostFormData, selectedPost] =
+    usePostStore(
+      (state) => [
+        state.createPostFormData,
+        state.setCreatePostFormData,
+        state.selectedPost,
+      ],
+      shallow
+    );
 
   const {
     missingAddress = {
@@ -29,7 +34,7 @@ export const MissingAddressInformationForm = () => {
       <h4>Missing Address</h4>
 
       <div className={cx('create-post__creating-form__inform-input-container')}>
-        <div className='d-flex flex-row align-items-center'>
+        <div className='d-flex flex-row align-items-center justify-content-start'>
           <div className='d-flex flex-column'>
             <label
               className={cx(
@@ -40,6 +45,11 @@ export const MissingAddressInformationForm = () => {
             </label>
             <Form.Item
               name={CreatePostFormItemsName.MISSING_REGION}
+              initialValue={
+                GeoUtils.getIDProvinceByName(
+                  selectedPost?.missingAddress.region || ''
+                ) || undefined
+              }
               rules={[{ required: true, message: 'Region is required' }]}
             >
               <Select
@@ -84,6 +94,11 @@ export const MissingAddressInformationForm = () => {
             </label>
             <Form.Item
               name={CreatePostFormItemsName.MISSING_STATE}
+              initialValue={
+                GeoUtils.getIDDistrictByName(
+                  selectedPost?.missingAddress.state || ''
+                ) || undefined
+              }
               rules={[{ required: true, message: 'State is required' }]}
             >
               <Select
@@ -109,21 +124,23 @@ export const MissingAddressInformationForm = () => {
                 }}
                 placeholder='State'
               >
-                {GeoUtils.getAllDistricts(missingAddress?.province ?? '').map(
-                  (district) => (
-                    <Option
-                      value={district.idDistrict}
-                      key={district.idDistrict}
-                    >
-                      {district.name}
-                    </Option>
-                  )
-                )}
+                {GeoUtils.getAllDistricts(
+                  missingAddress?.province
+                    ? missingAddress?.province
+                    : GeoUtils.getIDProvinceByName(
+                        selectedPost?.missingAddress.region || ''
+                      ) ?? ''
+                ).map((district) => (
+                  <Option value={district.idDistrict} key={district.idDistrict}>
+                    {district.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </div>
           <Form.Item
             name={CreatePostFormItemsName.MISSING_COMMUNE}
+            initialValue={selectedPost?.missingAddress.commune}
             rules={[
               {
                 required: true,
@@ -135,6 +152,7 @@ export const MissingAddressInformationForm = () => {
           </Form.Item>
           <Form.Item
             name={CreatePostFormItemsName.MISSING_HAMLET}
+            initialValue={selectedPost?.missingAddress.hamlet}
             rules={[
               {
                 required: true,

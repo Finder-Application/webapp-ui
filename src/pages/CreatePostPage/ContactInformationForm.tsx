@@ -1,69 +1,53 @@
 import { Input } from '@/components/Input';
+import { useUserStore } from '@/store/user';
+import { formatUserName } from '@/utils/format.util';
 import { Form } from 'antd';
 import React from 'react';
 import { CreatePostFormItemsName, cx } from './CreatePostPage';
 
 export const ContactInformationForm = () => {
+  const user = useUserStore((state) => state.user);
   return (
     <div className={cx('create-post__contact-form')}>
       <h4>Contact Information</h4>
       <div className={cx('create-post__note', 'mb-4')}>
-        * The below information is your default contact, you can modify it if
-        needed
+        * The below information is your default contact, you can modify in your
+        profile setting
       </div>
       <Form.Item
+        initialValue={user?.address}
         name={CreatePostFormItemsName.CONTACT_LIVING_PLACE}
-        rules={[
-          {
-            required: true,
-            message: `Living place is required`,
-          },
-        ]}
+        rules={[]}
       >
-        <Input width='100%' label='Living place' />
+        <Input width='100%' label='Living place' disabled={true} />
       </Form.Item>
-      <Form.Item
-        name={CreatePostFormItemsName.CONTACT_OFFICE_ADDRESS}
-        rules={[
-          {
-            required: true,
-            message: `Office address is required`,
-          },
-        ]}
-      >
-        <Input width='100%' label='Office address' className='my-2' />
-      </Form.Item>
+
       <Form.Item
         name={CreatePostFormItemsName.CONTACT_EMAIL}
-        rules={[
-          {
-            required: true,
-            message: `Email address is required`,
+        initialValue={formatUserName({
+          user: {
+            firstName: user?.firstName || '',
+            lastName: user?.lastName || '',
+            middleName: user?.middleName || '',
           },
-          {
-            pattern: new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
-            message: `Email address is invalid`,
-          },
-        ]}
+        })}
+        rules={
+          [
+            // {
+            //   pattern: new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
+            //   message: `Email address is invalid`,
+            // },
+          ]
+        }
       >
-        <Input width='100%' label='Email' className='mb-2' />
+        <Input width='100%' label='Email' className='mb-2' disabled={true} />
       </Form.Item>
       <Form.Item
+        initialValue={user?.phone}
         name={CreatePostFormItemsName.CONTACT_PHONE}
-        rules={[
-          {
-            required: true,
-            message: `Phone address is required`,
-          },
-          {
-            pattern: new RegExp(
-              /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
-            ),
-            message: `Phone is invalid`,
-          },
-        ]}
+        rules={[]}
       >
-        <Input width='100%' label='Phone' />
+        <Input width='100%' label='Phone' disabled={true} />
       </Form.Item>
     </div>
   );

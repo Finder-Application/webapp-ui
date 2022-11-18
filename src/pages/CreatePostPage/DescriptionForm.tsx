@@ -1,9 +1,12 @@
+import { usePostStore } from '@/store/post';
 import { Form } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
 import { CreatePostFormItemsName, cx } from './CreatePostPage';
 
 export const DescriptionForm = () => {
+  const selectedPost = usePostStore((state) => state.selectedPost);
+
   return (
     <>
       <h4>Description</h4>
@@ -24,6 +27,7 @@ export const DescriptionForm = () => {
           </label>
           <Form.Item
             name={CreatePostFormItemsName.DESCRIPTION}
+            initialValue={selectedPost?.description}
             rules={[{ required: true, message: 'Description is required' }]}
           >
             <TextArea

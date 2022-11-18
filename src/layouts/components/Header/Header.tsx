@@ -18,12 +18,15 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Notification } from './Notification';
 
 import styles from './Header.module.scss';
+import { useUserStore } from '@/store/user';
 export const cx = classNames.bind(styles);
 const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const [onFocusSearch, setOnFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const user = useUserStore((state) => state.user);
 
   const navigate = useNavigate();
 
@@ -120,13 +123,6 @@ const Header = () => {
     }
   );
 
-  const notificationDropdown: MenuProps['items'] = [
-    {
-      key: 1,
-      label: <div>Notifications</div>,
-    },
-  ];
-
   return (
     <div className={headerClassName}>
       <NavLink to='/'>
@@ -151,15 +147,21 @@ const Header = () => {
             <div className={cx('search-result')}></div>
           )}
         </div>
-        <Notification />
-        <Dropdown
-          menu={{ items: userDropdownItems }}
-          placement='bottomLeft'
-          arrow
-          overlayClassName={cx('header__user-dropdown')}
-        >
-          <UserIcon style={{ cursor: 'pointer' }} />
-        </Dropdown>
+
+        {user && (
+          <>
+            <Notification />
+            <Dropdown
+              menu={{ items: userDropdownItems }}
+              placement='bottomLeft'
+              arrow
+              overlayClassName={cx('header__user-dropdown')}
+            >
+              <UserIcon style={{ cursor: 'pointer' }} />
+            </Dropdown>
+          </>
+        )}
+
         <ButtonFinder
           className={cx('header__right__upload-btn')}
           onClick={() => navigate(ROUTES.createPost)}

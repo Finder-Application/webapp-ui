@@ -27,8 +27,8 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/configs';
 import { useGetPostDetail } from '@/hooks/post';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
-import moment from 'moment';
 import { formatDate } from '@/utils/format.util';
+import { useUserStore } from '@/store/user';
 
 const cx = classNames.bind(styles);
 interface PostDetailProps {
@@ -118,6 +118,11 @@ export const PostDetail = (props: PostDetailProps) => {
   const { height, width } = useWindowSize();
 
   const navigate = useNavigate();
+
+  const user = useUserStore((state) => state.user);
+
+  const setSelectedPost = usePostStore((state) => state.setSelectedPost);
+
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
@@ -150,10 +155,13 @@ export const PostDetail = (props: PostDetailProps) => {
       open={isVisible}
       className={cx('post-detail')}
       height={toNumber(height) - POP_TO_HEADER_HEIGHT}
-      onClose={onClose}
+      onClose={() => {
+        setSelectedPost(undefined);
+        onClose();
+      }}
       headerStyle={{ display: 'none' }}
     >
-      {!data || isLoading ? (
+      {!data && isLoading ? (
         <PostDetailPlaceholder />
       ) : (
         <>
@@ -237,23 +245,28 @@ export const PostDetail = (props: PostDetailProps) => {
                 </h5>
               </div>
               <ContactInform owner={data?.owner} />
-              <div className='d-flex flex-row align-items-center justify-content-center mt-5'>
-                <ButtonFinder
-                  className={cx('post-detail__edit-btn', 'mr-3')}
-                  onClick={() =>
-                    navigate(ROUTES.createPost, {
-                      state: {
-                        isFromPostDetail: true,
-                      },
-                    })
-                  }
-                >
-                  Edit Post
-                </ButtonFinder>
-                <ButtonFinder className={cx('post-detail__delete-btn')}>
-                  <TrashIcon width={15} height={15} className='mr-2' /> Delete
-                </ButtonFinder>
-              </div>
+
+              {
+                // TODO: Enable this condition later when we update uuid like the owner.uuid on our system
+                // user && user.uuid === data?.owner.uuid &&
+                <div className='d-flex flex-row align-items-center justify-content-center mt-5'>
+                  <ButtonFinder
+                    className={cx('post-detail__edit-btn', 'mr-3')}
+                    onClick={() =>
+                      navigate(ROUTES.createPost, {
+                        state: {
+                          isFromPostDetail: true,
+                        },
+                      })
+                    }
+                  >
+                    Edit Post
+                  </ButtonFinder>
+                  <ButtonFinder className={cx('post-detail__delete-btn')}>
+                    <TrashIcon width={15} height={15} className='mr-2' /> Delete
+                  </ButtonFinder>
+                </div>
+              }
             </div>
           </div>
 

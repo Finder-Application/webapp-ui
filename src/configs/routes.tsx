@@ -1,6 +1,5 @@
 import { AuthLayout } from '@/layouts';
 import { LoginPage, SearchPage } from '@/pages';
-import CreatePostPage from '@/pages/CreatePostPage/CreatePostPage';
 import React, { lazy } from 'react';
 
 // * Define all routes for websites

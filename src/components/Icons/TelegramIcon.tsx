@@ -3,26 +3,27 @@ import React from 'react';
 export const TelegramIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
+      xmlns='http://www.w3.org/2000/svg'
       width='18'
       height='18'
-      viewBox='0 0 18 18'
       fill='none'
-      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 18 18'
       {...props}
     >
-      <path
-        d='M17 0.739258L8 9.73926'
-        stroke='black'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        width='18'
+        height='18'
+        fill='none'
+        viewBox='0 0 18 18'
       >
         <path
-          d='M17 0.739258L11.4 16.7393L8.2 9.53926L1 6.33926L17 0.739258Z'
-          stroke='black'
+          stroke='#000'
           strokeLinecap='round'
           strokeLinejoin='round'
+          d='M17 .74l-9 9M17 .74l-5.6 16-3.2-7.2L1 6.34l16-5.6z'
         ></path>
-      </path>
+      </svg>
     </svg>
   );
 };
