@@ -1,10 +1,14 @@
 import { CalendarIcon2 } from '@/components/Icons';
+import { usePostStore } from '@/store/post';
 
 import { DatePicker, Form, Select } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { CreatePostFormItemsName, cx } from './CreatePostPage';
 
 export const MissingTimeForm = () => {
+  const selectedPost = usePostStore((state) => state.selectedPost);
+
   return (
     <>
       <h4>Missing Time</h4>
@@ -20,6 +24,9 @@ export const MissingTimeForm = () => {
           </label>
           <Form.Item
             name={CreatePostFormItemsName.MISSING_TIME}
+            initialValue={
+              selectedPost?.missingTime && moment(selectedPost?.missingTime)
+            }
             rules={[
               {
                 required: true,

@@ -40,7 +40,7 @@ export const useSendOtp = (
   );
 
 export const useGetMe = () => {
-  const { data, isLoading, isFetching } = useQuery(
+  const { data, isLoading, isFetching, refetch } = useQuery(
     'GET_ME',
     () => axiosClient.get(baseURL(false, 'users/me')) as Promise<Me>,
     {
@@ -49,7 +49,7 @@ export const useGetMe = () => {
     }
   );
 
-  return { data, isLoading };
+  return { data, isLoading, refetch };
 };
 
 export const useChangePwPublic = (

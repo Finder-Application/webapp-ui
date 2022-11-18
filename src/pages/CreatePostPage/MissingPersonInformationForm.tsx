@@ -8,14 +8,21 @@ import { DatePicker, Form, Select } from 'antd';
 import toLower from 'lodash/toLower';
 import shallow from 'zustand/shallow';
 import { CreatePostFormItemsName, cx } from './CreatePostPage';
+import moment from 'moment';
+import { regex } from '@/configs';
 
 const { Option } = Select;
 
 export const MissingPersonInformationForm = () => {
-  const [createPostFormData, setCreatePostFormData] = usePostStore(
-    (state) => [state.createPostFormData, state.setCreatePostFormData],
-    shallow
-  );
+  const [createPostFormData, setCreatePostFormData, selectedPost] =
+    usePostStore(
+      (state) => [
+        state.createPostFormData,
+        state.setCreatePostFormData,
+        state.selectedPost,
+      ],
+      shallow
+    );
 
   const {
     hometownAddress = {
@@ -40,13 +47,14 @@ export const MissingPersonInformationForm = () => {
           <div className='d-flex flex-row align-items-center mb-3'>
             <Form.Item
               name={CreatePostFormItemsName.FULL_NAME}
+              initialValue={selectedPost?.fullName}
               rules={[
                 {
                   required: true,
                   message: `Full name is required`,
                 },
                 {
-                  pattern: new RegExp(/^[a-zA-Z ]*$/),
+                  pattern: new RegExp(regex.vietNamAlphabets),
                   message: `Full name must be alphabets`,
                 },
               ]}
@@ -68,6 +76,13 @@ export const MissingPersonInformationForm = () => {
               </label>
               <Form.Item
                 name={CreatePostFormItemsName.GENDER}
+                initialValue={
+                  selectedPost?.gender === undefined
+                    ? undefined
+                    : selectedPost?.gender === 0
+                    ? 'male'
+                    : 'female'
+                }
                 rules={[{ required: true, message: 'Gender is required' }]}
               >
                 <Select
@@ -94,13 +109,15 @@ export const MissingPersonInformationForm = () => {
               </label>
               <Form.Item
                 name={CreatePostFormItemsName.DOB}
+                initialValue={
+                  selectedPost?.dateOfBirth && moment(selectedPost?.dateOfBirth)
+                }
                 rules={[
                   {
                     required: true,
                     message: 'Date of birth is required',
                   },
                 ]}
-                hasFeedback
               >
                 <DatePicker
                   className={cx(
@@ -109,12 +126,16 @@ export const MissingPersonInformationForm = () => {
                   placeholder='MM/DD/YYYY'
                   format='MM-DD-YYYY'
                   suffixIcon={<CalendarIcon2 height={15} width={15} />}
+                  clearIcon={false}
                 />
               </Form.Item>
             </div>
           </div>
         </div>
-        <Form.Item name={CreatePostFormItemsName.NICK_NAME}>
+        <Form.Item
+          name={CreatePostFormItemsName.NICK_NAME}
+          initialValue={selectedPost?.nickname}
+        >
           <Input
             width='18em'
             label='Nick name (optional)'
@@ -143,6 +164,11 @@ export const MissingPersonInformationForm = () => {
             <Form.Item
               name={CreatePostFormItemsName.HOMETOWN_REGION}
               rules={[{ required: true, message: 'Region is required' }]}
+              initialValue={
+                GeoUtils.getIDProvinceByName(
+                  selectedPost?.hometown.region || ''
+                ) || undefined
+              }
             >
               <Select
                 className={cx(
@@ -187,6 +213,11 @@ export const MissingPersonInformationForm = () => {
             <Form.Item
               name={CreatePostFormItemsName.HOMETOWN_STATE}
               rules={[{ required: true, message: 'State is required' }]}
+              initialValue={
+                GeoUtils.getIDDistrictByName(
+                  selectedPost?.hometown.state || ''
+                ) || undefined
+              }
             >
               <Select
                 className={cx(
@@ -211,21 +242,23 @@ export const MissingPersonInformationForm = () => {
                 }}
                 placeholder='State'
               >
-                {GeoUtils.getAllDistricts(hometownAddress?.province ?? '').map(
-                  (district) => (
-                    <Option
-                      value={district.idDistrict}
-                      key={district.idDistrict}
-                    >
-                      {district.name}
-                    </Option>
-                  )
-                )}
+                {GeoUtils.getAllDistricts(
+                  hometownAddress?.province
+                    ? hometownAddress?.province
+                    : GeoUtils.getIDProvinceByName(
+                        selectedPost?.hometown.region || ''
+                      ) ?? ''
+                ).map((district) => (
+                  <Option value={district.idDistrict} key={district.idDistrict}>
+                    {district.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </div>
           <Form.Item
             name={CreatePostFormItemsName.HOMETOWN_COMMUNE}
+            initialValue={selectedPost?.hometown.commune}
             rules={[
               {
                 required: true,
@@ -237,6 +270,7 @@ export const MissingPersonInformationForm = () => {
           </Form.Item>
           <Form.Item
             name={CreatePostFormItemsName.HOMETOWN_HAMLET}
+            initialValue={selectedPost?.hometown.hamlet}
             rules={[
               {
                 required: true,
