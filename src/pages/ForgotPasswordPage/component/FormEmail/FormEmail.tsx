@@ -24,8 +24,12 @@ const FormEmail = ({ onSendOtp, email, setEmail }: Props) => {
       onSendOtp();
     },
     onError(error, variables, context) {
-      if (typeof error?.response?.data?.message === 'string') {
-        toast.error(error?.response?.data?.message as string);
+      const data = error?.response?.data;
+      if (error?.response?.data) {
+        const { message } = data as any;
+        if (typeof message === 'string') {
+          toast.error(message);
+        }
       }
     },
   });

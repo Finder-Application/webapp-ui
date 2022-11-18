@@ -10,7 +10,7 @@ import {
   ResponseCreateComment,
 } from './interface';
 
-export const uesGetInfiComments = (params: IParamsDefault) =>
+export const uesGetInfiComments = (params: IParamsDefault<{}>) =>
   useGetInfinities<Comment>({
     query_key: QUERY_KEY.PAGINATION_COMMENTS,
     params,

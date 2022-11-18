@@ -4,7 +4,7 @@ import { UseInfiniteQueryResult } from 'react-query';
 
 interface Props<T> {
   uesGetInfi: <T>(
-    params: IParamsDefault
+    params: IParamsDefault<any>
   ) => UseInfiniteQueryResult<TResponseList<T>, unknown>;
   itemRender: (item: T) => JSX.Element;
 }

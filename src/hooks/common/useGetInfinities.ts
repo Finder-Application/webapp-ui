@@ -7,12 +7,12 @@ import {
   TResponseList,
 } from '../interfaces';
 const getInfinitiesApi = <T, P>(
-  params: P | IParamsDefault,
+  params: P | IParamsDefault<{}>,
   feature: FEATURE,
   isPublic?: boolean
 ): Promise<TResponseList<T>> => {
   const baseUrl = `/api/${isPublic ? 'public' : 'private'}/${feature}`;
-  params = params as IParamsDefault;
+  params = params as IParamsDefault<{}>;
   const { optionKey } = params;
   return axiosClient.get(baseUrl, {
     params: {
