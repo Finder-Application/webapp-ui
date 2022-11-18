@@ -21,7 +21,6 @@ const LoginPage = () => {
   const mutationLogin = useLogin({
     onSuccess(data, variables, context) {
       StorageUtils.set('token', data.token.accessToken);
-
       navigate(ROUTES.home);
     },
   });

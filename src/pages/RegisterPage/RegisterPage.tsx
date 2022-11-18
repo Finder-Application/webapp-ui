@@ -6,15 +6,14 @@ import classNames from 'classnames/bind';
 import React from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-  GoogleLogout,
-  useGoogleLogin,
-} from 'react-google-login';
+import { useGoogleLogin } from '@react-oauth/google';
 import styles from './RegisterPage.module.scss';
-import { useRegisterMutation } from '@/hooks/auth/query';
+import {
+  useRegisterGoogleMutation,
+  useRegisterMutation,
+} from '@/hooks/auth/query';
 import { RegisterDto } from '@/hooks/auth/interface';
+import StorageUtils from '@/utils/Storage.utils';
 const cx = classNames.bind(styles);
 
 const RegisterPage = () => {
@@ -22,21 +21,28 @@ const RegisterPage = () => {
   const [form] = Form.useForm();
 
   const { mutate: register, isLoading } = useRegisterMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      StorageUtils.set('token', data.token.accessToken);
       navigate(ROUTES.home);
     },
   });
 
-  const { signIn } = useGoogleLogin({
-    scope: 'profile email',
-    clientId:
-      '894609161760-1btovlg15pcuoedtfanpkogtahetsdq7.apps.googleusercontent.com',
-    onSuccess: (res) => {
-      console.log(res);
+  const { mutate: registerGG, isLoading: isLoadingGG } =
+    useRegisterGoogleMutation({
+      onSuccess: (data) => {
+        console.log(data);
+        StorageUtils.set('token', data.token.accessToken);
+        navigate(ROUTES.home);
+      },
+    });
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse.access_token);
+      registerGG({ idToken: tokenResponse.access_token });
     },
-    onFailure: (res) => {
-      console.log(res);
-    },
+    scope: 'profile email openid',
+    flow: 'implicit',
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -171,7 +177,10 @@ const RegisterPage = () => {
           isSignedIn={true}
           scope='profile'
           render={(renderProps) => ( */}
-        <ButtonFinder className={cx('w-100', 'btn-google')} onClick={signIn}>
+        <ButtonFinder
+          className={cx('w-100', 'btn-google')}
+          onClick={() => login()}
+        >
           <ColoringGoogleIcon className='mr-3' width={25} height={25} />
           Sign up with Google
         </ButtonFinder>
@@ -183,3 +192,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+//"You have created a new client application that uses libraries for user authentication or authorization that will soon be deprecated. New clients must use the new libraries instead; existing clients must also migrate before these libraries are deprecated. See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."

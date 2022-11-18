@@ -352,6 +352,11 @@
     classnames "^2.3.2"
     rc-util "^5.24.4"
 
+"@react-oauth/google@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@react-oauth/google/-/google-0.5.0.tgz#1c8aff6b6914a61ba3df505cdb126026db2e3cad"
+  integrity sha512-3bS+DmKjynzdn3dwdNFdiIybRTOhF2siVI+gjSZrsYI52oWKVqb8mkxsV3YbU/EnL/c5g9zBinGcbzTNUHq/eg==
+
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
