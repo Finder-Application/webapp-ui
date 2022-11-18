@@ -90,7 +90,7 @@ export const PostList = (props: PostListProps) => {
       >
         <div className='row flex-wrap justify-content-start align-items-center'>
           {filteredPost.map((post, index) => (
-            <div key={post.id.toString()} className='col-xl-3 col-lg-4'>
+            <div key={post.id.toString()} className='col-xl-4 col-lg-3'>
               <PostComponent postItem={post} />
             </div>
           ))}

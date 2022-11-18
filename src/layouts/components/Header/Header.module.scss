@@ -25,7 +25,6 @@
       max-height: 30em !important;
       overflow-y: auto;
 
-
       &__tab {
         padding: 0.3em 1em;
         border-radius: 10px;
@@ -46,7 +45,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding: 0.5em 1em;
+      padding: 0.5em 2rem;
       color: var(--grey-5);
 
       &__last-item {
@@ -95,7 +94,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 22rem;
+    width: 25rem;
     margin-left: 5rem;
 
     &__item {
@@ -265,4 +264,3 @@
   top: calc(var(--default-layout-header-height) * -1 + 10px);
   transition: height 0.5s ease-out;
 }
-
