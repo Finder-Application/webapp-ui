@@ -3,12 +3,13 @@ import {
   ChatIcon,
   ChevronRightIcon,
   EyesIcon,
+  TrashIcon,
   UserProfileIcon,
 } from '@/components/Icons';
 import { LoadMoreBtn } from '@/components/LoadMoreButton';
 import { PostListLoadingPlaceHolder } from '@/components/PostListLoadingPlaceHolder';
 import { ROUTES } from '@/configs';
-import { useGetPosts } from '@/hooks/post';
+import { useDeletePost, useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
 import { Operator } from '@/services/common/types';
 import { usePostStore } from '@/store/post';
@@ -31,22 +32,31 @@ const YourPosts = () => {
     (state) => state.setYourSelectedPost
   );
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isSuccess } =
-    useGetPosts({
-      take: 8,
-      // page: currentPage,
-      filter: [
-        {
-          operator: Operator.Equal,
-          field: 'userId',
-          // TODO: The user current does not have the userId, only has uuid, replace it when we have userId
-          value: '1',
-        },
-      ],
-      optionKey: {
-        page: currentPage.toString(),
+  const deletePost = useDeletePost();
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isSuccess,
+    refetch,
+    isRefetching,
+  } = useGetPosts({
+    take: 8,
+    // page: currentPage,
+    filter: [
+      {
+        operator: Operator.Equal,
+        field: 'userId',
+        // TODO: The user current does not have the userId, only has uuid, replace it when we have userId
+        value: '1',
       },
-    });
+    ],
+    optionKey: {
+      page: currentPage.toString(),
+    },
+  });
 
   useEffect(() => {
     if (data && isSuccess) {
@@ -58,7 +68,7 @@ const YourPosts = () => {
 
       setPosts((state) => [...state, ...postsFromData]);
     }
-  }, [isLoading, isSuccess]);
+  }, [isLoading, isSuccess, hasNextPage]);
 
   const YourPost = (props: { post: Post }) => {
     const { post } = props;
@@ -91,9 +101,25 @@ const YourPosts = () => {
               <span>100</span>
             </div>
             <div className={cx('your-posts__body__your-post__v-divider')}></div>
-            <div className='d-flex flex-row align-items-center'>
-              <ChatIcon className='mr-2' />
-              <span>5</span>
+            <div
+              className='d-flex flex-row align-items-center'
+              style={{ cursor: 'pointer' }}
+              onClick={async () => {
+                if (
+                  confirm('Are you sure you want to delete this post?') == true
+                ) {
+                  await deletePost
+                    .mutateAsync({ id: post.id })
+                    .then(async () => {
+                      await refetch();
+                      setPosts((state) =>
+                        state.filter((item) => item.id !== post.id)
+                      );
+                    });
+                }
+              }}
+            >
+              <TrashIcon color='red' width={15} height={15} />
             </div>
           </div>
         </div>
@@ -103,6 +129,7 @@ const YourPosts = () => {
 
   const filteredPost = posts.filter((post, index) => {
     // Filter duplicates items
+
     return posts.indexOf(post) === index;
   });
   return (

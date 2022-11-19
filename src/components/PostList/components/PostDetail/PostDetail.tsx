@@ -95,7 +95,7 @@ export const LARGE_IMAGES = [
   },
   {
     id: 3,
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQP7ARHenfnGXcxCIhmDxObHocM8FPbjyaBg&usqp=CAU',
+    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQP7ARHenfnGXcnPostDetailCIhmDxObHocM8FPbjyaBg&usqp=CAU',
     alt: 'Placeholder image',
   },
   {
@@ -124,9 +124,7 @@ export const PostDetail = (props: PostDetailProps) => {
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
-
   const { data, isLoading } = useGetPostDetail({ id });
-
   const ownerName =
     (data?.owner.firstName || '') +
     ' ' +
@@ -253,7 +251,7 @@ export const PostDetail = (props: PostDetailProps) => {
             visible={showCommentDrawer}
             onClose={onCloseCommentDrawer}
             // fake data postId=21 for show list comment
-            postId={21}
+            postId={id}
           />
         </>
       )}
