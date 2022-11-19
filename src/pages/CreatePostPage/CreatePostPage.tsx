@@ -9,7 +9,7 @@ import GeoUtils from '@/utils/Geo.utils';
 import { Form, Input as AntdInput } from 'antd';
 import classNames from 'classnames/bind';
 import { useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import shallow from 'zustand/shallow';
 import { ContactInformationForm } from './ContactInformationForm';
@@ -228,6 +228,7 @@ const CreatePostPage = () => {
           })
           .then(() => {
             toast.success('Create Post successfully!');
+
             // form.resetFields();
             // setCreatePostFormData({
             //   descriptors: [],

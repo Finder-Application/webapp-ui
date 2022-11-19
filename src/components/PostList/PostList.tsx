@@ -3,6 +3,7 @@ import { useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useLocation } from 'react-router-dom';
 import { NoResultsFound } from '../NoResult';
 import { Post as PostComponent } from './components/Post/Post';
 import { PostLoading } from './components/PostLoading';
@@ -26,21 +27,25 @@ export const PostList = (props: PostListProps) => {
       page: currentPage,
       take: 10,
     });
-  console.log('🚀 ~ file: PostList.tsx ~ line 25 ~ PostList ~ data', data);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (data && isSuccess) {
-      const postsFromData = data.pages
-        .flatMap((page) => {
-          setPageCount(page.meta.pageCount);
-          setItemCount(page.meta.itemCount);
-          return page.data;
-        })
-        .filter((item) => !posts.some((post) => post.id === item.id));
-
-      setPosts((state) => [...state, ...postsFromData]);
+      setPosts((state) => {
+        const postsFromData = data.pages
+          .flatMap((page) => {
+            setPageCount(page.meta.pageCount);
+            setItemCount(page.meta.itemCount);
+            return page.data;
+          })
+          .filter((item) => !state.some((post) => post.id === item.id));
+        return [...state, ...postsFromData];
+      });
     }
-  }, [isLoading, isSuccess]);
+  }, [isLoading, isSuccess, hasNextPage, data]);
 
   const renderLoadingListPost = () => {
     return (
@@ -81,7 +86,7 @@ export const PostList = (props: PostListProps) => {
   return (
     <>
       <InfiniteScroll
-        dataLength={posts.length}
+        dataLength={filteredPost.length}
         next={() => {
           fetchNextPage();
           currentPage < pageCount && setCurrentPage((state) => state + 1);

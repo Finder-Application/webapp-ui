@@ -70,6 +70,10 @@ const YourPosts = () => {
     }
   }, [isLoading, isSuccess, hasNextPage]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const YourPost = (props: { post: Post }) => {
     const { post } = props;
 
