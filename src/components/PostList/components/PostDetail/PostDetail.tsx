@@ -5,6 +5,7 @@ import {
   ContactIcon,
   DocumentIcon,
   ShareIcon,
+  TrashIcon,
 } from '@/components/Icons';
 import { useWindowSize } from '@/hooks';
 import { Button, Divider, Drawer, Tooltip } from 'antd';
@@ -14,7 +15,7 @@ import styles from './PostDetail.module.scss';
 
 import { UserAvatar } from '@/components/UserAvatar';
 import { TOOL_TIP_zINDEX } from '@/configs/constants';
-import { useGetPostDetail } from '@/hooks/post';
+import { useDeletePost, useGetPostDetail } from '@/hooks/post';
 import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import { formatDate } from '@/utils/format.util';
@@ -27,6 +28,8 @@ import { MissingInform } from './MissingInform';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
 import { SettingsPost } from './SettingsPost/Settings';
 import { SharingPopup } from './SharingPopup';
+import { ButtonFinder } from '@/components/ButtonFinder';
+import { ROUTES } from '@/configs';
 
 export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
@@ -95,7 +98,7 @@ export const LARGE_IMAGES = [
   },
   {
     id: 3,
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQP7ARHenfnGXcxCIhmDxObHocM8FPbjyaBg&usqp=CAU',
+    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQP7ARHenfnGXcnPostDetailCIhmDxObHocM8FPbjyaBg&usqp=CAU',
     alt: 'Placeholder image',
   },
   {
@@ -129,6 +132,7 @@ export const PostDetail = (props: PostDetailProps) => {
   );
 
   const { data, isLoading } = useGetPostDetail({ id });
+  const deletePost = useDeletePost();
 
   const ownerName =
     (data?.owner.firstName || '') +
@@ -247,6 +251,41 @@ export const PostDetail = (props: PostDetailProps) => {
                 </h5>
               </div>
               <ContactInform owner={data?.owner} />
+
+              {
+                // TODO: Enable this condition later when we update uuid like the owner.uuid on our system
+                // user && user.uuid === data?.owner.uuid &&
+                <div className='d-flex flex-row align-items-center justify-content-center mt-5'>
+                  <ButtonFinder
+                    className={cnPostDetail('post-detail__edit-btn', 'mr-3')}
+                    onClick={() =>
+                      navigate(ROUTES.createPost, {
+                        state: {
+                          isFromPostDetail: true,
+                        },
+                      })
+                    }
+                  >
+                    Edit Post
+                  </ButtonFinder>
+                  <ButtonFinder
+                    className={cnPostDetail('post-detail__delete-btn')}
+                    onClick={async () => {
+                      if (
+                        confirm('Are you sure you want to delete this post?') ==
+                        true
+                      ) {
+                        await deletePost.mutateAsync({ id: id }).then(() => {
+                          onClose();
+                          location.reload();
+                        });
+                      }
+                    }}
+                  >
+                    <TrashIcon width={15} height={15} className='mr-2' /> Delete
+                  </ButtonFinder>
+                </div>
+              }
             </div>
           </div>
 

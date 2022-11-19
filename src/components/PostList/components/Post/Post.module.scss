@@ -14,7 +14,21 @@
     background-color: var(--white);
     overflow: hidden;
     height: var(--card-height);
+
     &__info {
+      &__matching-percent {
+        position: absolute;
+        right: 0.5em;
+        top: 0.5em;
+        :global(.ant-progress-inner) {
+          width: 1.5em !important;
+          height: 1.5em !important;
+          :global(.ant-progress-text) {
+            font-size: 0.8rem !important;
+          }
+        }
+      }
+
       position: relative;
       --fs-state: 1rem;
       --space-top: 0.5rem;
