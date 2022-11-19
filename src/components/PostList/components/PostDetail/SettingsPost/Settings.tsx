@@ -1,6 +1,6 @@
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { ROUTES, TOOL_TIP_zINDEX } from '@/configs';
-import { Dropdown, Menu, MenuProps, Tooltip } from 'antd';
+import { Dropdown, Menu, MenuProps, Modal, Tooltip } from 'antd';
 import { cnPostDetail } from '../PostDetail';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
@@ -8,6 +8,8 @@ import { BsTrash } from 'react-icons/bs';
 
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
+import { useDeletePost } from '@/hooks/post';
+import { useState } from 'react';
 
 const cx = classNames;
 
@@ -17,6 +19,8 @@ interface SettingsPostProps {
 
 export const SettingsPost = (props: SettingsPostProps) => {
   const navigate = useNavigate();
+  const mutation = useDeletePost();
+  const [visibleConfirmDelete, setVisibleConfirmDelete] = useState(false);
   const settingsDropdowns = [
     {
       title: 'Edit post',
@@ -69,6 +73,7 @@ export const SettingsPost = (props: SettingsPostProps) => {
           <AiOutlineSetting width={15} height={15} />
         </ButtonFinder>
       </Dropdown>
+      <Modal title='Are you sure you want to delete this' visible />
     </div>
   );
 };
