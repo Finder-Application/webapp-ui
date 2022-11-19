@@ -117,10 +117,7 @@ export const PostDetail = (props: PostDetailProps) => {
 
   const { height, width } = useWindowSize();
 
-  const navigate = useNavigate();
-
   const user = useUserStore((state) => state.user);
-
   const setSelectedPost = usePostStore((state) => state.setSelectedPost);
 
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
@@ -183,7 +180,9 @@ export const PostDetail = (props: PostDetailProps) => {
               onClick={onOpenCommentDrawer}
             />
             <ShareToolTipButton onClick={showSharingPopupModal} />
-            <SettingsPost postId='' />
+            {data?.owner.userId === user?.userId && (
+              <SettingsPost postId={id} />
+            )}
           </div>
           <div
             className={cnPostDetail(

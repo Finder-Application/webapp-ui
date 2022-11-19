@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const cx = classNames;
 
 interface SettingsPostProps {
-  postId: string;
+  postId: number;
 }
 
 export const SettingsPost = (props: SettingsPostProps) => {

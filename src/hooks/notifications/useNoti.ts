@@ -1,4 +1,5 @@
 import { initSocket } from '@/configs/socket';
+import { useUserStore } from '@/store/user';
 import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { useGetMe } from '../auth/query';
@@ -10,7 +11,7 @@ export const useNoti = () => {
   const [noti, setNoti] = useState<any[]>([]);
   const [totalNoti, setTotalNoti] = useState(0);
 
-  const { data } = useGetMe();
+  const data = useUserStore((state) => state.user);
   // use effect to listen to the event "notification" from the server
   useEffect(() => {
     if (data?.uuid) {
