@@ -18,8 +18,18 @@ export const UploadImagesForm = () => {
   const [files, setFiles] = useState<string[]>([]);
 
   const inputImageFile = React.useRef<HTMLInputElement | null>(null);
-  const [createPostFormData, setCreatePostFormData] = usePostStore(
-    (state) => [state.createPostFormData, state.setCreatePostFormData],
+  const [
+    createPostFormData,
+    setCreatePostFormData,
+    selectedPost,
+    setSelectedPost,
+  ] = usePostStore(
+    (state) => [
+      state.createPostFormData,
+      state.setCreatePostFormData,
+      state.selectedPost,
+      state.setSelectedPost,
+    ],
     shallow
   );
 
@@ -37,7 +47,11 @@ export const UploadImagesForm = () => {
     return base64.split('/')[0].split(':')[1] === 'image';
   }
 
-  useEffect(() => {}, [faceDetect]);
+  useEffect(() => {
+    if (selectedPost) {
+      setFiles(selectedPost.photos);
+    }
+  }, [selectedPost]);
 
   useEffect(() => {
     return setCreatePostFormData({
@@ -147,11 +161,20 @@ export const UploadImagesForm = () => {
     const newDescriptors = createPostFormData?.descriptors?.filter(
       (_, index) => index !== deletingIndex
     );
+    const newImagesFromSelectedPost = selectedPost?.photos?.filter(
+      (_, index) => index !== deletingIndex
+    );
+
     setFiles(newImages);
     setCreatePostFormData({
       photos: newFiles,
       descriptors: newDescriptors,
     });
+    selectedPost &&
+      setSelectedPost({
+        ...selectedPost,
+        photos: newImagesFromSelectedPost ?? [],
+      });
   }
 
   return (

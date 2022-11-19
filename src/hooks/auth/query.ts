@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import {
   ChangePwDto,
   LoginDto,
+  LoginGGDto,
   Me,
   RegisterDto,
   ResponseLogin,
@@ -40,7 +41,7 @@ export const useSendOtp = (
   );
 
 export const useGetMe = () => {
-  const { data, isLoading, isFetching } = useQuery(
+  const { data, isLoading, isFetching, refetch } = useQuery(
     'GET_ME',
     () => axiosClient.get(baseURL(false, 'users/me')) as Promise<Me>,
     {
@@ -49,7 +50,7 @@ export const useGetMe = () => {
     }
   );
 
-  return { data, isLoading };
+  return { data, isLoading, refetch };
 };
 
 export const useChangePwPublic = (
@@ -75,6 +76,23 @@ export const useRegisterMutation = (
   return useMutation(
     (payload: RegisterDto) =>
       axiosClient.post(baseURL(true, 'auth/register'), {
+        ...payload,
+      }) as Promise<ResponseLogin>,
+    {
+      onError() {
+        toast.error('Something went wrong!');
+      },
+      ...option,
+    }
+  );
+};
+
+export const useRegisterGoogleMutation = (
+  option: UseMutationOptions<ResponseLogin, AxiosError, LoginGGDto>
+) => {
+  return useMutation(
+    (payload: LoginGGDto) =>
+      axiosClient.post(baseURL(true, 'auth/login-gg'), {
         ...payload,
       }) as Promise<ResponseLogin>,
     {

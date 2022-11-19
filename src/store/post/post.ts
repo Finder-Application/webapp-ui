@@ -21,7 +21,7 @@ interface PostStoreInterface {
   isShowSharingPopup: boolean;
   setIsShowSharingPopup: (isShowSharingPopup: boolean) => void;
   selectedPost?: Post;
-  setSelectedPost: (value: Post) => void;
+  setSelectedPost: (value?: Post) => void;
   yourSelectedPost?: Post;
   setYourSelectedPost: (value: Post) => void;
 }

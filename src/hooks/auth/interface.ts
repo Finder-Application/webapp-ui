@@ -50,3 +50,7 @@ export interface RegisterDto {
   email: string;
   password: string;
 }
+
+export interface LoginGGDto {
+  idToken: string;
+}

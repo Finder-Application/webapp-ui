@@ -5,30 +5,28 @@ import {
   ContactIcon,
   DocumentIcon,
   ShareIcon,
-  TrashIcon,
 } from '@/components/Icons';
 import { useWindowSize } from '@/hooks';
-import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
+import { Button, Divider, Drawer, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import toNumber from 'lodash/toNumber';
 import styles from './PostDetail.module.scss';
 
 import { UserAvatar } from '@/components/UserAvatar';
 import { TOOL_TIP_zINDEX } from '@/configs/constants';
+import { useGetPostDetail } from '@/hooks/post';
+import { usePostStore } from '@/store/post';
+import { useUserStore } from '@/store/user';
+import { formatDate } from '@/utils/format.util';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CommentDrawer } from './CommentDrawer';
 import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
 import { MissingInform } from './MissingInform';
-import { CommentDrawer } from './CommentDrawer';
-import { usePostStore } from '@/store/post';
-import { SharingPopup } from './SharingPopup';
-import { ButtonFinder } from '@/components/ButtonFinder';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/configs';
-import { useGetPostDetail } from '@/hooks/post';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
-import { formatDate } from '@/utils/format.util';
 import { SettingsPost } from './SettingsPost/Settings';
+import { SharingPopup } from './SharingPopup';
 
 export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
@@ -120,6 +118,11 @@ export const PostDetail = (props: PostDetailProps) => {
   const { height, width } = useWindowSize();
 
   const navigate = useNavigate();
+
+  const user = useUserStore((state) => state.user);
+
+  const setSelectedPost = usePostStore((state) => state.setSelectedPost);
+
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
@@ -153,10 +156,13 @@ export const PostDetail = (props: PostDetailProps) => {
       open={isVisible}
       className={cnPostDetail('post-detail')}
       height={toNumber(height) - POP_TO_HEADER_HEIGHT}
-      onClose={onClose}
+      onClose={() => {
+        setSelectedPost(undefined);
+        onClose();
+      }}
       headerStyle={{ display: 'none' }}
     >
-      {!data || isLoading ? (
+      {!data && isLoading ? (
         <PostDetailPlaceholder />
       ) : (
         <>
