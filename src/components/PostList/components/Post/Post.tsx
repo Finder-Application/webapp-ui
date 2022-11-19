@@ -1,5 +1,5 @@
 import { AsyncImage, ButtonFinder } from '@/components';
-import { Tag } from 'antd';
+import { Progress, Tag } from 'antd';
 import classNames from 'classnames/bind';
 import capitalize from 'lodash/capitalize';
 import React, { memo } from 'react';
@@ -8,6 +8,7 @@ import styles from './Post.module.scss';
 import { FcOvertime } from 'react-icons/fc';
 import { Post as PostInterface } from '@/hooks/post/interface';
 import { usePostStore } from '@/store/post';
+import { formatUserName } from '@/utils/format.util';
 
 const cx = classNames.bind(styles);
 type Props = {
@@ -19,14 +20,14 @@ export const Post = memo((props: Props) => {
 
   const setSelectedPost = usePostStore((state) => state.setSelectedPost);
 
-  const ownerName =
-    (postItem.owner.firstName || '') +
-    ' ' +
-    (postItem.owner.middleName || '') +
-    ' ' +
-    (postItem.owner.lastName || '');
+  const ownerName = formatUserName({
+    user: {
+      firstName: postItem.owner.firstName,
+      middleName: postItem.owner.middleName,
+      lastName: postItem.owner.lastName,
+    },
+  });
 
-  const state = postItem.found ? 'found' : 'finding';
   const [isHover, setIsHover] = React.useState(false);
   const [detailVisible, setDetailVisible] = React.useState(false);
 
@@ -64,11 +65,14 @@ export const Post = memo((props: Props) => {
           <AsyncImage src={postItem.photos[0]} />
         </div>
         <div className={cx('card__info', 'col-7 h-100')}>
-          <Tag
-            className={cx('card__info-status', `card__info-status--${state}`)}
-          >
-            {capitalize(state)}
-          </Tag>
+          {postItem.similar && (
+            <Progress
+              className={cx('card__info__matching-percent')}
+              type='circle'
+              percent={postItem.similar * 100}
+              format={(percent) => `${percent}%`}
+            />
+          )}
           <div className={cx('card__info-content')}>
             <div className={cx('content-item')}>
               <span>FullName: </span>

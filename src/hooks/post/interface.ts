@@ -47,6 +47,7 @@ export interface Post {
   missingTime: Date;
   owner: User;
   found: boolean;
+  similar?: number;
 }
 export interface Descriptor {
   0: number;

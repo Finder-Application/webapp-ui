@@ -1,6 +1,6 @@
 import { axiosClient } from '@/apis';
 import { PostEntity } from '@/entites/Post';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { useMutationCreate } from '../common/useCreate';
 import { useGetInfinities } from '../common/useGetInfinities';
 import { useMutationUpdate } from '../common/useUpdate';
@@ -72,3 +72,9 @@ export const useGetPostDetail = (params: { id: number }) =>
     },
     { enabled: params.id !== -1 }
   );
+
+export const useDeletePost = () =>
+  useMutation(['DELETE_POST'], async (params: { id: number }) => {
+    const data = await axiosClient.delete(`/api/private/posts/${params.id}`);
+    return data;
+  });
