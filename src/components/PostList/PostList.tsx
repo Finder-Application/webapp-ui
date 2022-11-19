@@ -86,7 +86,7 @@ export const PostList = (props: PostListProps) => {
           fetchNextPage();
           currentPage < pageCount && setCurrentPage((state) => state + 1);
         }}
-        hasMore={posts.length !== data?.pages.length}
+        hasMore={posts.length !== itemCount}
         loader={renderLoadingListPost()}
       >
         <div className='row flex-wrap justify-content-start align-items-center'>
