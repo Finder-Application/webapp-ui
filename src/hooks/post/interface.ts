@@ -46,6 +46,7 @@ export interface Post {
   createdAt: Date;
   missingTime: Date;
   owner: User;
+  found: boolean;
 }
 export interface Descriptor {
   0: number;

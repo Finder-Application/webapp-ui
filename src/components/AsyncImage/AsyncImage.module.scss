@@ -3,6 +3,14 @@
   height: 100%;
   object-fit: cover;
 }
+.small {
+  height: 2.5rem;
+  width: 2.5rem;
+}
 :global(.ant-image) {
   height: 100%;
+  .small {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
 }

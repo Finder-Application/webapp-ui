@@ -139,4 +139,7 @@
     justify-content: center;
     align-items: center;
   }
+  :global(.ant-dropdown) {
+    z-index: 9999999999;
+  }
 }

@@ -47,6 +47,6 @@ export const useGetPosts = (params: IParamsDefault<PostEntity>) =>
 
 export const useGetPostDetail = (params: { id: number }) =>
   useQuery(['GET_POST_DETAIL', params.id], async () => {
-    const data: Post = await axiosClient.get(`/api/private/posts/${params.id}`);
+    const data: Post = await axiosClient.get(`/api/public/posts/${params.id}`);
     return data;
   });

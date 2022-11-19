@@ -26,6 +26,7 @@ export const PostList = (props: PostListProps) => {
       page: currentPage,
       take: 10,
     });
+  console.log('🚀 ~ file: PostList.tsx ~ line 25 ~ PostList ~ data', data);
 
   useEffect(() => {
     if (data && isSuccess) {
@@ -85,7 +86,7 @@ export const PostList = (props: PostListProps) => {
           fetchNextPage();
           currentPage < pageCount && setCurrentPage((state) => state + 1);
         }}
-        hasMore={posts.length !== itemCount}
+        hasMore={posts.length !== data?.pages.length}
         loader={renderLoadingListPost()}
       >
         <div className='row flex-wrap justify-content-start align-items-center'>

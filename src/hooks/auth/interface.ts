@@ -18,6 +18,7 @@ export interface User {
   email: string;
   phone: string;
   address: string;
+  gender: boolean;
 }
 
 export interface Token {

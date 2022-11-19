@@ -10,8 +10,6 @@ import { Post as PostInterface } from '@/hooks/post/interface';
 import { usePostStore } from '@/store/post';
 
 const cx = classNames.bind(styles);
-const random = Math.floor(Math.random() * 10) % 2 === 0;
-
 type Props = {
   postItem: PostInterface;
 };
@@ -22,11 +20,13 @@ export const Post = memo((props: Props) => {
   const setSelectedPost = usePostStore((state) => state.setSelectedPost);
 
   const ownerName =
-    postItem.owner.firstName ||
-    '' + ' ' + postItem.owner.middleName ||
-    '' + ' ' + postItem.owner.lastName ||
-    '';
-  const state = random ? 'finding' : 'found';
+    (postItem.owner.firstName || '') +
+    ' ' +
+    (postItem.owner.middleName || '') +
+    ' ' +
+    (postItem.owner.lastName || '');
+
+  const state = postItem.found ? 'found' : 'finding';
   const [isHover, setIsHover] = React.useState(false);
   const [detailVisible, setDetailVisible] = React.useState(false);
 
@@ -114,6 +114,7 @@ export const Post = memo((props: Props) => {
             src={postItem.owner.avatar}
             className={cx('user__avatar')}
             avatar
+            gender={postItem.owner.gender}
           />
           {ownerName}
         </div>

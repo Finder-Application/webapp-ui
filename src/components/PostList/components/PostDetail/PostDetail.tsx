@@ -27,10 +27,10 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/configs';
 import { useGetPostDetail } from '@/hooks/post';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
-import moment from 'moment';
 import { formatDate } from '@/utils/format.util';
+import { SettingsPost } from './SettingsPost/Settings';
 
-const cx = classNames.bind(styles);
+export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
   id: number;
   isVisible?: boolean;
@@ -47,7 +47,9 @@ export const ShareToolTipButton = (props: React.HTMLProps<HTMLDivElement>) => {
         zIndex={TOOL_TIP_zINDEX}
         overlayInnerStyle={{ padding: '0.5em 2em' }}
       >
-        <Button className={cx('post-detail__interaction-items__item')}>
+        <Button
+          className={cnPostDetail('post-detail__interaction-items__item')}
+        >
           <ShareIcon width={15} height={15} />
         </Button>
       </Tooltip>
@@ -69,11 +71,11 @@ export const CommentTooltipButton = (
         overlayInnerStyle={{ padding: '0.5em 2em' }}
       >
         <Button
-          className={cx('post-detail__interaction-items__item')}
+          className={cnPostDetail('post-detail__interaction-items__item')}
           onClick={onClick}
         >
           <div
-            className={cx(
+            className={cnPostDetail(
               'post-detail__interaction-items__item__comments-count'
             )}
           >
@@ -126,10 +128,11 @@ export const PostDetail = (props: PostDetailProps) => {
   const { data, isLoading } = useGetPostDetail({ id });
 
   const ownerName =
-    data?.owner?.firstName ||
-    ` ${data?.owner?.middleName}` ||
-    ` ${data?.owner?.lastName}` ||
-    '';
+    (data?.owner.firstName || '') +
+    ' ' +
+    (data?.owner.middleName || '') +
+    ' ' +
+    (data?.owner.lastName || '');
 
   const onCloseCommentDrawer = () => {
     setShowCommentDrawer(false);
@@ -148,7 +151,7 @@ export const PostDetail = (props: PostDetailProps) => {
       placement={'bottom'}
       width={width}
       open={isVisible}
-      className={cx('post-detail')}
+      className={cnPostDetail('post-detail')}
       height={toNumber(height) - POP_TO_HEADER_HEIGHT}
       onClose={onClose}
       headerStyle={{ display: 'none' }}
@@ -160,10 +163,10 @@ export const PostDetail = (props: PostDetailProps) => {
           <SharingPopup />
           <CloseIcon
             onClick={onClose}
-            className={cx('post-detail__close-icon')}
+            className={cnPostDetail('post-detail__close-icon')}
           />
           <div
-            className={cx(
+            className={cnPostDetail(
               'post-detail__interaction-items',
               showCommentDrawer && 'post-detail__interaction-items__inactive'
             )}
@@ -174,9 +177,10 @@ export const PostDetail = (props: PostDetailProps) => {
               onClick={onOpenCommentDrawer}
             />
             <ShareToolTipButton onClick={showSharingPopupModal} />
+            <SettingsPost postId='' />
           </div>
           <div
-            className={cx(
+            className={cnPostDetail(
               'post-detail__main-content',
               showCommentDrawer && 'post-detail__main-content__active'
             )}
@@ -185,7 +189,7 @@ export const PostDetail = (props: PostDetailProps) => {
               <h1 className='font-weight-bold'>{data?.title}</h1>
               <hr />
               <div className='mt-4 mb-5 d-flex flex-row align-items-center'>
-                <div className='d-flex flex-row'>
+                <div className='d-flex flex-row align-items-center'>
                   <UserAvatar placement='bottomLeft' user={data?.owner} />
                   <div className='ml-2 font-weight-bold'>{ownerName}</div>
                 </div>
@@ -237,23 +241,6 @@ export const PostDetail = (props: PostDetailProps) => {
                 </h5>
               </div>
               <ContactInform owner={data?.owner} />
-              <div className='d-flex flex-row align-items-center justify-content-center mt-5'>
-                <ButtonFinder
-                  className={cx('post-detail__edit-btn', 'mr-3')}
-                  onClick={() =>
-                    navigate(ROUTES.createPost, {
-                      state: {
-                        isFromPostDetail: true,
-                      },
-                    })
-                  }
-                >
-                  Edit Post
-                </ButtonFinder>
-                <ButtonFinder className={cx('post-detail__delete-btn')}>
-                  <TrashIcon width={15} height={15} className='mr-2' /> Delete
-                </ButtonFinder>
-              </div>
             </div>
           </div>
 
