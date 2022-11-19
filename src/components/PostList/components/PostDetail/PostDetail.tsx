@@ -5,32 +5,30 @@ import {
   ContactIcon,
   DocumentIcon,
   ShareIcon,
-  TrashIcon,
 } from '@/components/Icons';
 import { useWindowSize } from '@/hooks';
-import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
+import { Button, Divider, Drawer, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import toNumber from 'lodash/toNumber';
 import styles from './PostDetail.module.scss';
 
 import { UserAvatar } from '@/components/UserAvatar';
 import { TOOL_TIP_zINDEX } from '@/configs/constants';
+import { useGetPostDetail } from '@/hooks/post';
+import { usePostStore } from '@/store/post';
+import { useUserStore } from '@/store/user';
+import { formatDate } from '@/utils/format.util';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CommentDrawer } from './CommentDrawer';
 import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
 import { MissingInform } from './MissingInform';
-import { CommentDrawer } from './CommentDrawer';
-import { usePostStore } from '@/store/post';
-import { SharingPopup } from './SharingPopup';
-import { ButtonFinder } from '@/components/ButtonFinder';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/configs';
-import { useGetPostDetail } from '@/hooks/post';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
-import { formatDate } from '@/utils/format.util';
-import { useUserStore } from '@/store/user';
+import { SettingsPost } from './SettingsPost/Settings';
+import { SharingPopup } from './SharingPopup';
 
-const cx = classNames.bind(styles);
+export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
   id: number;
   isVisible?: boolean;
@@ -47,7 +45,9 @@ export const ShareToolTipButton = (props: React.HTMLProps<HTMLDivElement>) => {
         zIndex={TOOL_TIP_zINDEX}
         overlayInnerStyle={{ padding: '0.5em 2em' }}
       >
-        <Button className={cx('post-detail__interaction-items__item')}>
+        <Button
+          className={cnPostDetail('post-detail__interaction-items__item')}
+        >
           <ShareIcon width={15} height={15} />
         </Button>
       </Tooltip>
@@ -69,11 +69,11 @@ export const CommentTooltipButton = (
         overlayInnerStyle={{ padding: '0.5em 2em' }}
       >
         <Button
-          className={cx('post-detail__interaction-items__item')}
+          className={cnPostDetail('post-detail__interaction-items__item')}
           onClick={onClick}
         >
           <div
-            className={cx(
+            className={cnPostDetail(
               'post-detail__interaction-items__item__comments-count'
             )}
           >
@@ -131,10 +131,11 @@ export const PostDetail = (props: PostDetailProps) => {
   const { data, isLoading } = useGetPostDetail({ id });
 
   const ownerName =
-    data?.owner?.firstName ||
-    ` ${data?.owner?.middleName}` ||
-    ` ${data?.owner?.lastName}` ||
-    '';
+    (data?.owner.firstName || '') +
+    ' ' +
+    (data?.owner.middleName || '') +
+    ' ' +
+    (data?.owner.lastName || '');
 
   const onCloseCommentDrawer = () => {
     setShowCommentDrawer(false);
@@ -153,7 +154,7 @@ export const PostDetail = (props: PostDetailProps) => {
       placement={'bottom'}
       width={width}
       open={isVisible}
-      className={cx('post-detail')}
+      className={cnPostDetail('post-detail')}
       height={toNumber(height) - POP_TO_HEADER_HEIGHT}
       onClose={() => {
         setSelectedPost(undefined);
@@ -168,10 +169,10 @@ export const PostDetail = (props: PostDetailProps) => {
           <SharingPopup />
           <CloseIcon
             onClick={onClose}
-            className={cx('post-detail__close-icon')}
+            className={cnPostDetail('post-detail__close-icon')}
           />
           <div
-            className={cx(
+            className={cnPostDetail(
               'post-detail__interaction-items',
               showCommentDrawer && 'post-detail__interaction-items__inactive'
             )}
@@ -182,9 +183,10 @@ export const PostDetail = (props: PostDetailProps) => {
               onClick={onOpenCommentDrawer}
             />
             <ShareToolTipButton onClick={showSharingPopupModal} />
+            <SettingsPost postId='' />
           </div>
           <div
-            className={cx(
+            className={cnPostDetail(
               'post-detail__main-content',
               showCommentDrawer && 'post-detail__main-content__active'
             )}
@@ -193,7 +195,7 @@ export const PostDetail = (props: PostDetailProps) => {
               <h1 className='font-weight-bold'>{data?.title}</h1>
               <hr />
               <div className='mt-4 mb-5 d-flex flex-row align-items-center'>
-                <div className='d-flex flex-row'>
+                <div className='d-flex flex-row align-items-center'>
                   <UserAvatar placement='bottomLeft' user={data?.owner} />
                   <div className='ml-2 font-weight-bold'>{ownerName}</div>
                 </div>
@@ -245,28 +247,6 @@ export const PostDetail = (props: PostDetailProps) => {
                 </h5>
               </div>
               <ContactInform owner={data?.owner} />
-
-              {
-                // TODO: Enable this condition later when we update uuid like the owner.uuid on our system
-                // user && user.uuid === data?.owner.uuid &&
-                <div className='d-flex flex-row align-items-center justify-content-center mt-5'>
-                  <ButtonFinder
-                    className={cx('post-detail__edit-btn', 'mr-3')}
-                    onClick={() =>
-                      navigate(ROUTES.createPost, {
-                        state: {
-                          isFromPostDetail: true,
-                        },
-                      })
-                    }
-                  >
-                    Edit Post
-                  </ButtonFinder>
-                  <ButtonFinder className={cx('post-detail__delete-btn')}>
-                    <TrashIcon width={15} height={15} className='mr-2' /> Delete
-                  </ButtonFinder>
-                </div>
-              }
             </div>
           </div>
 

@@ -40,7 +40,7 @@ export const PostLoading = (props: PostProps) => {
         )}
       >
         <div className={cx('user__info', 'd-flex align-items-center')}>
-          <AsyncImage avatar />
+          <AsyncImage avatar className={cx('user__avatar')} />
           <Skeleton
             active
             loading

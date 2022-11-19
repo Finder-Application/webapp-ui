@@ -26,6 +26,7 @@ export const PostList = (props: PostListProps) => {
       page: currentPage,
       take: 10,
     });
+  console.log('🚀 ~ file: PostList.tsx ~ line 25 ~ PostList ~ data', data);
 
   useEffect(() => {
     if (data && isSuccess) {

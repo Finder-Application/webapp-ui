@@ -13,6 +13,12 @@
 
   .user {
     margin-top: var(--default-margin);
+    &__avatar {
+      height: 2.5rem;
+      width: 2.5rem;
+      border-radius: 50%;
+      margin-right: var(--default-margin);
+    }
   }
 
   // animation

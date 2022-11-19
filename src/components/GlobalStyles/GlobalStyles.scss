@@ -172,12 +172,13 @@ html *::-webkit-scrollbar-track {
   font-size: 1.1rem;
 }
 .ant-dropdown {
+  z-index: 9999999999;
 }
 
 .ant-form-item {
   margin-bottom: 0 !important;
 }
 
-.ant-badge-count{
+.ant-badge-count {
   transform: translate(0%, 25%) !important;
 }

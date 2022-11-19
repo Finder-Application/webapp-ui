@@ -1,12 +1,9 @@
 import { ButtonFinder, PostList } from '@/components';
 import { DropdownIcon } from '@/components/Icons';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
-import { PostDetailPlaceholder } from '@/components/PostList/components/PostDetail/PostDetailPlaceholder';
 import GeoUtils from '@/utils/Geo.utils';
-import StringUtils from '@/utils/String.utils';
 import { Select } from 'antd';
 import classNames from 'classnames/bind';
-import toLower from 'lodash/toLower';
 import { useState } from 'react';
 import styles from './Homepage.module.scss';
 const { Option } = Select;
@@ -19,6 +16,7 @@ const Homepage = () => {
 
   return (
     <div className={cx('homepage')}>
+      <div></div>
       <div className={cx('title')}>
         We hope we can help you find your relatives as soon as possible
       </div>
