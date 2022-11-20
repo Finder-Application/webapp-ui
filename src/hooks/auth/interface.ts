@@ -14,7 +14,6 @@ export interface User {
   lastName: string;
   middleName: string;
   avatar: string;
-  userId: string;
   email: string;
   phone: string;
   address: string;
@@ -32,7 +31,6 @@ export interface Me {
   lastName: string;
   middleName: string;
   avatar: string;
-  userId: string;
   email: string;
   address: string;
   phone: string;
