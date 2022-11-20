@@ -70,7 +70,7 @@ export const Post = memo((props: Props) => {
               className={cx('card__info__matching-percent')}
               type='circle'
               percent={postItem.similar * 100}
-              format={(percent) => `${percent}%`}
+              format={(percent) => `${percent?.toFixed(0)}%`}
             />
           )}
           <div className={cx('card__info-content')}>

@@ -141,24 +141,12 @@ export const MissingAddressInformationForm = () => {
           <Form.Item
             name={CreatePostFormItemsName.MISSING_COMMUNE}
             initialValue={selectedPost?.missingAddress.commune}
-            rules={[
-              {
-                required: true,
-                message: `Commune is required`,
-              },
-            ]}
           >
             <Input width='90%' label='Commune/Precint' className='mr-4' />
           </Form.Item>
           <Form.Item
             name={CreatePostFormItemsName.MISSING_HAMLET}
             initialValue={selectedPost?.missingAddress.hamlet}
-            rules={[
-              {
-                required: true,
-                message: `Hamlet name is required`,
-              },
-            ]}
           >
             <Input width='100%' label='Hamlet' />
           </Form.Item>

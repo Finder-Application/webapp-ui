@@ -14,18 +14,27 @@ import { useOnClickOutside } from '@/hooks';
 import { Dropdown, MenuProps } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Notification } from './Notification';
 
 import styles from './Header.module.scss';
 import { useUserStore } from '@/store/user';
 import { useGetMe } from '@/hooks/auth/query';
 export const cx = classNames.bind(styles);
+
+type HeaderState = {
+  isFromPostDetail: boolean;
+};
+
 const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const [onFocusSearch, setOnFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const location = useLocation();
+  const state = location.state as HeaderState;
+  const { isFromPostDetail = false } = state || {};
 
   const user = useUserStore((state) => state.user);
 
@@ -167,7 +176,9 @@ const Header = () => {
 
         <ButtonFinder
           className={cx('header__right__upload-btn')}
-          onClick={() => navigate(ROUTES.createPost)}
+          onClick={
+            !isFromPostDetail ? () => navigate(ROUTES.createPost) : undefined
+          }
         >
           Upload
         </ButtonFinder>

@@ -1,4 +1,5 @@
 import { initSocket } from '@/configs/socket';
+import { useUserStore } from '@/store/user';
 import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { useGetMe } from '../auth/query';
