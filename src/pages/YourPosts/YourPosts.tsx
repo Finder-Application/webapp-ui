@@ -31,9 +31,10 @@ const YourPosts = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const user = useUserStore((state) => state.user);
-  const setYourSelectedPost = usePostStore(
-    (state) => state.setYourSelectedPost
-  );
+  const [setYourSelectedPost, setSelectedPost] = usePostStore((state) => [
+    state.setYourSelectedPost,
+    state.setSelectedPost,
+  ]);
 
   const deletePost = useDeletePost();
 
@@ -113,6 +114,7 @@ const YourPosts = () => {
             >
               <SettingsPost
                 postId={post.id}
+                onEdit={() => setSelectedPost(post)}
                 onDelete={async () => {
                   await refetch();
                   setPosts((state) =>

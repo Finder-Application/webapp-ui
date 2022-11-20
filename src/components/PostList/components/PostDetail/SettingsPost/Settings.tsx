@@ -13,6 +13,7 @@ const cx = classNames;
 interface SettingsPostProps {
   postId: number;
   onDelete?: () => void;
+  onEdit?: () => void;
 }
 
 export const SettingsPost = (
@@ -22,19 +23,21 @@ export const SettingsPost = (
       HTMLDivElement
     >
 ) => {
-  const { postId, children, onDelete } = props;
+  const { postId, children, onDelete, onEdit } = props;
   const navigate = useNavigate();
   const deletePost = useDeletePost();
   const settingsDropdowns = [
     {
       title: 'Edit post',
       icon: FaRegEdit,
-      onClick: () =>
+      onClick: () => {
+        onEdit && onEdit();
         navigate(ROUTES.createPost, {
           state: {
             isFromPostDetail: true,
           },
-        }),
+        });
+      },
     },
     {
       title: 'Delete post',
