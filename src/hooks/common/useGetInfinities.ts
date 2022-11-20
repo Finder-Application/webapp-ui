@@ -39,7 +39,19 @@ export const useGetInfinities = <
 
   return useInfiniteQuery<TResponseList<TResponse>>(
     [query_key, params],
-    async () => getInfinitiesApi<TResponse, Params>(params, resource, isPublic),
+
+    async ({ pageParam = 1 }) => {
+      const overrideParams = {
+        ...params,
+        page: pageParam,
+      };
+
+      return await getInfinitiesApi<TResponse, Params>(
+        overrideParams,
+        resource,
+        isPublic
+      );
+    },
     {
       getNextPageParam: (lastPage) => {
         return lastPage?.meta.hasNextPage ? lastPage.meta.page + 1 : undefined;

@@ -3,7 +3,7 @@ import { uesGetInfiComments, useCreateComment } from '@/hooks/comments/query';
 import { usePostStore } from '@/store/post';
 import { Button } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CommentCpn } from '../Comment';
 import { CommentInput } from '../CommentInput';
 import { ShareToolTipButton } from '../PostDetail';
@@ -15,15 +15,17 @@ type CommentDrawerProps = {
   visible?: boolean;
   onClose?: () => void;
   postId: number;
+  settTotalNoti: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const CommentDrawer = (
   props: CommentDrawerProps & React.HTMLProps<HTMLDivElement>
 ) => {
-  const { visible = false, onClose, postId } = props;
+  const { visible = false, onClose, postId, settTotalNoti } = props;
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
+
   const { data, fetchNextPage, hasNextPage, isLoading } = uesGetInfiComments({
     take: 20,
     order: {
@@ -34,6 +36,10 @@ export const CommentDrawer = (
       id: postId.toString(),
     },
   });
+
+  useEffect(() => {
+    settTotalNoti(data?.pages?.[0]?.meta?.itemCount || 0);
+  }, [data?.pages?.[0]]);
 
   return (
     <div className={cx('comment-drawer-container')}>

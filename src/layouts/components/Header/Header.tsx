@@ -19,6 +19,7 @@ import { Notification } from './Notification';
 
 import styles from './Header.module.scss';
 import { useUserStore } from '@/store/user';
+import { useGetMe } from '@/hooks/auth/query';
 export const cx = classNames.bind(styles);
 
 type HeaderState = {
@@ -36,6 +37,8 @@ const Header = () => {
   const { isFromPostDetail = false } = state || {};
 
   const user = useUserStore((state) => state.user);
+
+  const { data: me } = useGetMe();
 
   const navigate = useNavigate();
 
@@ -157,7 +160,7 @@ const Header = () => {
           )}
         </div>
 
-        {user && (
+        {me && (
           <>
             <Notification />
             <Dropdown

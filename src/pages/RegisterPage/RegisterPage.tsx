@@ -38,7 +38,6 @@ const RegisterPage = () => {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse.access_token);
       registerGG({ idToken: tokenResponse.access_token });
     },
     scope: 'profile email openid',
@@ -170,13 +169,6 @@ const RegisterPage = () => {
           <hr className='my-0' style={{ width: '12rem' }} />
         </div>
 
-        {/* <GoogleLogin
-          clientId='894609161760-1btovlg15pcuoedtfanpkogtahetsdq7.apps.googleusercontent.com'
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          isSignedIn={true}
-          scope='profile'
-          render={(renderProps) => ( */}
         <ButtonFinder
           className={cx('w-100', 'btn-google')}
           onClick={() => login()}

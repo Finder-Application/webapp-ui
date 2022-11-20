@@ -58,4 +58,16 @@
     cursor: pointer;
     color: var(--primary-2);
   }
+
+  .btn-google {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    display: flex;
+    border: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-blue-4);
+  }
 }

@@ -10,12 +10,17 @@ export const useNoti = () => {
   // use state to store the notification
   const [noti, setNoti] = useState<any[]>([]);
   const [totalNoti, setTotalNoti] = useState(0);
+  const [socket, setSocket] = useState<Socket>();
 
-  const data = useUserStore((state) => state.user);
+  const { data } = useGetMe();
+
   // use effect to listen to the event "notification" from the server
   useEffect(() => {
-    if (data?.uuid) {
+    if (data?.userId) {
       const socket = initSocket('api/notifications');
+
+      setSocket(socket);
+
       // log when socket connected
       socket.on('connect', () => {
         console.log('socket connected');
@@ -31,11 +36,21 @@ export const useNoti = () => {
         setTotalNoti(+data);
       });
 
+      socket.on('reduce-notification', () => {
+        console.log('reduce-notification');
+        setTotalNoti((prev) => prev - 1);
+      });
+
       return () => {
         socket?.disconnect();
       };
     }
-  }, [data]);
+  }, [data?.userId]);
   // return the state
-  return { totalNoti };
+  return { totalNoti, socket };
 };
+
+// socket.emit('seen-notification', {
+//   postId: 2,
+//   type: 'post',
+// });

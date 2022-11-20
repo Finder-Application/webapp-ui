@@ -56,9 +56,9 @@ export const ShareToolTipButton = (props: React.HTMLProps<HTMLDivElement>) => {
 };
 
 export const CommentTooltipButton = (
-  props: React.HTMLProps<HTMLDivElement>
+  props: React.HTMLProps<HTMLDivElement> & { total: number }
 ) => {
-  const { onClick } = props;
+  const { onClick, total } = props;
   return (
     <div {...props}>
       <Tooltip
@@ -78,7 +78,7 @@ export const CommentTooltipButton = (
             )}
           >
             {/* TODO: change thi in the api response get all post */}
-            48
+            {total}
           </div>
           <CommentIcon width={15} height={15} />
         </Button>
@@ -116,6 +116,10 @@ export const PostDetail = (props: PostDetailProps) => {
   const { id, isVisible, onClose } = props;
 
   const { height, width } = useWindowSize();
+
+  const [totalNoti, settTotalNoti] = useState(0);
+
+  const navigate = useNavigate();
 
   const user = useUserStore((state) => state.user);
   const setSelectedPost = usePostStore((state) => state.setSelectedPost);
@@ -174,6 +178,7 @@ export const PostDetail = (props: PostDetailProps) => {
           >
             <UserAvatar user={data?.owner} />
             <CommentTooltipButton
+              total={totalNoti}
               className='my-4'
               onClick={onOpenCommentDrawer}
             />
@@ -250,8 +255,8 @@ export const PostDetail = (props: PostDetailProps) => {
           <CommentDrawer
             visible={showCommentDrawer}
             onClose={onCloseCommentDrawer}
-            // fake data postId=21 for show list comment
-            postId={id}
+            postId={data?.id || 0}
+            settTotalNoti={settTotalNoti}
           />
         </>
       )}
