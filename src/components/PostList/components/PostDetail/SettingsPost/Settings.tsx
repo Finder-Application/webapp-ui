@@ -1,8 +1,5 @@
-import { ButtonFinder } from '@/components/ButtonFinder';
 import { ROUTES, TOOL_TIP_zINDEX } from '@/configs';
 import { Dropdown, Menu, MenuProps, Modal, Tooltip } from 'antd';
-import { cnPostDetail } from '../PostDetail';
-import { AiOutlineSetting } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
 import { BsTrash } from 'react-icons/bs';
 
@@ -15,12 +12,19 @@ const cx = classNames;
 
 interface SettingsPostProps {
   postId: number;
+  onDelete?: () => void;
 }
 
-export const SettingsPost = (props: SettingsPostProps) => {
+export const SettingsPost = (
+  props: SettingsPostProps &
+    React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLDivElement>,
+      HTMLDivElement
+    >
+) => {
+  const { postId, children, onDelete } = props;
   const navigate = useNavigate();
-  const mutation = useDeletePost();
-  const [visibleConfirmDelete, setVisibleConfirmDelete] = useState(false);
+  const deletePost = useDeletePost();
   const settingsDropdowns = [
     {
       title: 'Edit post',
@@ -35,7 +39,13 @@ export const SettingsPost = (props: SettingsPostProps) => {
     {
       title: 'Delete post',
       icon: BsTrash,
-      onClick: () => {},
+      onClick: async () => {
+        if (confirm('Are you sure you want to delete this post?') == true) {
+          await deletePost.mutateAsync({ id: postId }).then(async () => {
+            onDelete && onDelete();
+          });
+        }
+      },
     },
   ];
   const menuDropdownItems: MenuProps['items'] = settingsDropdowns.map(
@@ -61,19 +71,14 @@ export const SettingsPost = (props: SettingsPostProps) => {
   );
 
   return (
-    <div className='my-4'>
+    <div {...props}>
       <Dropdown
         menu={{ items: menuDropdownItems }}
         placement='bottomLeft'
         arrow
       >
-        <ButtonFinder
-          className={cnPostDetail('post-detail__interaction-items__item')}
-        >
-          <AiOutlineSetting width={15} height={15} />
-        </ButtonFinder>
+        {children}
       </Dropdown>
-      <Modal title='Are you sure you want to delete this' visible />
     </div>
   );
 };

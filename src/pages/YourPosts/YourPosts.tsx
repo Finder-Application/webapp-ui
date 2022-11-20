@@ -3,12 +3,15 @@ import {
   ChatIcon,
   ChevronRightIcon,
   EyesIcon,
+  ThreeDotsIcon,
   TrashIcon,
   UserProfileIcon,
 } from '@/components/Icons';
 import { LoadMoreBtn } from '@/components/LoadMoreButton';
+import { SettingsPost } from '@/components/PostList/components/PostDetail/SettingsPost/Settings';
 import { PostListLoadingPlaceHolder } from '@/components/PostListLoadingPlaceHolder';
 import { ROUTES } from '@/configs';
+import { useGetMe } from '@/hooks/auth/query';
 import { useDeletePost, useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
 import { Operator } from '@/services/common/types';
@@ -49,8 +52,7 @@ const YourPosts = () => {
       {
         operator: Operator.Equal,
         field: 'userId',
-        // TODO: The user current does not have the userId, only has uuid, replace it when we have userId
-        value: '1',
+        value: user.userId.toString(),
       },
     ],
     optionKey: {
@@ -100,30 +102,26 @@ const YourPosts = () => {
             {post.fullName}
           </div>
           <div className='d-flex flex-row align-items-center'>
-            <div className='d-flex flex-row align-items-center'>
+            {/* <div className='d-flex flex-row align-items-center'>
               <EyesIcon className='mr-2' />
               <span>100</span>
             </div>
-            <div className={cx('your-posts__body__your-post__v-divider')}></div>
+            <div className={cx('your-posts__body__your-post__v-divider')}></div> */}
             <div
               className='d-flex flex-row align-items-center'
               style={{ cursor: 'pointer' }}
-              onClick={async () => {
-                if (
-                  confirm('Are you sure you want to delete this post?') == true
-                ) {
-                  await deletePost
-                    .mutateAsync({ id: post.id })
-                    .then(async () => {
-                      await refetch();
-                      setPosts((state) =>
-                        state.filter((item) => item.id !== post.id)
-                      );
-                    });
-                }
-              }}
             >
-              <TrashIcon color='red' width={15} height={15} />
+              <SettingsPost
+                postId={post.id}
+                onDelete={async () => {
+                  await refetch();
+                  setPosts((state) =>
+                    state.filter((item) => item.id !== post.id)
+                  );
+                }}
+              >
+                <ThreeDotsIcon />
+              </SettingsPost>
             </div>
           </div>
         </div>

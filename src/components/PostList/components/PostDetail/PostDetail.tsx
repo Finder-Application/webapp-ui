@@ -27,6 +27,8 @@ import { MissingInform } from './MissingInform';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
 import { SettingsPost } from './SettingsPost/Settings';
 import { SharingPopup } from './SharingPopup';
+import { ButtonFinder } from '@/components/ButtonFinder';
+import { AiOutlineSetting } from 'react-icons/ai';
 
 export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
@@ -184,7 +186,15 @@ export const PostDetail = (props: PostDetailProps) => {
             />
             <ShareToolTipButton onClick={showSharingPopupModal} />
             {data?.owner.userId === user?.userId && (
-              <SettingsPost postId={id} />
+              <SettingsPost postId={id} onDelete={onClose} className='my-4'>
+                <ButtonFinder
+                  className={cnPostDetail(
+                    'post-detail__interaction-items__item'
+                  )}
+                >
+                  <AiOutlineSetting width={15} height={15} />
+                </ButtonFinder>
+              </SettingsPost>
             )}
           </div>
           <div

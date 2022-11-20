@@ -36,7 +36,10 @@ const Header = () => {
   const state = location.state as HeaderState;
   const { isFromPostDetail = false } = state || {};
 
-  const user = useUserStore((state) => state.user);
+  const [user, resetUser] = useUserStore((state) => [
+    state.user,
+    state.resetUser,
+  ]);
 
   const { data: me } = useGetMe();
 
@@ -110,6 +113,11 @@ const Header = () => {
     {
       title: 'Sign out',
       icon: SignOutIcon,
+      onClick: () => {
+        localStorage.clear();
+        resetUser();
+        navigate(ROUTES.login);
+      },
     },
   ];
 
