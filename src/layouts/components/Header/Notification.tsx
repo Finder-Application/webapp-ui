@@ -11,7 +11,7 @@ import { Avatar, Badge, List, Tooltip } from 'antd';
 import { useState } from 'react';
 import { UseInfiniteQueryResult } from 'react-query';
 import { cx } from './Header';
-import { ContentNotifications } from './PostNotifications';
+import { BoxNotifications } from './BoxNotifications';
 
 enum NotificationTab {
   POSTS = 'Posts',
@@ -23,7 +23,7 @@ export const Notification = () => {
     NotificationTab.POSTS
   );
 
-  const { totalNoti } = useNoti();
+  const { totalNoti, socket } = useNoti();
 
   const TabItem = (item: NotificationTab) => {
     return (
@@ -53,12 +53,18 @@ export const Notification = () => {
           </div>
 
           {currentTab === NotificationTab.POSTS ? (
-            <ContentNotifications
+            <BoxNotifications
               uesGetInfi={
                 uesGetInfiPostNotis as <PostNotis>(
                   params: IParamsDefault<{}>
                 ) => UseInfiniteQueryResult<TResponseList<PostNotis>, unknown>
               }
+              onSeen={(item: PostNotis) => {
+                socket?.emit('seen-notification', {
+                  id: item.id,
+                  type: 'post',
+                });
+              }}
               itemRender={(item: PostNotis) => (
                 <List.Item.Meta
                   avatar={<Avatar src={item.user.avatar} />}
@@ -66,14 +72,21 @@ export const Notification = () => {
                   description={item.content}
                 />
               )}
+              isNewNoti={(item: PostNotis) => !!!item.seen}
             />
           ) : (
-            <ContentNotifications
+            <BoxNotifications
               uesGetInfi={
                 uesGetInfiCmtNotis as <CmtNotis>(
                   params: IParamsDefault<{}>
                 ) => UseInfiniteQueryResult<TResponseList<CmtNotis>, unknown>
               }
+              onSeen={(item: PostNotis) => {
+                socket?.emit('seen-notification', {
+                  id: item.id,
+                  type: 'comment',
+                });
+              }}
               itemRender={(item: CmtNotis) => (
                 <List.Item.Meta
                   avatar={<Avatar src={item.user.avatar} />}
@@ -81,6 +94,7 @@ export const Notification = () => {
                   description={item.content}
                 />
               )}
+              isNewNoti={(item: PostNotis) => !!item.seen}
             />
           )}
         </div>

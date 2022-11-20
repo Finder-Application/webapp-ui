@@ -19,6 +19,7 @@ import { Notification } from './Notification';
 
 import styles from './Header.module.scss';
 import { useUserStore } from '@/store/user';
+import { useGetMe } from '@/hooks/auth/query';
 export const cx = classNames.bind(styles);
 const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
@@ -27,6 +28,8 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const user = useUserStore((state) => state.user);
+
+  const { data: me } = useGetMe();
 
   const navigate = useNavigate();
 
@@ -148,7 +151,7 @@ const Header = () => {
           )}
         </div>
 
-        {user && (
+        {me && (
           <>
             <Notification />
             <Dropdown

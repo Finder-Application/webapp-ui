@@ -1,6 +1,6 @@
 import { ButtonFinder } from '@/components';
 import { ROUTES } from '@/configs';
-import { useLogin } from '@/hooks/auth/query';
+import { useLogin, useRegisterGoogleMutation } from '@/hooks/auth/query';
 import { Input } from 'antd';
 import classNames from 'classnames/bind';
 import React from 'react';
@@ -8,6 +8,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import StorageUtils from '@/utils/Storage.utils';
 import styles from './LoginPage.module.scss';
+import { ColoringGoogleIcon } from '@/components/Icons';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const cx = classNames.bind(styles);
 const LoginPage = () => {
@@ -30,6 +32,23 @@ const LoginPage = () => {
       [key]: value,
     }));
   };
+
+  const { mutate: registerGG, isLoading: isLoadingGG } =
+    useRegisterGoogleMutation({
+      onSuccess: (data) => {
+        console.log(data);
+        StorageUtils.set('token', data.token.accessToken);
+        navigate(ROUTES.home);
+      },
+    });
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      registerGG({ idToken: tokenResponse.access_token });
+    },
+    scope: 'profile email openid',
+    flow: 'implicit',
+  });
 
   const handleSubmit = () => {
     mutationLogin.mutate(formState);
@@ -91,6 +110,14 @@ const LoginPage = () => {
         onClick={handleSubmit}
       >
         Login{' '}
+      </ButtonFinder>
+
+      <ButtonFinder
+        className={cx('w-100', 'btn-google')}
+        onClick={() => login()}
+      >
+        <ColoringGoogleIcon className='mr-3' width={25} height={25} />
+        Sign up with Google
       </ButtonFinder>
     </div>
   );

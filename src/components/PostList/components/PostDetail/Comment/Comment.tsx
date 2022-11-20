@@ -8,6 +8,7 @@ import { CommentInput, CommentInputType } from '../CommentInput';
 import { Comment } from '@/hooks/comments/interface';
 import { formatDate, formatUserName } from '@/utils/format.util';
 import { useDeleteComment } from '@/hooks/comments/query';
+import { useGetMe } from '@/hooks/auth/query';
 
 const cx = classNames.bind(styles);
 
@@ -23,13 +24,19 @@ export const CommentCpn = (
 
   const { mutate } = useDeleteComment();
 
+  const me = useGetMe();
+
+  const userId = me.data?.userId;
+
   const quantityOfReply = comment.child?.length || 0;
 
   const onDeleteComment = () => {
     mutate({
-      id: 1,
+      id: comment.id,
     });
   };
+
+  console.log(userId, comment.user.userId);
 
   return (
     <div {...CommentProps}>
@@ -65,16 +72,17 @@ export const CommentCpn = (
                 Reply {!showReply && `(${quantityOfReply})`}
               </span>
             </div>
-            {/* TODO: check is auth of comment show for delete */}
-            <div
-              onClick={onDeleteComment}
-              className='ml-3 d-flex flex-row align-items-center comment-container__reply--pointer'
-            >
-              <TrashIcon color='black' className='mr-2' />
-              <span className={cx('comment-container__reply-text')}>
-                Delete
-              </span>
-            </div>
+            {userId === comment.user.userId && (
+              <div
+                onClick={onDeleteComment}
+                className='ml-3 d-flex flex-row align-items-center comment-container__reply--pointer'
+              >
+                <TrashIcon color='black' className='mr-2' />
+                <span className={cx('comment-container__reply-text')}>
+                  Delete
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
