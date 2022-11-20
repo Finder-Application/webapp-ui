@@ -1,4 +1,5 @@
 import { axiosClient } from '@/apis';
+import { useUserStore } from '@/store/user';
 import { AxiosError } from 'axios';
 import { useMutation, UseMutationOptions, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
@@ -41,16 +42,16 @@ export const useSendOtp = (
   );
 
 export const useGetMe = () => {
-  const { data, isLoading, isFetching, refetch } = useQuery(
-    'GET_ME',
-    () => axiosClient.get(baseURL(false, 'users/me')) as Promise<Me>,
-    {
-      // enabled: false,
-      staleTime: Infinity,
-    }
-  );
-
-  return { data, isLoading, refetch };
+  const { setUser, resetUser } = useUserStore((state) => state);
+  return useQuery('GET_ME', {
+    queryFn: (): Promise<Me> => axiosClient.get(baseURL(false, 'users/me')),
+    onSuccess(data: Me) {
+      setUser(data);
+    },
+    onError(data: Error) {
+      resetUser();
+    },
+  });
 };
 
 export const useChangePwPublic = (

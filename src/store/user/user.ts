@@ -7,11 +7,38 @@ export enum RelevantResourcesMenuItems {
 }
 
 interface UserStoreInterface {
-  user?: Me;
+  user: Me;
+  isLoggedIn: boolean;
   setUser: (data: Me) => void;
+  resetUser: () => void;
 }
-
-export const useUserStore = create<UserStoreInterface>((set) => ({
-  user: undefined,
-  setUser: (value) => set({ user: value }),
+const initUser = {
+  address: '',
+  avatar: '',
+  email: '',
+  firstName: '',
+  isActive: 0,
+  userId: -1,
+  lastName: '',
+  middleName: '',
+  phone: '',
+  uuid: '',
+};
+export const useUserStore = create<UserStoreInterface>((set, get, api) => ({
+  user: initUser,
+  isLoggedIn: false,
+  setUser: (value: Me) => {
+    if (get().user.userId == -1) {
+      set({
+        user: value,
+        isLoggedIn: true,
+      });
+    }
+  },
+  resetUser: () => {
+    set({
+      user: initUser,
+      isLoggedIn: false,
+    });
+  },
 }));
