@@ -1,11 +1,15 @@
 import { ArrowLeftIcon } from '@/components/Icons/ArrowLeft';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Contents } from './components/Contents';
 import { RelevantResourcesMenu } from './components/Menu';
 
 const RelevantPostsAndResources = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className='d-flex flex-row'>
