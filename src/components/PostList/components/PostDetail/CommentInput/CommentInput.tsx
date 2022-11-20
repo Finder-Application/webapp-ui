@@ -66,6 +66,7 @@ export const CommentInput = (
         <UserAvatar
           className='mr-2'
           svgProps={{ width: userAvatarIconSize, height: userAvatarIconSize }}
+          popup
         />
         <div
           className={cx(

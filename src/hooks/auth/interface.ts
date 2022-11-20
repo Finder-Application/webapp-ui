@@ -19,6 +19,7 @@ export interface User {
   phone: string;
   address: string;
   gender: boolean;
+  userId: number;
 }
 
 export interface Token {
@@ -36,6 +37,7 @@ export interface Me {
   address: string;
   phone: string;
   isActive: number;
+  userId: number;
 }
 
 export interface ResponseLogin {
