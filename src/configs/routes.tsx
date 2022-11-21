@@ -37,7 +37,7 @@ const publicRoutes: RouteFinder[] = [
   },
   {
     path: ROUTES.home,
-    page: lazy(() => import('@/pages/YourPosts/YourPosts')),
+    page: lazy(() => import('@/pages/Homepage/Homepage')),
     title: 'Homepage',
   },
   {
