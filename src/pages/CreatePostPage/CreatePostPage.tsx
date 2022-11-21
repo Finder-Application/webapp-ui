@@ -290,7 +290,7 @@ const CreatePostPage = () => {
             <MissingTimeForm />
             <DescriptionForm />
             <FaceImageExample />
-            <UploadImagesForm />
+            <UploadImagesForm isUpdatingPost={isFromPostDetail} />
 
             <div className='d-flex flex-row justify-content-end mt-5'>
               <ButtonFinder

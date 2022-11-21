@@ -11,7 +11,13 @@ import { useFaceApi } from '@/hooks/faceApi/query';
 import FileUtils from '@/utils/File.utils';
 import { Descriptor } from '@/hooks/interfaces';
 
-export const UploadImagesForm = () => {
+type UploadImagesFormProps = {
+  isUpdatingPost: boolean;
+};
+
+export const UploadImagesForm = (props: UploadImagesFormProps) => {
+  const { isUpdatingPost } = props;
+
   const faceDetect = useFaceApi();
 
   // Base64[]
@@ -33,7 +39,8 @@ export const UploadImagesForm = () => {
     shallow
   );
 
-  const isThereAFile = files.length > 0;
+  const isThereAFile =
+    files.length > 0 || (selectedPost && selectedPost?.photos.length > 0);
 
   const [isScanningFace, setIsScanningFace] = useState(false);
   const [currentScannedImage, setCurrentScannedImage] = useState<string[]>([]);
@@ -48,7 +55,7 @@ export const UploadImagesForm = () => {
   }
 
   useEffect(() => {
-    if (selectedPost) {
+    if (selectedPost && files.length === 0) {
       setFiles(selectedPost.photos);
     }
   }, [selectedPost]);
@@ -119,7 +126,6 @@ export const UploadImagesForm = () => {
                     toast.error('Maximum number of files is 5');
                   } else {
                     const descriptor = value[0];
-                    console.log('descriptor: ', descriptor);
 
                     descriptors.push(descriptor);
 
@@ -153,28 +159,38 @@ export const UploadImagesForm = () => {
     }
   };
 
-  function deleteFile(deletingIndex: number) {
-    const newImages = files.filter((_, index) => index !== deletingIndex);
-    const newFiles = createPostFormData?.photos?.filter(
-      (_, index) => index !== deletingIndex
+  function deleteFile(deletedIndex: number) {
+    const newFiles = files.filter((_, index) => index !== deletedIndex);
+
+    const deletedIndexInCaseUpdating = files.length - 1 - deletedIndex;
+
+    const newPhotos = createPostFormData?.photos?.filter((_, index) =>
+      // If we are editing post, and selectedPost have 3 photos => files has 3 photos
+      // But when we add 1 photo (files now has 4 photos) and when we delete it => deletedIndex = 3
+      // So we will have 'files.length - 1 - deletedIndex' = 4 - 3 - 1 = 0 (the deletedIndex for createPostFormData?.photos)
+      // **** We have to to this because in editing the length of 'files' and 'createPostFormData?.photos?' is not equal
+      isUpdatingPost ? deletedIndexInCaseUpdating : index !== deletedIndex
     );
-    const newDescriptors = createPostFormData?.descriptors?.filter(
-      (_, index) => index !== deletingIndex
-    );
-    const newImagesFromSelectedPost = selectedPost?.photos?.filter(
-      (_, index) => index !== deletingIndex
+    const newDescriptors = createPostFormData?.descriptors?.filter((_, index) =>
+      isUpdatingPost ? deletedIndexInCaseUpdating : index !== deletedIndex
     );
 
-    setFiles(newImages);
+    setFiles(newFiles);
     setCreatePostFormData({
-      photos: newFiles,
+      photos: newPhotos,
       descriptors: newDescriptors,
     });
-    selectedPost &&
-      setSelectedPost({
-        ...selectedPost,
-        photos: newImagesFromSelectedPost ?? [],
-      });
+
+    if (selectedPost && deletedIndex < selectedPost.photos.length) {
+      const newImagesFromSelectedPost = selectedPost?.photos?.filter(
+        (_, index) => index !== deletedIndex
+      );
+      selectedPost &&
+        setSelectedPost({
+          ...selectedPost,
+          photos: newImagesFromSelectedPost ?? [],
+        });
+    }
   }
 
   return (
