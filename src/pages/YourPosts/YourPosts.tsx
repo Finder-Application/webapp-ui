@@ -1,28 +1,25 @@
 import { AsyncImage } from '@/components';
 import {
-  ChatIcon,
   ChevronRightIcon,
-  EyesIcon,
   ThreeDotsIcon,
-  TrashIcon,
   UserProfileIcon,
 } from '@/components/Icons';
 import { LoadMoreBtn } from '@/components/LoadMoreButton';
 import { SettingsPost } from '@/components/PostList/components/PostDetail/SettingsPost/Settings';
 import { PostListLoadingPlaceHolder } from '@/components/PostListLoadingPlaceHolder';
 import { ROUTES } from '@/configs';
-import { useGetMe } from '@/hooks/auth/query';
-import { useDeletePost, useGetPosts } from '@/hooks/post';
+import { useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
 import { Operator } from '@/services/common/types';
 import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import classNames from 'classnames/bind';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { NoData } from './components/NoData';
 
 import styles from './YourPosts.module.scss';
-const cx = classNames.bind(styles);
+export const cx = classNames.bind(styles);
 
 const YourPosts = () => {
   const navigate = useNavigate();
@@ -35,8 +32,6 @@ const YourPosts = () => {
     state.setYourSelectedPost,
     state.setSelectedPost,
   ]);
-
-  const deletePost = useDeletePost();
 
   const {
     data,
@@ -133,9 +128,9 @@ const YourPosts = () => {
 
   const filteredPost = posts.filter((post, index) => {
     // Filter duplicates items
-
     return posts.indexOf(post) === index;
   });
+
   return (
     <div className={cx('your-posts')}>
       <div className={cx('your-posts__header')}>
@@ -151,23 +146,27 @@ const YourPosts = () => {
         </div>
       </div>
       <hr />
-      <div className={cx('your-posts__body')}>
-        {filteredPost.map((post) => {
-          return <YourPost key={post.id} post={post} />;
-        })}
+      {filteredPost.length > 0 ? (
+        <div className={cx('your-posts__body')}>
+          {filteredPost.map((post) => {
+            return <YourPost key={post.id} post={post} />;
+          })}
 
-        {hasNextPage &&
-          (isLoading ? (
-            <PostListLoadingPlaceHolder />
-          ) : (
-            <LoadMoreBtn
-              onClick={() => {
-                fetchNextPage();
-                setCurrentPage((state) => state + 1);
-              }}
-            />
-          ))}
-      </div>
+          {hasNextPage &&
+            (isLoading ? (
+              <PostListLoadingPlaceHolder />
+            ) : (
+              <LoadMoreBtn
+                onClick={() => {
+                  fetchNextPage();
+                  setCurrentPage((state) => state + 1);
+                }}
+              />
+            ))}
+        </div>
+      ) : (
+        <NoData />
+      )}
     </div>
   );
 };

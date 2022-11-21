@@ -40,7 +40,7 @@ export const ContactInformationForm = () => {
           ]
         }
       >
-        <Input width='100%' label='Email' className='mb-2' disabled={true} />
+        <Input width='100%' label='Email' className='my-3' disabled={true} />
       </Form.Item>
       <Form.Item
         initialValue={user?.phone}

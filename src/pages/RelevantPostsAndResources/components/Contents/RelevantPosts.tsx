@@ -15,7 +15,7 @@ type Props = React.DetailedHTMLProps<
   HTMLDivElement
 >;
 
-const NUMBER_OF_TAKEN_ITEMS = 5;
+const NUMBER_OF_TAKEN_ITEMS = 8;
 
 export const RelevantPosts = (props: Props) => {
   const yourSelectedPost = usePostStore((state) => state.yourSelectedPost);
@@ -43,6 +43,13 @@ export const RelevantPosts = (props: Props) => {
     }
   }, [currentTakenIndex, data, isSuccess]);
 
+  const sortedPosts = posts.sort((post1, post2) => {
+    if (post1.similar && post2.similar) {
+      return post2.similar - post1.similar;
+    }
+    return 0;
+  });
+
   return (
     <div {...props}>
       {isLoading ? (
@@ -62,7 +69,7 @@ export const RelevantPosts = (props: Props) => {
           ) : (
             <>
               <div className='d-flex row flex-wrap justify-content-start align-items-center'>
-                {posts.map((post, index) => (
+                {sortedPosts.map((post, index) => (
                   <div key={post.id.toString()} className='col-xl-4 col-lg-4'>
                     <PostComponent postItem={post} />
                   </div>
