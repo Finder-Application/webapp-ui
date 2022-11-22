@@ -42,8 +42,8 @@ export const useGetInfinities = <
 
     async ({ pageParam = 1 }) => {
       const overrideParams = {
-        ...params,
         page: pageParam,
+        ...params,
       };
 
       return await getInfinitiesApi<TResponse, Params>(
