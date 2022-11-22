@@ -73,6 +73,8 @@ export const Notification = () => {
                 />
               )}
               isNewNoti={(item: PostNotis) => !!!item.seen}
+              type='post'
+              socket={socket}
             />
           ) : (
             <BoxNotifications
@@ -94,7 +96,9 @@ export const Notification = () => {
                   description={item.content}
                 />
               )}
-              isNewNoti={(item: PostNotis) => !!item.seen}
+              isNewNoti={(item: PostNotis) => item.seen}
+              type='comment'
+              socket={socket}
             />
           )}
         </div>

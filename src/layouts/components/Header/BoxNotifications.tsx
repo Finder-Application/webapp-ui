@@ -1,7 +1,8 @@
 import { IParamsDefault, TResponseList } from '@/hooks/interfaces';
 import { Button, List, Skeleton } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UseInfiniteQueryResult } from 'react-query';
+import { Socket } from 'socket.io-client';
 
 interface Props<T> {
   uesGetInfi: <T>(
@@ -10,14 +11,19 @@ interface Props<T> {
   itemRender: (item: T) => JSX.Element;
   onSeen: (item: T) => void;
   isNewNoti: (item: T) => boolean;
+  socket?: Socket;
+  type: 'comment' | 'post';
 }
 export const BoxNotifications = <T,>({
   uesGetInfi,
   itemRender,
   onSeen,
   isNewNoti,
+  socket,
+  type,
 }: Props<T>) => {
-  const { data, fetchNextPage, hasNextPage, isLoading } = uesGetInfi({
+  const [listNoti, setListNoti] = useState<T[]>([]);
+  const { data, fetchNextPage, hasNextPage, isLoading, refetch } = uesGetInfi({
     take: 20,
     order: {
       field: 'createdAt',
@@ -31,6 +37,27 @@ export const BoxNotifications = <T,>({
     //   },
     // ],
   });
+
+  useEffect(() => {
+    socket?.on('new-notification', (data) => {
+      const notiParse = JSON.parse(data) as {
+        type: 'comment' | 'post';
+        data: any;
+      };
+
+      if (notiParse.type === type) {
+        refetch({ refetchPage: () => true, fetching: true });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      const list = data.pages.map((page) => page.data).flat() as T[];
+
+      setListNoti([...list]);
+    }
+  }, [data]);
 
   const onLoadMore = () => {
     fetchNextPage();
@@ -48,6 +75,7 @@ export const BoxNotifications = <T,>({
       <Button onClick={onLoadMore}>loading more</Button>
     </div>
   ) : null;
+
   return (
     <div className='d-flex flex-column   pt-3 justify-content-center'>
       <List
@@ -55,15 +83,14 @@ export const BoxNotifications = <T,>({
         loading={isLoading}
         itemLayout='horizontal'
         loadMore={loadMore}
-        dataSource={
-          (data ? data.pages.map((page) => page.data).flat() : []) as T[]
-        }
+        dataSource={listNoti}
         renderItem={(item: T) => (
           <NotiItem
             onSeen={onSeen}
             itemRender={itemRender}
             item={item}
             isNewNoti={isNewNoti}
+            key={(item as any).id}
           />
         )}
       />
@@ -83,7 +110,7 @@ export const NotiItem = <T,>({
   isNewNoti,
   onSeen,
 }: NotiNewProps<T>) => {
-  const [isNew, setIsNew] = useState(isNewNoti(item));
+  const [isNew, setIsNew] = useState(!isNewNoti(item));
 
   return (
     <List.Item

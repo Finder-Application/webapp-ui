@@ -18,7 +18,8 @@ const getInfinitiesApi = <T, P>(
     params: {
       ...params,
       filter: JSON.stringify(params.filter),
-      order: JSON.stringify(params.order),
+      order:
+        params.order && `${params.order?.field}:${params.order?.direction}`,
       ...optionKey,
     },
   });

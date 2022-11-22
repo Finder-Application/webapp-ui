@@ -1,6 +1,5 @@
 import { initSocket } from '@/configs/socket';
-import { useUserStore } from '@/store/user';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { useGetMe } from '../auth/query';
 
@@ -8,7 +7,6 @@ export const useNoti = () => {
   // use socket io to connect to http://localhost:9000/api/
 
   // use state to store the notification
-  const [noti, setNoti] = useState<any[]>([]);
   const [totalNoti, setTotalNoti] = useState(0);
   const [socket, setSocket] = useState<Socket>();
 
@@ -39,6 +37,10 @@ export const useNoti = () => {
       socket.on('reduce-notification', () => {
         console.log('reduce-notification');
         setTotalNoti((prev) => prev - 1);
+      });
+
+      socket.on('increase-notification', () => {
+        setTotalNoti((prev) => prev + 1);
       });
 
       return () => {
