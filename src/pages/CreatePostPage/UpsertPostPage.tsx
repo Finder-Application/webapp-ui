@@ -77,6 +77,9 @@ const UpsertPostPage = () => {
     if (isSuccess && data) {
       setSelectedPost(data);
     }
+    if (!id) {
+      setSelectedPost(undefined);
+    }
   }, [isSuccess, id]);
 
   const setIsShowingLoadingModal = useAppStore(
