@@ -81,6 +81,14 @@ export const PostList = (props: PostListProps) => {
       }
 
       return true;
+    })
+    .sort((post1, post2) => {
+      if (post1.createdAt && post2.createdAt) {
+        var date1 = new Date(post1.createdAt);
+        var date2 = new Date(post2.createdAt);
+        return date2.getTime() - date1.getTime();
+      }
+      return 0;
     });
 
   return (
