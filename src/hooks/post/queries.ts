@@ -1,6 +1,8 @@
 import { axiosClient } from '@/apis';
 import { PostEntity } from '@/entites/Post';
+// import { usePostStore2 } from '@/store/post';
 import { useQuery, useMutation } from 'react-query';
+import { toast } from 'react-toastify';
 import { useMutationCreate } from '../common/useCreate';
 import { useGetInfinities } from '../common/useGetInfinities';
 import { useMutationUpdate } from '../common/useUpdate';
@@ -32,7 +34,12 @@ export const useCreatePost = (
   >['configMutation']
 ) =>
   useMutationCreate<CreatePostResponse, unknown, CreatePostBody>({
-    configMutation,
+    configMutation: {
+      ...configMutation,
+      onSuccess(data, variables, context) {
+        toast.success('Create post successfully');
+      },
+    },
     resource: FEATURE.POST,
   });
 
@@ -47,7 +54,12 @@ export const useUpdatePost = (
   >['configMutation']
 ) =>
   useMutationUpdate<CreatePostBody, Post>({
-    configMutation,
+    configMutation: {
+      ...configMutation,
+      onSuccess(data, variables, context) {
+        toast.success('Updated post successfully');
+      },
+    },
     resource: FEATURE.POST,
   });
 
@@ -61,17 +73,16 @@ export const useGetPosts = (params: IParamsDefault<PostEntity>) =>
     },
   });
 
-export const useGetPostDetail = (params: { id: number }) =>
-  useQuery(
-    ['GET_POST_DETAIL', params.id],
-    async () => {
-      const data: Post = await axiosClient.get(
-        `/api/public/posts/${params.id}`
-      );
-      return data;
-    },
-    { enabled: params.id !== -1 }
+export const useGetPostDetail = (id?: number) => {
+  return useQuery(
+    ['GET_POST_DETAIL', id],
+
+    {
+      enabled: !!id && id !== -1,
+      queryFn: (): Promise<Post> => axiosClient.get(`/api/public/posts/${id}`),
+    }
   );
+};
 
 export const useDeletePost = () =>
   useMutation(['DELETE_POST'], async (params: { id: number }) => {

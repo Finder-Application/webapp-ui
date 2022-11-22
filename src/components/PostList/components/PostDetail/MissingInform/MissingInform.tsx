@@ -40,7 +40,10 @@ export const MissingInform = (
       {renderInfoDetail('Nickname', inform?.nickname || '')}
       {renderInfoDetail(
         'Dob',
-        formatDate(new Date(inform?.dateOfBirth.toString() || ''), 'DD/MM/YYYY')
+        formatDate(
+          new Date(inform?.dateOfBirth?.toString() || ''),
+          'DD/MM/YYYY'
+        )
       )}
       {renderInfoDetail('Hometown', homeTown)}
       {renderInfoDetail('Missing address', missingAddress)}
@@ -48,7 +51,7 @@ export const MissingInform = (
       {inform?.missingTime &&
         renderInfoDetail(
           'Missing time',
-          formatDate(new Date(inform?.missingTime.toString() || ''), 'LLLL')
+          formatDate(new Date(inform?.missingTime?.toString() || ''), 'LLLL')
         )}
     </div>
   );

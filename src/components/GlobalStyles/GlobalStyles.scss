@@ -1,5 +1,8 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+.html {
+  scroll-behavior: smooth;
+}
 :root {
   font-size: 14px !important;
 
