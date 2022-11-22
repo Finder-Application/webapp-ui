@@ -31,6 +31,12 @@ export const MissingPersonInformationForm = () => {
     },
   } = createPostFormData || {};
 
+  const gender =
+    selectedPost?.gender === undefined
+      ? undefined
+      : selectedPost?.gender === 0
+      ? 'male'
+      : 'female';
   return (
     <>
       <h4>Missing Person Information</h4>
@@ -62,6 +68,7 @@ export const MissingPersonInformationForm = () => {
               <Input
                 width='18em'
                 label='Full name'
+                value={selectedPost?.fullName}
                 name={CreatePostFormItemsName.FULL_NAME}
               />
             </Form.Item>
@@ -76,19 +83,14 @@ export const MissingPersonInformationForm = () => {
               </label>
               <Form.Item
                 name={CreatePostFormItemsName.GENDER}
-                initialValue={
-                  selectedPost?.gender === undefined
-                    ? undefined
-                    : selectedPost?.gender === 0
-                    ? 'male'
-                    : 'female'
-                }
+                initialValue={gender}
                 rules={[{ required: true, message: 'Gender is required' }]}
               >
                 <Select
                   className={cx(
                     'create-post__creating-form__inform-input-container__select'
                   )}
+                  value={gender}
                   placeholder='Gender'
                   style={{ width: 120 }}
                   suffixIcon={<DropdownIcon width={10} height={10} />}

@@ -1,5 +1,4 @@
 import { AuthLayout } from '@/layouts';
-import { LoginPage, SearchPage } from '@/pages';
 import React, { lazy } from 'react';
 
 // * Define all routes for websites
@@ -11,9 +10,10 @@ export const ROUTES = {
   guide: '/guide',
   search: '/search',
   createPost: '/create-post',
+  editPost: '/edit-post',
   forgotPassword: '/forgot-password',
   relevantPostsAndResources: '/relevantPostsAndResources',
-  yourPosts: '/yourPosts',
+  yourPosts: '/your-posts',
 };
 
 const publicRoutes: RouteFinder[] = [
@@ -61,7 +61,7 @@ const publicRoutes: RouteFinder[] = [
 const privateRoutes: RouteFinder[] = [
   {
     path: ROUTES.createPost,
-    page: React.lazy(() => import('@/pages/CreatePostPage/CreatePostPage')),
+    page: lazy(() => import('@/pages/CreatePostPage/UpsertPostPage')),
     title: 'Create Post',
   },
   {
@@ -76,6 +76,12 @@ const privateRoutes: RouteFinder[] = [
     path: ROUTES.yourPosts,
     page: lazy(() => import('@/pages/YourPosts/YourPosts')),
     title: 'Your Posts',
+  },
+  {
+    path: ROUTES.editPost,
+    title: 'Edit Post',
+    page: lazy(() => import('@/pages/CreatePostPage/UpsertPostPage')),
+    params: ':id',
   },
 ];
 

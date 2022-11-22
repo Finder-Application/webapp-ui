@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 export const CustomPage = (props: RouteFinder) => {
   DocumentUtils.setTitle(props.title);
   const Page = props.page;
+
   return (
     <div className={cx('custom-page')}>
       <React.Suspense fallback={<LoadingPage />}>

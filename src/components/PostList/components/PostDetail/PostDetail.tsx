@@ -130,7 +130,7 @@ export const PostDetail = (props: PostDetailProps) => {
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
-  const { data, isLoading } = useGetPostDetail({ id });
+  const { data, isLoading } = useGetPostDetail(id);
   const ownerName =
     (data?.owner.firstName || '') +
     ' ' +
