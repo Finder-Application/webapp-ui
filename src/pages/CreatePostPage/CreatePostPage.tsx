@@ -64,7 +64,7 @@ const CreatePostPage = () => {
     shallow
   );
 
-  const { data } = useGetPostDetail({ id: selectedPost?.id || -1 });
+  const { data } = useGetPostDetail(selectedPost?.id);
 
   const setIsShowingLoadingModal = useAppStore(
     (state) => state.setIsShowingLoadingModal

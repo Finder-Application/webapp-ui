@@ -32,11 +32,7 @@ export const SettingsPost = (
       icon: FaRegEdit,
       onClick: () => {
         onEdit && onEdit();
-        navigate(ROUTES.createPost, {
-          state: {
-            isFromPostDetail: true,
-          },
-        });
+        navigate(`${ROUTES.editPost}/${postId}`);
       },
     },
     {

@@ -26,7 +26,7 @@ const initUser = {
 };
 export const useUserStore = create<UserStoreInterface>((set, get, api) => ({
   user: initUser,
-  isLoggedIn: false,
+  isLoggedIn: true,
   setUser: (value: Me) => {
     if (get().user.userId == -1) {
       set({
@@ -36,6 +36,8 @@ export const useUserStore = create<UserStoreInterface>((set, get, api) => ({
     }
   },
   resetUser: () => {
+    console.log('run it');
+
     set({
       user: initUser,
       isLoggedIn: false,

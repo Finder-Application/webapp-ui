@@ -1,13 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { GlobalStyles } from './components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import GlobalStyles from './components/GlobalStyles';
 import { privateRoutes, publicRoutes, ROUTES } from './configs';
+import { useGetMe } from './hooks/auth/query';
 import { DefaultLayout } from './layouts';
 import { CustomPage } from './pages/CustomPage';
 import { PrivateOutletRoute, PublicOutletRoute } from './routes';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { useGetMe } from './hooks/auth/query';
 import { useUserStore } from './store/user';
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
   const navigate = useNavigate();
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
-  useEffect(() => {
-    isLoggedIn && navigate(ROUTES.home);
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   isLoggedIn && navigate(ROUTES.home);
+  // }, [isLoggedIn]);
   const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
     routes.map((route, index) => {
       const Layout =
@@ -26,11 +26,14 @@ function App() {
           : route.layout === null
           ? Fragment
           : route.layout;
-
+      let path = route.path;
+      if (route.params) {
+        path = `${route.path}/${route.params}`;
+      }
       return (
         <Route
           key={index}
-          path={route.path}
+          path={path}
           element={
             <Layout>
               <CustomPage {...route} />
