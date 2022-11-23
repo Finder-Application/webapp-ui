@@ -7,6 +7,7 @@ import { useDeletePost } from '@/hooks/post';
 import { usePostStore } from '@/store/post';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const cx = classNames;
 
@@ -44,6 +45,7 @@ export const SettingsPost = (
         setIsLoading && setIsLoading();
         if (confirm('Are you sure you want to delete this post?') == true) {
           await deletePost.mutateAsync({ id: postId }).then(async () => {
+            toast.success('You delete post successfully');
             onDelete && onDelete();
           });
         }

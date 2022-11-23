@@ -149,7 +149,6 @@ export const PostDetail = (props: PostDetailProps) => {
     setIsShowSharingPopup(true);
   };
   const handleClosePostDetail = async () => {
-    toast.success('You delete post successfully');
     setSearchParams({});
     setIsLoadingDelete(false);
   };
