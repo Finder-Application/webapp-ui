@@ -1,15 +1,19 @@
 import { ButtonFinder, PostList } from '@/components';
 import { DropdownIcon } from '@/components/Icons';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
+import { PostDetail } from '@/components/PostList/components/PostDetail';
+import { queryClient } from '@/main';
 import GeoUtils from '@/utils/Geo.utils';
 import { Select } from 'antd';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styles from './Homepage.module.scss';
 const { Option } = Select;
 
 const cx = classNames.bind(styles);
 const Homepage = () => {
+  const searchParams = useSearchParams()[0];
   const [provinceState, setProvince] = useState<string>();
   const [genderFilter, setGenderFilter] = useState();
   const provinces = GeoUtils.getAllProvinces();
@@ -87,6 +91,9 @@ const Homepage = () => {
       <div className={cx('mt-4')}>
         <PostList filter={{ gender: genderFilter, region: provinceState }} />
       </div>
+      {searchParams.get('id') && (
+        <PostDetail id={String(searchParams.get('id'))} />
+      )}
     </div>
   );
 };

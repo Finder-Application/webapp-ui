@@ -25,7 +25,7 @@ export const PostList = (props: PostListProps) => {
   const { data, fetchNextPage, hasNextPage, isSuccess, isLoading } =
     useGetPosts({
       page: currentPage,
-      take: 10,
+      take: constants.RENDERED_POST_SIZE,
     });
 
   useEffect(() => {

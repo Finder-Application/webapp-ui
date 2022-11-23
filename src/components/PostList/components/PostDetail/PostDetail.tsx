@@ -19,7 +19,7 @@ import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import { formatDate } from '@/utils/format.util';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommentDrawer } from './CommentDrawer';
 import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
@@ -29,12 +29,13 @@ import { SettingsPost } from './SettingsPost/Settings';
 import { SharingPopup } from './SharingPopup';
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { toast } from 'react-toastify';
+import { queryClient } from '@/main';
+import { QUERY_KEY } from '@/hooks/constants';
 
 export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
-  id: number;
-  isVisible?: boolean;
-  onClose: () => void;
+  id: number | string;
 }
 
 export const ShareToolTipButton = (props: React.HTMLProps<HTMLDivElement>) => {
@@ -115,22 +116,20 @@ export const LARGE_IMAGES = [
 const POP_TO_HEADER_HEIGHT = 50;
 
 export const PostDetail = (props: PostDetailProps) => {
-  const { id, isVisible, onClose } = props;
+  const { id } = props;
 
   const { height, width } = useWindowSize();
-
-  const [totalNoti, settTotalNoti] = useState(0);
-
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
 
   const user = useUserStore((state) => state.user);
-  const setSelectedPost = usePostStore((state) => state.setSelectedPost);
 
+  const [totalNoti, settTotalNoti] = useState(0);
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
-  const { data, isLoading } = useGetPostDetail(id);
+  const { data, isLoading } = useGetPostDetail(Number(id));
   const ownerName =
     (data?.owner.firstName || '') +
     ' ' +
@@ -149,27 +148,29 @@ export const PostDetail = (props: PostDetailProps) => {
   const showSharingPopupModal = () => {
     setIsShowSharingPopup(true);
   };
+  const handleClosePostDetail = async () => {
+    toast.success('You delete post successfully');
+    setSearchParams({});
+    setIsLoadingDelete(false);
+  };
 
   return (
     <Drawer
       placement={'bottom'}
       width={width}
-      open={isVisible}
+      open={!!id}
       className={cnPostDetail('post-detail')}
       height={toNumber(height) - POP_TO_HEADER_HEIGHT}
-      onClose={() => {
-        setSelectedPost(undefined);
-        onClose();
-      }}
+      onClose={handleClosePostDetail}
       headerStyle={{ display: 'none' }}
     >
-      {!data && isLoading ? (
+      {(!data && isLoading) || isLoadingDelete ? (
         <PostDetailPlaceholder />
       ) : (
         <>
           <SharingPopup />
           <CloseIcon
-            onClick={onClose}
+            onClick={handleClosePostDetail}
             className={cnPostDetail('post-detail__close-icon')}
           />
           <div
@@ -186,7 +187,12 @@ export const PostDetail = (props: PostDetailProps) => {
             />
             <ShareToolTipButton onClick={showSharingPopupModal} />
             {data?.owner.userId === user?.userId && (
-              <SettingsPost postId={id} onDelete={onClose} className='my-4'>
+              <SettingsPost
+                postId={Number(id)}
+                setIsLoading={() => setIsLoadingDelete(true)}
+                onDelete={handleClosePostDetail}
+                className='my-4'
+              >
                 <ButtonFinder
                   className={cnPostDetail(
                     'post-detail__interaction-items__item'

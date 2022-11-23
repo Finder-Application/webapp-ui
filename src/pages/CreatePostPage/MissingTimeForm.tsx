@@ -36,13 +36,13 @@ export const MissingTimeForm = () => {
             hasFeedback
           >
             <DatePicker
-              showTime={{ format: 'HH:mm' }}
+              showTime={false}
               className={cx(
                 'create-post__creating-form__inform-input-container__date-picker'
               )}
               style={{ width: '18em' }}
               placeholder='MM/DD/YYYY'
-              format='MM-DD-YYYY LT'
+              format='MM-DD-YYYY'
               suffixIcon={<CalendarIcon2 height={15} width={15} />}
             />
           </Form.Item>

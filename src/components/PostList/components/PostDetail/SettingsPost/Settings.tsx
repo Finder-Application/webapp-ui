@@ -1,12 +1,12 @@
-import { ROUTES, TOOL_TIP_zINDEX } from '@/configs';
-import { Dropdown, Menu, MenuProps, Modal, Tooltip } from 'antd';
-import { FaRegEdit } from 'react-icons/fa';
+import { ROUTES } from '@/configs';
+import { Dropdown, MenuProps } from 'antd';
 import { BsTrash } from 'react-icons/bs';
+import { FaRegEdit } from 'react-icons/fa';
 
+import { useDeletePost } from '@/hooks/post';
+import { usePostStore } from '@/store/post';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
-import { useDeletePost } from '@/hooks/post';
-import { useState } from 'react';
 
 const cx = classNames;
 
@@ -14,8 +14,9 @@ interface SettingsPostProps {
   postId: number;
   onDelete?: () => void;
   onEdit?: () => void;
+  setIsLoading?: () => void;
 }
-
+// TODO: FIX DELETED POST
 export const SettingsPost = (
   props: SettingsPostProps &
     React.DetailedHTMLProps<
@@ -23,7 +24,8 @@ export const SettingsPost = (
       HTMLDivElement
     >
 ) => {
-  const { postId, children, onDelete, onEdit } = props;
+  const { postId, children, onDelete, onEdit, setIsLoading } = props;
+
   const navigate = useNavigate();
   const deletePost = useDeletePost();
   const settingsDropdowns = [
@@ -39,6 +41,7 @@ export const SettingsPost = (
       title: 'Delete post',
       icon: BsTrash,
       onClick: async () => {
+        setIsLoading && setIsLoading();
         if (confirm('Are you sure you want to delete this post?') == true) {
           await deletePost.mutateAsync({ id: postId }).then(async () => {
             onDelete && onDelete();

@@ -69,16 +69,17 @@ const UpsertPostPage = () => {
   const createPost = useCreatePost();
   const updatePost = useUpdatePost();
 
+  const isCreatePost = !id && isEmpty(selectedPost);
+  const isUpdatePost = id && !isLoading && selectedPost;
   const netWorkImageUrl = useCreateNetworkImageUrl();
 
   const [form] = Form.useForm<EFormItemsName>();
 
   useEffect(() => {
+    if (!id) return setSelectedPost(undefined);
+
     if (isSuccess && data) {
-      setSelectedPost(data);
-    }
-    if (!id) {
-      setSelectedPost(undefined);
+      return setSelectedPost(data);
     }
   }, [isSuccess, id]);
 
@@ -146,11 +147,11 @@ const UpsertPostPage = () => {
         const url: string = networkImageUrls[index];
         if (url) {
           const id = url?.split('img-')[1];
-          const nextValue = {
+          const newLocal = {
             id: id,
             descriptor: descriptor,
           };
-          return [...prev, nextValue];
+          return [...prev, newLocal];
         }
         return prev;
       },
@@ -187,10 +188,10 @@ const UpsertPostPage = () => {
           id: id,
           ...body,
         };
-        if (!payload.id) {
+        if (isCreatePost) {
           await handleCreatePost(payload);
         } else {
-          await handleUpdatePost(payload.id, payload);
+          await handleUpdatePost(String(id), payload);
         }
         navigate(ROUTES.home);
       } catch (error) {
@@ -205,10 +206,11 @@ const UpsertPostPage = () => {
   };
 
   // TODO: Refactor
+
   return (
     <>
       <LoadingModal />
-      {!id || (!isLoading && selectedPost) ? (
+      {isCreatePost || isUpdatePost ? (
         <Form
           form={form}
           name='control-hooks'
@@ -230,7 +232,6 @@ const UpsertPostPage = () => {
                 ]}
               >
                 <TextArea
-                  value={selectedPost?.title}
                   className={cx('create-post__creating-form__title-input')}
                   bordered={false}
                   placeholder='Title here...'
