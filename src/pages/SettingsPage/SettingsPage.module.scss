@@ -1,0 +1,19 @@
+.settings-page {
+  --w-sb: 15rem;
+  .sidebar {
+    min-height: 20rem;
+    width: var(--w-sb);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    .item {
+      display: inline;
+      font-size: 1.75rem;
+    }
+  }
+  .content {
+    width: calc(calc(100% - var(--w-sb)) - 20px);
+    background-color: white;
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
+  }
+}

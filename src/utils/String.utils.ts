@@ -20,6 +20,10 @@ class StringUtils {
 
     return str;
   };
+
+  static getGender(value: string | number) {
+    return Number(value) === 0 ? 'male' : 'female';
+  }
 }
 
 export default StringUtils;
