@@ -1,4 +1,140 @@
 .homepage {
+  &__search-container {
+    position: relative;
+    margin: -2rem -5.5% 2em;
+
+    &__content {
+      width: 100%;
+      position: absolute;
+      top: 7em;
+
+      &__title {
+        text-align: center;
+        font-size: 3.5rem;
+        color: var(--blue-1);
+        margin: 0;
+        margin-bottom: 0.1em;
+      }
+
+      &__sub-title {
+        text-align: center;
+        font-size: 2rem;
+        color: var(--purple-2);
+        width: 100%;
+        padding: 0 30%;
+        margin-bottom: 1em;
+      }
+      &__search-btn {
+        padding: 0 45%;
+
+        &__btn {
+          text-transform: uppercase;
+          text-decoration: none;
+          padding: 10px 40px;
+          display: inline-block;
+          border-radius: 55px;
+          transition: all 0.2s;
+          position: absolute;
+          cursor: pointer;
+          &--hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 500ms ease-in-out;
+          }
+        }
+
+        .btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+          transform: translateY(-1px);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-white {
+          color: var(--white);
+          border: solid 1px var(--white);
+        }
+
+        .btn::after {
+          content: '';
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+          border-radius: 100px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          transition: all 0.4s;
+        }
+
+        // .btn-white::after {
+        //   background-color: #fff;
+        // }
+
+        .btn:hover::after {
+          transform: scaleX(1.4) scaleY(1.6);
+          opacity: 0;
+        }
+
+        .btn-animated {
+          animation: moveInBottom 5s ease-out;
+          animation-fill-mode: backwards;
+        }
+
+        @keyframes moveInBottom {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+
+          100% {
+            opacity: 1;
+            transform: translateY(0px);
+          }
+        }
+      }
+    }
+
+    &__form {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      padding: 4em 0;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--black-opacity-48);
+
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 500ms ease-in-out, visibility 0s ease-in-out 500ms;
+
+      &--visible {
+        transition: opacity 500ms ease-in-out, visibility 0s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      &__input {
+        height: 3.2em;
+        width: 30em;
+        background: #efefef;
+        border-radius: 5px;
+      }
+      &__search-btn {
+        background-color: var(--light-blue-1);
+        padding: 0.8em 3em;
+        border-radius: 5px;
+        color: var(--white);
+        border: none;
+      }
+    }
+  }
   .title {
     text-align: center;
     font-size: 2rem;

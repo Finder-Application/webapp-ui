@@ -1,9 +1,12 @@
 import { constants } from '@/configs';
+import { PostEntity } from '@/entites/Post';
+import { Filter } from '@/hooks/interfaces';
 import { useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
-import React, { useEffect, useState } from 'react';
+import { Operator } from '@/services/common/types';
+import { useAppStore } from '@/store/app';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useLocation } from 'react-router-dom';
 import { NoResultsFound } from '../NoResult';
 import { Post as PostComponent } from './components/Post/Post';
 import { PostLoading } from './components/PostLoading';
@@ -14,7 +17,7 @@ type PostListProps = {
     region?: string;
   };
 };
-export const PostList = (props: PostListProps) => {
+export const PostList = memo((props: PostListProps) => {
   const { filter } = props;
 
   const [posts, setPosts] = useState<Post[]>([]);
@@ -22,11 +25,39 @@ export const PostList = (props: PostListProps) => {
   const [pageCount, setPageCount] = useState(1);
   const [itemCount, setItemCount] = useState(1);
 
+  const searchKeyWords = useAppStore((state) => state.globalSearchingKeyWords);
+
+  const getPostsFilter: Filter<PostEntity>[] = useMemo(() => {
+    return searchKeyWords
+      ? [
+          {
+            operator: Operator.Like,
+            field: 'title',
+            value: `%${searchKeyWords}%`,
+          },
+        ]
+      : [];
+  }, [searchKeyWords]);
+
+  // Need to check again, the useQuery Key receives an object (here is getPostsFilter) as dependencies but not trigger calling
+  // when the component rerender. Is it use deep compare?
   const { data, fetchNextPage, hasNextPage, isSuccess, isLoading } =
     useGetPosts({
       page: currentPage,
       take: constants.RENDERED_POST_SIZE,
+      filter: getPostsFilter,
     });
+
+  const resetPagination = () => {
+    setPosts([]);
+    setCurrentPage(1);
+    setPageCount(1);
+    setItemCount(1);
+  };
+
+  useEffect(() => {
+    resetPagination();
+  }, [searchKeyWords]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -93,24 +124,26 @@ export const PostList = (props: PostListProps) => {
 
   return (
     <>
-      <InfiniteScroll
-        dataLength={filteredPost.length}
-        next={() => {
-          fetchNextPage();
-          currentPage < pageCount && setCurrentPage((state) => state + 1);
-        }}
-        hasMore={posts.length !== itemCount}
-        loader={renderLoadingListPost()}
-      >
-        <div className='row flex-wrap justify-content-start align-items-center'>
-          {filteredPost.map((post, index) => (
-            <div key={post.id.toString()} className='col-xl-4 col-lg-3'>
-              <PostComponent postItem={post} />
-            </div>
-          ))}
-        </div>
-      </InfiniteScroll>
+      {
+        <InfiniteScroll
+          dataLength={filteredPost.length}
+          next={() => {
+            fetchNextPage();
+            currentPage < pageCount && setCurrentPage((state) => state + 1);
+          }}
+          hasMore={posts.length !== itemCount}
+          loader={renderLoadingListPost()}
+        >
+          <div className='row flex-wrap justify-content-start align-items-center'>
+            {filteredPost.map((post, index) => (
+              <div key={post.id.toString()} className='col-xl-4 col-lg-3'>
+                <PostComponent postItem={post} />
+              </div>
+            ))}
+          </div>
+        </InfiniteScroll>
+      }
       {data && filteredPost.length === 0 && !hasNextPage && <NoResultsFound />}
     </>
   );
-};
+});

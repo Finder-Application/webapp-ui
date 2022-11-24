@@ -18,7 +18,7 @@ export const Input = (
   return (
     <div style={{ width: width }} className={className}>
       {label && <label className={cx('my-input__label')}>{label}</label>}
-      <AntdInput {...inputProps} className={cx('my-input__input')} />
+      <AntdInput className={cx('my-input__input')} {...inputProps} />
     </div>
   );
 };
