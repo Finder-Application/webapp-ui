@@ -4,19 +4,24 @@ import { usePostStore } from '@/store/post';
 import shallow from 'zustand/shallow';
 import { Modal } from 'antd';
 import { AsyncImage } from '@/components/AsyncImage';
-import { LARGE_IMAGES } from '../PostDetail';
 import { FacebookSharingIcon, TwitterIcon } from '@/components/Icons';
-
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import styles from './SharingPopup.module.scss';
 import { toast } from 'react-toastify';
+import { constants, ROUTES } from '@/configs';
 
 const cx = classNames.bind(styles);
 
-type SharingPopupProps = {};
+type SharingPopupProps = {
+  photo?: string;
+  postId: string | number;
+  title: string;
+};
 
 export const SharingPopup = (
   props: SharingPopupProps & React.HTMLProps<HTMLDivElement>
 ) => {
+  const { photo, postId, title } = props;
   const [isShowSharingPopup, setIsShowSharingPopup] = usePostStore(
     (state) => [state.isShowSharingPopup, state.setIsShowSharingPopup],
     shallow
@@ -26,6 +31,8 @@ export const SharingPopup = (
     toast.success(label);
     return await navigator.clipboard.writeText(text);
   }
+
+  const url = `${constants.BASE_URL}${ROUTES.postDetail}/${postId}`;
   return (
     <Modal
       className={cx('share-popup')}
@@ -36,10 +43,7 @@ export const SharingPopup = (
       onCancel={() => setIsShowSharingPopup(false)}
     >
       <div className={cx('share-popup__header')}>
-        <AsyncImage
-          src={LARGE_IMAGES[2].src}
-          className={cx('share-popup__header__image')}
-        />
+        <AsyncImage src={photo} className={cx('share-popup__header__image')} />
       </div>
       <h4 className='font-weight-bold mt-5'>
         Share this with your social <br />
@@ -47,10 +51,20 @@ export const SharingPopup = (
       </h4>
       <div className='d-flex flex-row align-items-center justify-content-center my-5'>
         <div className={cx('share-popup__fb-icon', 'mr-4')}>
-          <FacebookSharingIcon />
+          <FacebookShareButton
+            url={url}
+            title={title}
+            about={title}
+            hashtag='#finder'
+            quote={title}
+          >
+            <FacebookSharingIcon />
+          </FacebookShareButton>
         </div>
         <div className={cx('share-popup__twitter-icon')}>
-          <TwitterIcon />
+          <TwitterShareButton url={url}>
+            <TwitterIcon />
+          </TwitterShareButton>
         </div>
       </div>
       <div className='text-left mx-4'>
@@ -59,13 +73,11 @@ export const SharingPopup = (
         </div>
         <div className={cx('share-popup__sharing-link-container')}>
           <div className={cx('share-popup__sharing-link-container__link')}>
-            https://finder.com/post/11310
+            {url}
           </div>
           <div
             className={cx('share-popup__sharing-link-container__copy')}
-            onClick={() =>
-              copyTextToClipboard('Copied!', 'https://finder.com/post/11310')
-            }
+            onClick={() => copyTextToClipboard('Copied!', url)}
           >
             Copy
           </div>
