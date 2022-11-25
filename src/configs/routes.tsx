@@ -15,6 +15,7 @@ export const ROUTES = {
   relevantPostsAndResources: '/relevantPostsAndResources',
   yourPosts: '/your-posts',
   settings: '/settings',
+  postDetail: '/post-detail/:id',
 };
 
 const publicRoutes: RouteFinder[] = [
@@ -56,6 +57,13 @@ const publicRoutes: RouteFinder[] = [
     path: ROUTES.search,
     page: lazy(() => import('@/pages/ReSearchPage/ReSearchPage')),
     title: 'Search',
+  },
+  {
+    path: ROUTES.postDetail,
+    page: lazy(
+      () => import('@/components/PostList/components/PostDetail/PostDetail')
+    ),
+    title: 'Post Detail',
   },
 ];
 

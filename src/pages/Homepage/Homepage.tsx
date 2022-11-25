@@ -1,8 +1,7 @@
 import { ButtonFinder, PostList } from '@/components';
 import { DropdownIcon } from '@/components/Icons';
 import RefreshIcon from '@/components/Icons/RefreshIcon';
-import { PostDetail } from '@/components/PostList/components/PostDetail';
-import { queryClient } from '@/main';
+import PostDetail from '@/components/PostList/components/PostDetail/PostDetail';
 import GeoUtils from '@/utils/Geo.utils';
 import { Select } from 'antd';
 import classNames from 'classnames/bind';

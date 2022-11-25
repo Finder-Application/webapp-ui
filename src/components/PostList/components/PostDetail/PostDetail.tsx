@@ -12,6 +12,7 @@ import classNames from 'classnames/bind';
 import toNumber from 'lodash/toNumber';
 import styles from './PostDetail.module.scss';
 
+import { ButtonFinder } from '@/components/ButtonFinder';
 import { UserAvatar } from '@/components/UserAvatar';
 import { TOOL_TIP_zINDEX } from '@/configs/constants';
 import { useGetPostDetail } from '@/hooks/post';
@@ -19,7 +20,8 @@ import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import { formatDate } from '@/utils/format.util';
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AiOutlineSetting } from 'react-icons/ai';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { CommentDrawer } from './CommentDrawer';
 import { ContactInform } from './ContactInform';
 import { ImageSlider } from './ImageSlider';
@@ -27,11 +29,7 @@ import { MissingInform } from './MissingInform';
 import { PostDetailPlaceholder } from './PostDetailPlaceholder';
 import { SettingsPost } from './SettingsPost/Settings';
 import { SharingPopup } from './SharingPopup';
-import { ButtonFinder } from '@/components/ButtonFinder';
-import { AiOutlineSetting } from 'react-icons/ai';
-import { toast } from 'react-toastify';
-import { queryClient } from '@/main';
-import { QUERY_KEY } from '@/hooks/constants';
+import { ROUTES } from '@/configs';
 
 export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
@@ -90,46 +88,24 @@ export const CommentTooltipButton = (
   );
 };
 
-export const LARGE_IMAGES = [
-  {
-    id: 1,
-    src: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-    alt: 'Placeholder image',
-  },
-  {
-    id: 3,
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQP7ARHenfnGXcnPostDetailCIhmDxObHocM8FPbjyaBg&usqp=CAU',
-    alt: 'Placeholder image',
-  },
-  {
-    id: 1,
-    src: 'https://media.istockphoto.com/photos/asian-poor-boy-with-happy-face-picture-id931087280?k=20&m=931087280&s=612x612&w=0&h=rp9eXInKksATBqxe4SrwZBP0s_bOJ-fIWlBF26H8Rz0=',
-    alt: 'Placeholder image',
-  },
-  {
-    id: 3,
-    src: 'https://media.istockphoto.com/photos/group-of-vietnamese-girls-on-the-beach-vietnam-picture-id1268046898?k=20&m=1268046898&s=612x612&w=0&h=s70meFViTyW6S2G06zQ6h4RXAnb6U7Pymn0knmcsiZs=',
-    alt: 'Placeholder image',
-  },
-];
-
 const POP_TO_HEADER_HEIGHT = 50;
 
-export const PostDetail = (props: PostDetailProps) => {
+const PostDetail = (props: PostDetailProps) => {
   const { id } = props;
-
+  const navigate = useNavigate();
+  const { id: post_id } = useParams<{ id: string }>();
   const { height, width } = useWindowSize();
-  const [, setSearchParams] = useSearchParams();
+  const setSearchParams = useSearchParams()[1];
+  const postID = id || post_id;
 
   const user = useUserStore((state) => state.user);
-
   const [totalNoti, settTotalNoti] = useState(0);
   const [showCommentDrawer, setShowCommentDrawer] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const setIsShowSharingPopup = usePostStore(
     (state) => state.setIsShowSharingPopup
   );
-  const { data, isLoading } = useGetPostDetail(Number(id));
+  const { data, isLoading } = useGetPostDetail(Number(postID));
   const ownerName =
     (data?.owner.firstName || '') +
     ' ' +
@@ -149,6 +125,9 @@ export const PostDetail = (props: PostDetailProps) => {
     setIsShowSharingPopup(true);
   };
   const handleClosePostDetail = async () => {
+    if (post_id) {
+      return navigate(-1);
+    }
     setSearchParams({});
     setIsLoadingDelete(false);
   };
@@ -157,7 +136,7 @@ export const PostDetail = (props: PostDetailProps) => {
     <Drawer
       placement={'bottom'}
       width={width}
-      open={!!id}
+      open={!!postID}
       className={cnPostDetail('post-detail')}
       height={toNumber(height) - POP_TO_HEADER_HEIGHT}
       onClose={handleClosePostDetail}
@@ -167,7 +146,11 @@ export const PostDetail = (props: PostDetailProps) => {
         <PostDetailPlaceholder />
       ) : (
         <>
-          <SharingPopup />
+          <SharingPopup
+            photo={data?.photos[0]}
+            postId={String(postID)}
+            title={String(data?.title)}
+          />
           <CloseIcon
             onClick={handleClosePostDetail}
             className={cnPostDetail('post-detail__close-icon')}
@@ -278,3 +261,5 @@ export const PostDetail = (props: PostDetailProps) => {
     </Drawer>
   );
 };
+
+export default PostDetail;

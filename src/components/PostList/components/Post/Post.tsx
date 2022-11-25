@@ -1,22 +1,26 @@
 import { AsyncImage, ButtonFinder } from '@/components';
+import { ROUTES } from '@/configs';
 import { Post as PostInterface } from '@/hooks/post/interface';
 import { usePostStore } from '@/store/post';
 import { formatUserName } from '@/utils/format.util';
+import { RouteUtils } from '@/utils/Route.utils';
 import { Progress } from 'antd';
 import classNames from 'classnames/bind';
 import React, { memo } from 'react';
 import { FcOvertime } from 'react-icons/fc';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './Post.module.scss';
 
 const cx = classNames.bind(styles);
 type Props = {
   postItem: PostInterface;
+  onHomepage?: boolean;
 };
 
 export const Post = memo((props: Props) => {
-  const { postItem } = props;
-  const [, setSearchParams] = useSearchParams();
+  const { postItem, onHomepage = true } = props;
+  const navigate = useNavigate();
+  const setSearchParams = useSearchParams()[1];
 
   const setSelectedPost = usePostStore((state) => state.setSelectedPost);
 
@@ -31,9 +35,11 @@ export const Post = memo((props: Props) => {
   const [isHover, setIsHover] = React.useState(false);
 
   const showPostDetail = () => {
-    setSearchParams({
-      id: String(postItem.id),
-    });
+    if (onHomepage)
+      setSearchParams({
+        id: String(postItem.id),
+      });
+    else navigate(`${RouteUtils.getPath('postDetail')}/${postItem.id}`);
     setSelectedPost(postItem);
   };
 

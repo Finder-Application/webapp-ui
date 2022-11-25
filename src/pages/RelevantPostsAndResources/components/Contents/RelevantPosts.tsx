@@ -71,7 +71,7 @@ export const RelevantPosts = (props: Props) => {
               <div className='d-flex row flex-wrap justify-content-start align-items-center'>
                 {sortedPosts.map((post, index) => (
                   <div key={post.id.toString()} className='col-xl-4 col-lg-4'>
-                    <PostComponent postItem={post} />
+                    <PostComponent postItem={post} onHomepage={false} />
                   </div>
                 ))}
               </div>
