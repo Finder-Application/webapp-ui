@@ -2,6 +2,7 @@ import { User } from '../auth/interface';
 
 export interface PostNotis {
   id: number;
+  postId: number;
   content: string;
   title: string;
   seen: boolean;

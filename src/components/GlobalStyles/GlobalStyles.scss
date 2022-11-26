@@ -195,3 +195,12 @@ html *::-webkit-scrollbar-track {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.ant-list-item-meta-description , .ant-list-item-meta-title{
+  white-space: nowrap; 
+  width: 200px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+ 

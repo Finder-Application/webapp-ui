@@ -26,17 +26,7 @@ export interface Token {
   accessToken: string;
 }
 
-export interface Me {
-  firstName: string;
-  lastName: string;
-  middleName: string;
-  avatar: string;
-  email: string;
-  address: string;
-  phone: string;
-  isActive: number;
-  userId: number;
-}
+export interface Me extends User {}
 
 export interface ResponseLogin {
   user: Me;

@@ -8,6 +8,7 @@ import { AttachIcon } from '@/components/Icons';
 import classNames from 'classnames';
 import styles from './CommentInput.scss';
 import { useCreateComment, useCreateSubComment } from '@/hooks/comments/query';
+import { useGetMe } from '@/hooks/auth/query';
 
 const cx = classNames.bind(styles);
 
@@ -42,6 +43,10 @@ export const CommentInput = (
     inputImageFile?.current?.click();
   };
 
+  const me = useGetMe();
+
+  const userInfo = me.data;
+
   const onComment = () => {
     repFor
       ? mutateSubComment({
@@ -67,6 +72,7 @@ export const CommentInput = (
           className='mr-2'
           svgProps={{ width: userAvatarIconSize, height: userAvatarIconSize }}
           popup
+          user={userInfo}
         />
         <div
           className={cx(
