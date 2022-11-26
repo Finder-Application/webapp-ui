@@ -31,14 +31,24 @@ export const PostList = memo((props: PostListProps) => {
   const searchKeyWords = useAppStore((state) => state.globalSearchingKeyWords);
 
   const getPostsFilter: Filter<PostEntity>[] = useMemo(() => {
+    const filterFields = [
+      'title',
+      'fullName',
+      'hometownRegion',
+      'hometownState',
+      'hometownHamlet',
+      'missingRegion',
+      'missingState',
+      'missingHamlet',
+      'missingCommune',
+    ] as const;
+
     return searchKeyWords.length > 0
-      ? [
-          {
-            operator: Operator.Like,
-            field: 'title',
-            value: `%${searchKeyWords.trim()}%`,
-          },
-        ]
+      ? filterFields.map((field) => ({
+          operator: Operator.Like,
+          field,
+          value: `%${searchKeyWords.trim()}%`,
+        }))
       : [];
   }, [searchKeyWords]);
 
