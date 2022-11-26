@@ -5,6 +5,7 @@ import { useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
 import { Operator } from '@/services/common/types';
 import { useAppStore } from '@/store/app';
+import moment from 'moment';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NoResultsFound } from '../NoResult';
@@ -15,10 +16,12 @@ type PostListProps = {
   filter: {
     gender?: number;
     region?: string;
+    birthYear: moment.Moment | null;
   };
+  onSetTotalOfSearch: (value: number) => void;
 };
 export const PostList = memo((props: PostListProps) => {
-  const { filter } = props;
+  const { filter, onSetTotalOfSearch } = props;
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -28,12 +31,12 @@ export const PostList = memo((props: PostListProps) => {
   const searchKeyWords = useAppStore((state) => state.globalSearchingKeyWords);
 
   const getPostsFilter: Filter<PostEntity>[] = useMemo(() => {
-    return searchKeyWords
+    return searchKeyWords.length > 0
       ? [
           {
             operator: Operator.Like,
             field: 'title',
-            value: `%${searchKeyWords}%`,
+            value: `%${searchKeyWords.trim()}%`,
           },
         ]
       : [];
@@ -46,6 +49,7 @@ export const PostList = memo((props: PostListProps) => {
       page: currentPage,
       take: constants.RENDERED_POST_SIZE,
       filter: getPostsFilter,
+      order: { field: 'createdAt', direction: 'DESC' },
     });
 
   const resetPagination = () => {
@@ -70,6 +74,8 @@ export const PostList = memo((props: PostListProps) => {
           .flatMap((page) => {
             setPageCount(page.meta.pageCount);
             setItemCount(page.meta.itemCount);
+            onSetTotalOfSearch(page.meta.itemCount);
+
             return page.data;
           })
           .filter((item) => !state.some((post) => post.id === item.id));
@@ -92,41 +98,37 @@ export const PostList = memo((props: PostListProps) => {
     );
   };
 
+  // Not sure the best way to use filter
   const filteredPost = posts
     .filter((post, index) => {
       // Filter duplicates items
       return posts.indexOf(post) === index;
     })
-    .filter((post, index) => {
-      if (filter.region && filter.gender !== undefined) {
-        return (
-          post.hometown.region === filter.region &&
-          post.gender === +filter.gender
-        );
-      }
+    .filter((post) => {
       if (filter.region) {
         return post.hometown.region === filter.region;
       }
+      return true;
+    })
+    .filter((post) => {
       if (filter.gender !== undefined) {
         return post.gender === +filter.gender;
       }
-
       return true;
     })
-    .sort((post1, post2) => {
-      if (post1.createdAt && post2.createdAt) {
-        var date1 = new Date(post1.createdAt);
-        var date2 = new Date(post2.createdAt);
-        return date2.getTime() - date1.getTime();
+    .filter((post) => {
+      if (filter.birthYear !== null) {
+        const dob = new Date(post.dateOfBirth);
+        return dob.getFullYear() === filter.birthYear?.year();
       }
-      return 0;
+      return true;
     });
 
   return (
     <>
       {
         <InfiniteScroll
-          dataLength={filteredPost.length}
+          dataLength={posts.length}
           next={() => {
             fetchNextPage();
             currentPage < pageCount && setCurrentPage((state) => state + 1);
