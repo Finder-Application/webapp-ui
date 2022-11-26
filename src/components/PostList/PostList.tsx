@@ -30,7 +30,7 @@ export const PostList = memo((props: PostListProps) => {
 
   const searchKeyWords = useAppStore((state) => state.globalSearchingKeyWords);
 
-  const getPostsFilter: Filter<PostEntity>[] = useMemo(() => {
+  const postsToFilter: Filter<PostEntity>[] = useMemo(() => {
     const filterFields = [
       'title',
       'fullName',
@@ -52,13 +52,13 @@ export const PostList = memo((props: PostListProps) => {
       : [];
   }, [searchKeyWords]);
 
-  // Need to check again, the useQuery Key receives an object (here is getPostsFilter) as dependencies but not trigger calling
+  // Need to check again, the useQuery Key receives an object (here is postsToFilter) as dependencies but not trigger calling
   // when the component rerender. Is it use deep compare?
   const { data, fetchNextPage, hasNextPage, isSuccess, isLoading } =
     useGetPosts({
       page: currentPage,
       take: constants.RENDERED_POST_SIZE,
-      filter: getPostsFilter,
+      filter: postsToFilter,
       order: { field: 'createdAt', direction: 'DESC' },
     });
 
@@ -88,7 +88,18 @@ export const PostList = memo((props: PostListProps) => {
 
             return page.data;
           })
-          .filter((item) => !state.some((post) => post.id === item.id));
+          // This is for getting the not duplicating post.
+          // For ex: state = [1, 2, 3], data = [1, 4, 5] => postsFromData = [4, 5];
+          .filter((item) => {
+            const foundIndex = state.findIndex((post) => post.id === item.id);
+
+            if (foundIndex !== -1) {
+              state[foundIndex] = item;
+            }
+
+            return foundIndex === -1;
+          });
+
         return [...state, ...postsFromData];
       });
     }
@@ -110,10 +121,6 @@ export const PostList = memo((props: PostListProps) => {
 
   // Not sure the best way to use filter
   const filteredPost = posts
-    .filter((post, index) => {
-      // Filter duplicates items
-      return posts.indexOf(post) === index;
-    })
     .filter((post) => {
       if (filter.region) {
         return post.hometown.region === filter.region;
