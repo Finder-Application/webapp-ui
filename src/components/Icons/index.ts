@@ -39,3 +39,4 @@ export * from './ChevronRight';
 export * from './Eyes';
 export * from './Chat';
 export * from './ThreeDots';
+export * from './ChevronDown';
