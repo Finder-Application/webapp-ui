@@ -16,7 +16,7 @@ type PostListProps = {
   filter: {
     gender?: number;
     region?: string;
-    birthYear: moment.Moment | null;
+    birthYear?: moment.Moment | null;
   };
   onSetTotalOfSearch: (value: number) => void;
 };

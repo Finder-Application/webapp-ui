@@ -26,7 +26,17 @@ export interface Token {
   accessToken: string;
 }
 
-export interface Me extends User {}
+export interface Me {
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  avatar: string;
+  email: string;
+  phone: string;
+  address: string;
+  gender: boolean;
+  userId: number;
+}
 
 export interface ResponseLogin {
   user: Me;

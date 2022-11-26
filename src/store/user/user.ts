@@ -23,6 +23,7 @@ const initUser = {
   middleName: '',
   phone: '',
   uuid: '',
+  gender: false,
 };
 export const useUserStore = create<UserStoreInterface>((set, get, api) => ({
   user: initUser,

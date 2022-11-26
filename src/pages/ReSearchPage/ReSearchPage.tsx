@@ -88,7 +88,7 @@ const ReSearch = () => {
         </ButtonFinder> */}
       </div>
       <div className={cx('mt-4')}>
-        <PostList filter={{}} />
+        <PostList filter={{}} onSetTotalOfSearch={()=>{}} />
       </div>
     </div>
   );
