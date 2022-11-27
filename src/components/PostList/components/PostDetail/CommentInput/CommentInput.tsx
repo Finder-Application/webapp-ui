@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import styles from './CommentInput.scss';
 import { useCreateComment, useCreateSubComment } from '@/hooks/comments/query';
 import { useGetMe } from '@/hooks/auth/query';
+import { queryClient } from '@/main';
+import { QUERY_KEY } from '@/hooks/constants';
 
 const cx = classNames.bind(styles);
 

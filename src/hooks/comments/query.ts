@@ -1,3 +1,5 @@
+import { axiosClient } from '@/apis';
+import { useQuery } from 'react-query';
 import { useMutationCreate } from '../common/useCreate';
 import { useMutationDelete } from '../common/useDelete';
 import { useGetInfinities } from '../common/useGetInfinities';
@@ -9,6 +11,9 @@ import {
   CreateSubComment,
   ResponseCreateComment,
 } from './interface';
+
+const baseURL = (isPublic: boolean, url: string) =>
+  `api/${isPublic ? 'public' : 'private'}/${url}`;
 
 export const uesGetInfiComments = (params: IParamsDefault<{}>) =>
   useGetInfinities<Comment>({
@@ -55,3 +60,15 @@ export const useCreateSubComment = (
     resource: FEATURE.COMMENT,
     query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
+
+export const useCountComment = (id: string | number | undefined) =>
+  useQuery(
+    [QUERY_KEY.COUNT_COMMENT, id],
+    () =>
+      axiosClient.get(baseURL(true, `comments/count?id=${id}`)) as unknown as {
+        total: number;
+      },
+    {
+      enabled: !!id,
+    }
+  );

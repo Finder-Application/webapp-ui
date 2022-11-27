@@ -10,4 +10,5 @@ export enum QUERY_KEY {
   PAGINATION_POSTS = 'paginationPosts',
   PAGINATION_POST_NOTIS = 'paginationPostNotis',
   PAGINATION_CMT_NOTIS = 'paginationCmtNotis',
+  COUNT_COMMENT = 'countComment',
 }

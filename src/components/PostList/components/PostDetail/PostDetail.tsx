@@ -30,6 +30,7 @@ import { PostDetailPlaceholder } from './PostDetailPlaceholder';
 import { SettingsPost } from './SettingsPost/Settings';
 import { SharingPopup } from './SharingPopup';
 import { ROUTES } from '@/configs';
+import { useCountComment } from '@/hooks/comments/query';
 
 export const cnPostDetail = classNames.bind(styles);
 interface PostDetailProps {
@@ -57,9 +58,16 @@ export const ShareToolTipButton = (props: React.HTMLProps<HTMLDivElement>) => {
 };
 
 export const CommentTooltipButton = (
-  props: React.HTMLProps<HTMLDivElement> & { total: number }
+  props: React.HTMLProps<HTMLDivElement> & {
+    postID: string | number | undefined;
+  }
 ) => {
-  const { onClick, total } = props;
+  const { onClick, postID } = props;
+
+  const { data } = useCountComment(postID);
+
+  const total = data?.total || 0;
+
   return (
     <div {...props}>
       <Tooltip
@@ -163,7 +171,7 @@ const PostDetail = (props: PostDetailProps) => {
           >
             <UserAvatar user={data?.owner} />
             <CommentTooltipButton
-              total={totalNoti}
+              postID={postID}
               className='my-4'
               onClick={onOpenCommentDrawer}
             />
