@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -17,23 +16,20 @@ function App() {
         route.layout === undefined
           ? DefaultLayout
           : route.layout === null
-          ? Fragment
+          ? null
           : route.layout;
       let path = route.path;
       if (route.params) {
         path = `${route.path}/${route.params}`;
       }
-      return (
-        <Route
-          key={index}
-          path={path}
-          element={
-            <Layout>
-              <CustomPage {...route} />
-            </Layout>
-          }
-        />
+      const element = Layout ? (
+        <Layout>
+          <CustomPage {...route} />
+        </Layout>
+      ) : (
+        <CustomPage {...route} />
       );
+      return <Route key={index} path={path} element={element} />;
     });
   return (
     <GlobalStyles>
@@ -60,4 +56,4 @@ function App() {
   );
 }
 
-export { App };
+export default App;
