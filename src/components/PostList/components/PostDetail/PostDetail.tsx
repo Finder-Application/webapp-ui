@@ -191,7 +191,7 @@ const PostDetail = (props: PostDetailProps) => {
               showCommentDrawer && 'post-detail__main-content__active'
             )}
           >
-            <div className={showCommentDrawer ? 'col-9' : 'col-10'}>
+            <div className={showCommentDrawer ? 'col-9' : 'col-11'}>
               <h1 className='font-weight-bold'>{data?.title}</h1>
               <hr />
               <div className='mt-4 mb-5 d-flex flex-row align-items-center'>
@@ -218,7 +218,7 @@ const PostDetail = (props: PostDetailProps) => {
                 </div>
               </div>
               <div className='d-flex flex-row justify-content-between align-items-center'>
-                <div style={{ width: '75%' }}>
+                <div className={cnPostDetail('wrapper-slider')}>
                   <ImageSlider
                     images={
                       data?.photos
@@ -231,7 +231,10 @@ const PostDetail = (props: PostDetailProps) => {
                     }
                   />
                 </div>
-                <MissingInform inform={data} className='ml-5' />
+                <MissingInform
+                  inform={data}
+                  className={cnPostDetail('ml-5', 'missing-form')}
+                />
               </div>
 
               <div className='mt-5 mb-4 d-flex flex-row align-items-center'>

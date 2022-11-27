@@ -9,7 +9,7 @@ type MissingInformProps = {
 export const MissingInform = (
   props: React.HTMLProps<HTMLDivElement> & MissingInformProps
 ) => {
-  const { inform } = props;
+  const { inform, ...defaultProps } = props;
 
   const getAddress = (address?: Address) => {
     return (
@@ -34,7 +34,7 @@ export const MissingInform = (
   };
 
   return (
-    <div {...props}>
+    <div {...defaultProps}>
       <h5 className='mb-4 font-weight-bold'>Missing person Information</h5>
       {renderInfoDetail('Fullname', inform?.fullName || '')}
       {renderInfoDetail('Nickname', inform?.nickname || '')}

@@ -1,6 +1,7 @@
 .post-detail {
   z-index: 999999;
   background-color: var(--black-opacity-84) !important;
+  --w-ms-from: 400px;
   :global(.ant-drawer-content) {
     border-radius: 0;
     border-top-left-radius: 1em;
@@ -141,5 +142,12 @@
   }
   :global(.ant-dropdown) {
     z-index: 9999999999;
+  }
+
+  .missing-form {
+    width: var(--w-ms-from);
+  }
+  .wrapper-slider {
+    width: calc(100% - var(--w-ms-from));
   }
 }
