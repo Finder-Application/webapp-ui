@@ -44,12 +44,12 @@ const publicRoutes: RouteFinder[] = [
   },
   {
     path: ROUTES.about,
-    page: lazy(() => import('@/pages/Homepage/Homepage')),
+    page: lazy(() => import('@/pages/ComingSoon/ComingSoonPage')),
     title: 'About',
   },
   {
     path: ROUTES.guide,
-    page: React.lazy(() => import('@/pages/Homepage/Homepage')),
+    page: React.lazy(() => import('@/pages/ComingSoon/ComingSoonPage')),
     title: 'Guild Lines',
   },
 

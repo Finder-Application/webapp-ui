@@ -1,14 +1,15 @@
-import React from 'react';
-import classNames from 'classnames/bind';
-import { usePostStore } from '@/store/post';
-import shallow from 'zustand/shallow';
-import { Modal } from 'antd';
 import { AsyncImage } from '@/components/AsyncImage';
 import { FacebookSharingIcon, TwitterIcon } from '@/components/Icons';
+import { constants } from '@/configs';
+import { usePostStore } from '@/store/post';
+import { RouteUtils } from '@/utils/Route.utils';
+import { Modal } from 'antd';
+import classNames from 'classnames/bind';
+import React from 'react';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
-import styles from './SharingPopup.module.scss';
 import { toast } from 'react-toastify';
-import { constants, ROUTES } from '@/configs';
+import shallow from 'zustand/shallow';
+import styles from './SharingPopup.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -32,7 +33,10 @@ export const SharingPopup = (
     return await navigator.clipboard.writeText(text);
   }
 
-  const url = `${constants.BASE_URL}${ROUTES.postDetail}/${postId}`;
+  const url = `${constants.BASE_URL}${RouteUtils.getPath(
+    'postDetail'
+  )}/${postId}`;
+
   return (
     <Modal
       className={cx('share-popup')}

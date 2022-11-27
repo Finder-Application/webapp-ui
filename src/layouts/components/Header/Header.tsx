@@ -9,7 +9,6 @@ import {
   UserProfileIcon,
   YourPostsIcon,
 } from '@/components/Icons';
-import { ROUTES } from '@/configs';
 import { useOnClickOutside } from '@/hooks';
 import { Dropdown, MenuProps } from 'antd';
 import classNames from 'classnames/bind';
@@ -20,6 +19,8 @@ import { Notification } from './Notification';
 import styles from './Header.module.scss';
 import { useUserStore } from '@/store/user';
 import { useGetMe } from '@/hooks/auth/query';
+import { RouteUtils } from '@/utils/Route.utils';
+import StorageUtils from '@/utils/Storage.utils';
 export const cx = classNames.bind(styles);
 
 type HeaderState = {
@@ -74,14 +75,17 @@ const Header = () => {
       ['header__nav__item__active']: isActive,
     });
   };
-  const NavBar = () => {
+  const renderNavbar = () => {
     return (
       <div className={cx('header__nav')}>
-        <NavLink className={getNavbarClassName} to='/'>
+        <NavLink className={getNavbarClassName} to={RouteUtils.getPath('home')}>
           Home
         </NavLink>
         <span className={cx('header__nav__dot')}></span>
-        <NavLink className={getNavbarClassName} to='/about'>
+        <NavLink
+          className={getNavbarClassName}
+          to={RouteUtils.getPath('about')}
+        >
           About us
         </NavLink>
         <span className={cx('header__nav__dot')}></span>
@@ -104,7 +108,7 @@ const Header = () => {
     {
       title: 'Your Posts',
       icon: YourPostsIcon,
-      onClick: () => navigate(ROUTES.yourPosts),
+      onClick: () => navigate(RouteUtils.getPath('yourPosts')),
     },
     {
       title: 'Account Settings',
@@ -114,9 +118,9 @@ const Header = () => {
       title: 'Sign out',
       icon: SignOutIcon,
       onClick: () => {
-        localStorage.clear();
+        StorageUtils.clear();
         resetUser();
-        navigate(ROUTES.login);
+        navigate(RouteUtils.getPath('login'));
       },
     },
   ];
@@ -148,7 +152,7 @@ const Header = () => {
       <NavLink to='/'>
         <FinderLogo isLight={false} />
       </NavLink>
-      <NavBar />
+      {renderNavbar()}
       <div className={cx('header__right')}>
         <div
           className={searchWrapperClassName}
@@ -185,7 +189,9 @@ const Header = () => {
         <ButtonFinder
           className={cx('header__right__upload-btn')}
           onClick={
-            !isFromPostDetail ? () => navigate(ROUTES.createPost) : undefined
+            !isFromPostDetail
+              ? () => navigate(RouteUtils.getPath('createPost'))
+              : undefined
           }
         >
           Upload

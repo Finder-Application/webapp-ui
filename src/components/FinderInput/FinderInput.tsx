@@ -5,6 +5,7 @@ import Input from 'antd/lib/input/Input';
 import React from 'react';
 interface FinderInputProps extends FormItemProps {
   type: 'email' | 'password' | 'name' | 'text' | 'number';
+  isForm?: boolean;
 }
 const FinderInput = (props: FinderInputProps) => {
   const { type, required } = props;
@@ -18,6 +19,7 @@ const FinderInput = (props: FinderInputProps) => {
         break;
     }
   };
+
   return (
     <Form.Item
       {...props}

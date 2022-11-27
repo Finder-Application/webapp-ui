@@ -13,6 +13,9 @@ class StorageUtils {
     localStorage.setItem(key, value);
     return value;
   }
+  static clear() {
+    localStorage.clear();
+  }
 }
 
 export default StorageUtils;
