@@ -13,7 +13,13 @@ import { useOnClickOutside } from '@/hooks';
 import { Dropdown, MenuProps } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {
+  createSearchParams,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { Notification } from './Notification';
 
 import styles from './Header.module.scss';
@@ -23,6 +29,7 @@ import { RouteUtils } from '@/utils/Route.utils';
 import StorageUtils from '@/utils/Storage.utils';
 import { useAppStore } from '@/store/app';
 import shallow from 'zustand/shallow';
+import { SEARCH_QUERY } from '@/configs';
 export const cx = classNames.bind(styles);
 
 type HeaderState = {
@@ -33,14 +40,11 @@ const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const [onFocusSearch, setOnFocusSearch] = useState(false);
-  const [globalSearchingKeywords, setGlobalSearchingKeywords] = useAppStore(
-    (state) => [
-      state.globalSearchingKeyWords,
-      state.setGlobalSearchingKeywords,
-    ],
-    shallow
-  );
-  const [searchValue, setSearchValue] = useState(globalSearchingKeywords);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get(SEARCH_QUERY);
+
+  const [searchValue, setSearchValue] = useState(searchQuery);
 
   const location = useLocation();
   const state = location.state as HeaderState;
@@ -170,14 +174,20 @@ const Header = () => {
         >
           <SearchIcon className={cx('search-icon')} />
           <input
-            value={searchValue}
+            value={searchValue || ''}
             className={cx('search-input')}
             type='text'
             placeholder='Search in here ..'
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                setGlobalSearchingKeywords(searchValue);
+                if (searchValue) {
+                  setSearchParams(
+                    createSearchParams({
+                      [`${SEARCH_QUERY}`]: searchValue,
+                    })
+                  );
+                }
               }
             }}
           />

@@ -1,4 +1,4 @@
-import { constants } from '@/configs';
+import { constants, SEARCH_QUERY } from '@/configs';
 import { PostEntity } from '@/entites/Post';
 import { Filter } from '@/hooks/interfaces';
 import { useGetPosts } from '@/hooks/post';
@@ -8,6 +8,7 @@ import { useAppStore } from '@/store/app';
 import moment from 'moment';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from 'react-router-dom';
 import { NoResultsFound } from '../NoResult';
 import { Post as PostComponent } from './components/Post/Post';
 import { PostLoading } from './components/PostLoading';
@@ -15,7 +16,7 @@ import { PostLoading } from './components/PostLoading';
 type PostListProps = {
   filter: {
     gender?: number;
-    region?: string;
+    residence?: string;
     birthYear?: moment.Moment | null;
   };
   onSetTotalOfSearch: (value: number) => void;
@@ -28,10 +29,11 @@ export const PostList = memo((props: PostListProps) => {
   const [pageCount, setPageCount] = useState(1);
   const [itemCount, setItemCount] = useState(1);
 
-  const searchKeyWords = useAppStore((state) => state.globalSearchingKeyWords);
+  const [searchParams] = useSearchParams();
+  const searchKeyWords = searchParams.get(SEARCH_QUERY);
 
   const postsToFilter: Filter<PostEntity>[] = useMemo(() => {
-    const filterFields = [
+    const filteringFields = [
       'title',
       'fullName',
       'hometownRegion',
@@ -43,14 +45,46 @@ export const PostList = memo((props: PostListProps) => {
       'missingCommune',
     ] as const;
 
-    return searchKeyWords.length > 0
-      ? filterFields.map((field) => ({
+    const gender =
+      filter.gender !== undefined
+        ? [
+            {
+              operator: Operator.Equal,
+              field: 'gender' as keyof PostEntity,
+              value: `${+filter.gender}`,
+            },
+          ]
+        : [];
+    const residence =
+      filter.residence !== undefined
+        ? [
+            {
+              operator: Operator.Equal,
+              field: 'hometownRegion' as keyof PostEntity,
+              value: `${filter.residence}`,
+            },
+          ]
+        : [];
+    const birthYear =
+      filter.birthYear !== null
+        ? [
+            {
+              operator: Operator.Like,
+              field: 'date_of_birth' as keyof PostEntity,
+              value: `%${filter.birthYear?.year()}%`,
+            },
+          ]
+        : [];
+    const searchInput = searchKeyWords
+      ? filteringFields.map((field) => ({
           operator: Operator.Like,
           field,
           value: `%${searchKeyWords.trim()}%`,
         }))
       : [];
-  }, [searchKeyWords]);
+
+    return [...searchInput, ...gender, ...residence, ...birthYear];
+  }, [searchKeyWords, filter]);
 
   // Need to check again, the useQuery Key receives an object (here is postsToFilter) as dependencies but not trigger calling
   // when the component rerender. Is it use deep compare?
@@ -71,7 +105,7 @@ export const PostList = memo((props: PostListProps) => {
 
   useEffect(() => {
     resetPagination();
-  }, [searchKeyWords]);
+  }, [searchKeyWords, filter]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -119,28 +153,6 @@ export const PostList = memo((props: PostListProps) => {
     );
   };
 
-  // Not sure the best way to use filter
-  const filteredPost = posts
-    .filter((post) => {
-      if (filter.region) {
-        return post.hometown.region === filter.region;
-      }
-      return true;
-    })
-    .filter((post) => {
-      if (filter.gender !== undefined) {
-        return post.gender === +filter.gender;
-      }
-      return true;
-    })
-    .filter((post) => {
-      if (filter.birthYear !== null) {
-        const dob = new Date(post.dateOfBirth);
-        return dob.getFullYear() === filter.birthYear?.year();
-      }
-      return true;
-    });
-
   return (
     <>
       {
@@ -154,7 +166,7 @@ export const PostList = memo((props: PostListProps) => {
           loader={renderLoadingListPost()}
         >
           <div className='row flex-wrap justify-content-start align-items-center'>
-            {filteredPost.map((post, index) => (
+            {posts.map((post, index) => (
               <div key={post.id.toString()} className='col-xl-4 col-lg-3'>
                 <PostComponent postItem={post} />
               </div>
@@ -162,7 +174,7 @@ export const PostList = memo((props: PostListProps) => {
           </div>
         </InfiniteScroll>
       }
-      {data && filteredPost.length === 0 && !hasNextPage && <NoResultsFound />}
+      {data && posts.length === 0 && !hasNextPage && <NoResultsFound />}
     </>
   );
 });

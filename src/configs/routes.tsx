@@ -12,7 +12,7 @@ export const ROUTES = {
   createPost: '/create-post',
   editPost: '/edit-post',
   forgotPassword: '/forgot-password',
-  relevantPostsAndResources: '/relevantPostsAndResources',
+  relevantPostsAndResources: '/relevantPostsAndResources/:id',
   yourPosts: '/your-posts',
   settings: '/settings',
   postDetail: '/post-detail/:id',

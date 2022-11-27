@@ -9,6 +9,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Skeleton } from 'antd';
 import { usePostStore } from '@/store/post';
 import { PostListLoadingPlaceHolder } from '@/components/PostListLoadingPlaceHolder';
+import { useParams } from 'react-router-dom';
+import { useGetPostDetail } from '@/hooks/post';
 
 type Props = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -18,11 +20,14 @@ type Props = React.DetailedHTMLProps<
 const NUMBER_OF_TAKEN_ITEMS = 8;
 
 export const RelevantPosts = (props: Props) => {
-  const yourSelectedPost = usePostStore((state) => state.yourSelectedPost);
+  const { id: post_id } = useParams<{ id: string }>();
 
   const { data, isSuccess, isLoading } = useRelevantPosts({
-    id: yourSelectedPost?.id || -1,
+    id: Number(post_id) || -1,
   });
+
+  const { data: yourSelectedPostData, isLoading: isPostDetailLoading } =
+    useGetPostDetail(Number(post_id));
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentTakenIndex, setCurrentTakenIndex] = useState(0);
@@ -52,7 +57,7 @@ export const RelevantPosts = (props: Props) => {
 
   return (
     <div {...props}>
-      {isLoading ? (
+      {isLoading || isPostDetailLoading ? (
         <PostListLoadingPlaceHolder />
       ) : (
         <>
@@ -60,7 +65,9 @@ export const RelevantPosts = (props: Props) => {
             There are{' '}
             <span className='font-italic'>{data?.length} post results</span>{' '}
             relating to your post&nbsp;
-            <span className='font-weight-bold'>{yourSelectedPost?.title}</span>
+            <span className='font-weight-bold'>
+              {yourSelectedPostData?.title}
+            </span>
           </div>
           {data?.length === 0 ? (
             <div className='d-flex flex-column align-items-center justify-content-center w-100'>
