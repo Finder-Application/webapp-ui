@@ -12,6 +12,8 @@ import { useState } from 'react';
 import { UseInfiniteQueryResult } from 'react-query';
 import { cx } from './Header';
 import { BoxNotifications } from './BoxNotifications';
+import { useNavigate } from 'react-router-dom';
+import { RouteUtils } from '@/utils/Route.utils';
 
 enum NotificationTab {
   POSTS = 'Posts',
@@ -24,6 +26,8 @@ export const Notification = () => {
   );
 
   const { totalNoti, socket } = useNoti();
+
+  const navigate = useNavigate();
 
   const TabItem = (item: NotificationTab) => {
     return (
@@ -64,12 +68,19 @@ export const Notification = () => {
                   id: item.id,
                   type: 'post',
                 });
+
+                navigate(`${RouteUtils.getPath('postDetail')}/${item.postId}`);
               }}
               itemRender={(item: PostNotis) => (
                 <List.Item.Meta
                   avatar={<Avatar src={item.user.avatar} />}
                   title={item.title}
-                  description={item.content}
+                  // check title if > 50 char then cut it and add ...
+                  description={
+                    item.content.length > 50
+                      ? item.content.slice(0, 50) + '...'
+                      : item.content
+                  }
                 />
               )}
               isNewNoti={(item: PostNotis) => !!!item.seen}
@@ -88,11 +99,11 @@ export const Notification = () => {
                   id: item.id,
                   type: 'comment',
                 });
+                navigate(`${RouteUtils.getPath('postDetail')}/${item.postId}`);
               }}
               itemRender={(item: CmtNotis) => (
                 <List.Item.Meta
                   avatar={<Avatar src={item.user.avatar} />}
-                  // title={item.title}
                   description={item.content}
                 />
               )}

@@ -21,6 +21,8 @@ import { useUserStore } from '@/store/user';
 import { useGetMe } from '@/hooks/auth/query';
 import { RouteUtils } from '@/utils/Route.utils';
 import StorageUtils from '@/utils/Storage.utils';
+import { useAppStore } from '@/store/app';
+import shallow from 'zustand/shallow';
 export const cx = classNames.bind(styles);
 
 type HeaderState = {
@@ -31,7 +33,14 @@ const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const [onFocusSearch, setOnFocusSearch] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [globalSearchingKeywords, setGlobalSearchingKeywords] = useAppStore(
+    (state) => [
+      state.globalSearchingKeyWords,
+      state.setGlobalSearchingKeywords,
+    ],
+    shallow
+  );
+  const [searchValue, setSearchValue] = useState(globalSearchingKeywords);
 
   const location = useLocation();
   const state = location.state as HeaderState;
@@ -166,10 +175,15 @@ const Header = () => {
             type='text'
             placeholder='Search in here ..'
             onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                setGlobalSearchingKeywords(searchValue);
+              }
+            }}
           />
-          {onFocusSearch && searchValue && (
+          {/* {onFocusSearch && searchValue && (
             <div className={cx('search-result')}></div>
-          )}
+          )} */}
         </div>
 
         {me && (

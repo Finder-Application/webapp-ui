@@ -17,6 +17,7 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NoData } from './components/NoData';
+import CommonImages from '@/assets/images/common';
 
 import styles from './YourPosts.module.scss';
 export const cx = classNames.bind(styles);
@@ -33,28 +34,21 @@ const YourPosts = () => {
     state.setSelectedPost,
   ]);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isSuccess,
-    refetch,
-    isRefetching,
-  } = useGetPosts({
-    take: 8,
-    // page: currentPage,
-    filter: [
-      {
-        operator: Operator.Equal,
-        field: 'userId',
-        value: user.userId.toString(),
+  const { data, fetchNextPage, hasNextPage, isLoading, isSuccess, refetch } =
+    useGetPosts({
+      take: 8,
+      // page: currentPage,
+      filter: [
+        {
+          operator: Operator.Equal,
+          field: 'userId',
+          value: user.userId.toString(),
+        },
+      ],
+      optionKey: {
+        page: currentPage.toString(),
       },
-    ],
-    optionKey: {
-      page: currentPage.toString(),
-    },
-  });
+    });
 
   useEffect(() => {
     if (data && isSuccess) {
@@ -109,6 +103,7 @@ const YourPosts = () => {
             >
               <SettingsPost
                 postId={post.id}
+                onViewDetail={() => setSelectedPost(post)}
                 onEdit={() => setSelectedPost(post)}
                 onDelete={async () => {
                   await refetch();
@@ -134,12 +129,18 @@ const YourPosts = () => {
   return (
     <div className={cx('your-posts')}>
       <div className={cx('your-posts__header')}>
+        <img
+          src={CommonImages.yourPostsBanner}
+          className={cx('your-posts__header__banner')}
+        />
         <div className='d-flex flex-column align-items-center justify-content-center'>
           <AsyncImage
             className={cx('your-posts__header__avatar')}
             src={user?.avatar}
           />
-          <h4 className='mt-2'>{user?.firstName}</h4>
+          <h4 className={cx('your-posts__header__name', 'mt-2')}>
+            {user?.firstName}
+          </h4>
           <div className={cx('your-posts__header__edit')}>
             Edit Profile <ChevronRightIcon className='ml-2' />
           </div>

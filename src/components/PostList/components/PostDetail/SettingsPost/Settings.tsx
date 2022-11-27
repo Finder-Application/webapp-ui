@@ -4,10 +4,11 @@ import { BsTrash } from 'react-icons/bs';
 import { FaRegEdit } from 'react-icons/fa';
 
 import { useDeletePost } from '@/hooks/post';
-import { usePostStore } from '@/store/post';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { RouteUtils } from '@/utils/Route.utils';
+import { ViewDetailIcon } from '@/components/Icons';
 
 const cx = classNames;
 
@@ -15,6 +16,7 @@ interface SettingsPostProps {
   postId: number;
   onDelete?: () => void;
   onEdit?: () => void;
+  onViewDetail?: () => void;
   setIsLoading?: () => void;
 }
 // TODO: FIX DELETED POST
@@ -25,7 +27,8 @@ export const SettingsPost = (
       HTMLDivElement
     >
 ) => {
-  const { postId, children, onDelete, onEdit, setIsLoading } = props;
+  const { postId, children, onDelete, onEdit, onViewDetail, setIsLoading } =
+    props;
 
   const navigate = useNavigate();
   const deletePost = useDeletePost();
@@ -37,6 +40,7 @@ export const SettingsPost = (
         onEdit && onEdit();
         navigate(`${ROUTES.editPost}/${postId}`);
       },
+      shouldShowItem: true,
     },
     {
       title: 'Delete post',
@@ -50,27 +54,42 @@ export const SettingsPost = (
           });
         }
       },
+      shouldShowItem: true,
+    },
+
+    {
+      title: 'View detail',
+      icon: ViewDetailIcon,
+      onClick: () => {
+        onViewDetail && onViewDetail();
+        navigate(`${RouteUtils.getPath('postDetail')}/${postId}`);
+      },
+      shouldShowItem: onViewDetail ? true : false,
     },
   ];
   const menuDropdownItems: MenuProps['items'] = settingsDropdowns.map(
     (item, index) => {
       const Icon = item.icon;
-      return {
-        key: index,
-        label: (
-          <div
-            className={cx(
-              'header__user-dropdown__item',
-              index !== settingsDropdowns.length - 1 &&
-                'header__user-dropdown__item__last-item'
-            )}
-            onClick={item.onClick}
-          >
-            <Icon className={cx('header__user-dropdown__item__icon', 'mr-3')} />
-            <span>{item.title}</span>
-          </div>
-        ),
-      };
+      return item.shouldShowItem
+        ? {
+            key: index,
+            label: (
+              <div
+                className={cx(
+                  'header__user-dropdown__item',
+                  index !== settingsDropdowns.length - 1 &&
+                    'header__user-dropdown__item__last-item'
+                )}
+                onClick={item.onClick}
+              >
+                <Icon
+                  className={cx('header__user-dropdown__item__icon', 'mr-3')}
+                />
+                <span>{item.title}</span>
+              </div>
+            ),
+          }
+        : null;
     }
   );
 

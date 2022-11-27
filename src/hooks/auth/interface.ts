@@ -32,9 +32,9 @@ export interface Me {
   middleName: string;
   avatar: string;
   email: string;
-  address: string;
   phone: string;
-  isActive: number;
+  address: string;
+  gender: boolean;
   userId: number;
 }
 

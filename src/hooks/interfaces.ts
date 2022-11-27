@@ -12,7 +12,7 @@ enum Operator {
   Not = 'NOT',
 }
 
-interface Filter<Field> {
+export interface Filter<Field> {
   field: keyof Field;
   operator: Operator;
   value: string;
