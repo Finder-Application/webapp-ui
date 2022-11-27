@@ -8,7 +8,7 @@
     "baseUrl": "src",
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": false,
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
