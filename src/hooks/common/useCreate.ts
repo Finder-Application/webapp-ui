@@ -41,6 +41,10 @@ export const useMutationCreate = <TResponse, TError, TCreate>(
         if (query_key) {
           queryClient.refetchQueries([query_key]);
         }
+
+        if (configMutation?.onSuccess) {
+          configMutation.onSuccess(data, variables, context);
+        }
         // toast.success('Create Success!');
       },
       onError: (error) => {

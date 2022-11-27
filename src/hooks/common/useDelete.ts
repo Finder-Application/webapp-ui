@@ -9,6 +9,7 @@ export interface ResponseDeleteSuccess {
   message: string;
   record: {
     id: string | number;
+    postId?: string | number;
   };
 }
 
@@ -41,6 +42,10 @@ export const useMutationDelete = (
         queryClient.refetchQueries([defineQueryKey]);
       }
       showToast && toast.success('Delete Success!');
+
+      if (configMutation?.onSuccess) {
+        configMutation.onSuccess(data, variables, context);
+      }
     },
     onError: (error) => {
       console.log(error);

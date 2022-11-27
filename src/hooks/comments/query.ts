@@ -1,4 +1,5 @@
 import { axiosClient } from '@/apis';
+import { queryClient } from '@/main';
 import { useQuery } from 'react-query';
 import { useMutationCreate } from '../common/useCreate';
 import { useMutationDelete } from '../common/useDelete';
@@ -27,6 +28,11 @@ export const uesGetInfiComments = (params: IParamsDefault<{}>) =>
 
 export const useDeleteComment = () =>
   useMutationDelete({
+    configMutation: {
+      onSuccess: (data, variables, context) => {
+        data?.record?.postId && refetchCountComment(data?.record?.postId);
+      },
+    },
     resource: FEATURE.COMMENT,
     query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
@@ -41,7 +47,12 @@ export const useCreateComment = (
   >['configMutation']
 ) =>
   useMutationCreate<ResponseCreateComment, unknown, CreateComment>({
-    configMutation,
+    configMutation: {
+      ...configMutation,
+      onSuccess: (data, variables, context) => {
+        refetchCountComment(variables.dataCreate.postId);
+      },
+    },
     resource: FEATURE.COMMENT,
     query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
@@ -56,7 +67,12 @@ export const useCreateSubComment = (
   >['configMutation']
 ) =>
   useMutationCreate<ResponseCreateComment, unknown, CreateSubComment>({
-    configMutation,
+    configMutation: {
+      ...configMutation,
+      onSuccess: (data, variables, context) => {
+        refetchCountComment(variables.dataCreate.postId);
+      },
+    },
     resource: FEATURE.COMMENT,
     query_key: QUERY_KEY.PAGINATION_COMMENTS,
   });
@@ -72,3 +88,13 @@ export const useCountComment = (id: string | number | undefined) =>
       enabled: !!id,
     }
   );
+
+const refetchCountComment = async (id: string | number | undefined) => {
+  await queryClient.prefetchQuery({
+    queryKey: [QUERY_KEY.COUNT_COMMENT, id],
+    queryFn: () =>
+      axiosClient.get(baseURL(true, `comments/count?id=${id}`)) as unknown as {
+        total: number;
+      },
+  });
+};

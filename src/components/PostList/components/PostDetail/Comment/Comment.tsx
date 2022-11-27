@@ -9,6 +9,7 @@ import { Comment } from '@/hooks/comments/interface';
 import { formatDate, formatUserName } from '@/utils/format.util';
 import { useDeleteComment } from '@/hooks/comments/query';
 import { useGetMe } from '@/hooks/auth/query';
+import { FcEmptyTrash } from 'react-icons/fc';
 
 const cx = classNames.bind(styles);
 
@@ -53,7 +54,7 @@ export const CommentCpn = (
                 {formatUserName({ user: comment.user, option: 'short' })}
               </div>
               <div className={cx('comment-container__comment-date')}>
-                {formatDate(comment.createdAt, 'MMMM d, YYYY')}
+                {formatDate(comment.createdAt, 'DD/MM/YYYY HH:mm')}
               </div>
             </div>
             <p className={cx('comment-container__comment-content')}>
@@ -77,7 +78,8 @@ export const CommentCpn = (
                 onClick={onDeleteComment}
                 className='ml-3 d-flex flex-row align-items-center comment-container__reply--pointer'
               >
-                <TrashIcon color='black' className='mr-2' />
+                <FcEmptyTrash className='mr-1' />
+                {/* <TrashIcon color='black' className='mr-2' /> */}
                 <span className={cx('comment-container__reply-text')}>
                   Delete
                 </span>
