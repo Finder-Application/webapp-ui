@@ -205,7 +205,7 @@ const PostDetail = (props: PostDetailProps) => {
                   type='vertical'
                 />
                 <div
-                  className='d-flex flex-row'
+                  className='d-flex flex-row align-items-center'
                   style={{ color: 'var(--grey-4)' }}
                 >
                   <CalendarIcon className='mr-2' />
