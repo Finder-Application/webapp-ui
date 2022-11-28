@@ -20,6 +20,7 @@ import { NoData } from './components/NoData';
 import CommonImages from '@/assets/images/common';
 
 import styles from './YourPosts.module.scss';
+import { RouteUtils } from '@/utils/Route.utils';
 export const cx = classNames.bind(styles);
 
 const YourPosts = () => {
@@ -52,15 +53,25 @@ const YourPosts = () => {
 
   useEffect(() => {
     if (data && isSuccess) {
-      const postsFromData = data.pages
-        .flatMap((page) => {
-          return page.data;
-        })
-        .filter((item) => !posts.some((post) => post.id === item.id));
+      setPosts((state) => {
+        const postsFromData = data.pages
+          .flatMap((page) => {
+            return page.data;
+          })
+          .filter((item) => {
+            const foundIndex = state.findIndex((post) => post.id === item.id);
 
-      setPosts((state) => [...state, ...postsFromData]);
+            if (foundIndex !== -1) {
+              state[foundIndex] = item;
+            }
+
+            return foundIndex === -1;
+          });
+
+        return [...state, ...postsFromData];
+      });
     }
-  }, [isLoading, isSuccess, hasNextPage]);
+  }, [isLoading, isSuccess, hasNextPage, data]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,7 +86,9 @@ const YourPosts = () => {
           className={cx('your-posts__body__your-post__image-container')}
           onClick={() => {
             setYourSelectedPost(post);
-            navigate(ROUTES.relevantPostsAndResources);
+            navigate(
+              `${RouteUtils.getPath('relevantPostsAndResources')}/${post.id}`
+            );
           }}
         >
           <AsyncImage

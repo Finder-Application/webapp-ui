@@ -5,18 +5,19 @@ import PostDetail from '@/components/PostList/components/PostDetail/PostDetail';
 import GeoUtils from '@/utils/Geo.utils';
 import { DatePicker, Input, Select } from 'antd';
 import classNames from 'classnames/bind';
-import { useSearchParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import styles from './Homepage.module.scss';
 import CommonImages from '@/assets/images/common';
-import { useAppStore } from '@/store/app';
-import shallow from 'zustand/shallow';
+import { SEARCH_QUERY } from '@/configs';
 
 const { Option } = Select;
 
 const cx = classNames.bind(styles);
 const Homepage = () => {
-  const searchParams = useSearchParams()[0];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get(SEARCH_QUERY);
+
   const [provinceState, setProvince] = useState<string>();
   const [genderFilter, setGenderFilter] = useState();
   const [birthYearFilter, setBirthYearFilter] = useState<moment.Moment | null>(
@@ -26,7 +27,7 @@ const Homepage = () => {
   const filterOptions = useMemo(
     () => ({
       gender: genderFilter,
-      region: provinceState,
+      residence: provinceState,
       birthYear: birthYearFilter,
     }),
     [genderFilter, provinceState, birthYearFilter]
@@ -35,19 +36,10 @@ const Homepage = () => {
   const [totalOfSearch, setTotalOfSearch] = useState<number>();
 
   const provinces = GeoUtils.getAllProvinces();
-
-  const [globalSearchingKeywords, setGlobalSearchingKeywords] = useAppStore(
-    (state) => [
-      state.globalSearchingKeyWords,
-      state.setGlobalSearchingKeywords,
-    ],
-    shallow
-  );
-
-  const [searchKeywords, setSearchKeywords] = useState(globalSearchingKeywords);
+  const [searchKeywords, setSearchKeywords] = useState(searchQuery);
 
   const isSearching =
-    globalSearchingKeywords.length !== 0 ||
+    searchQuery ||
     provinceState !== undefined ||
     genderFilter !== undefined ||
     birthYearFilter !== null;
@@ -55,19 +47,15 @@ const Homepage = () => {
   const [showSearchForm, setShowSearchForm] = useState(isSearching);
 
   useEffect(() => {
-    setSearchKeywords(globalSearchingKeywords);
+    setSearchKeywords(searchQuery);
     setShowSearchForm(isSearching);
-  }, [globalSearchingKeywords]);
+  }, [searchQuery]);
 
   const resetFilter = () => {
     setProvince(undefined);
     setGenderFilter(undefined);
     setBirthYearFilter(null);
   };
-
-  useEffect(() => {
-    return () => setGlobalSearchingKeywords('');
-  }, []);
 
   return (
     <div className={cx('homepage')}>
@@ -105,7 +93,7 @@ const Homepage = () => {
             showSearchForm && 'homepage__search-container__form--visible'
           )}
         >
-          {globalSearchingKeywords.length > 0 && (
+          {searchQuery && (
             <h3
               className={cx('homepage__search-container__form__search-result')}
             >
@@ -114,7 +102,7 @@ const Homepage = () => {
           )}
           <div className='d-flex flex-row align-items-end justify-content-center'>
             <Input
-              value={searchKeywords}
+              value={searchKeywords || ''}
               onChange={(e) => {
                 const value = e.target.value;
                 setSearchKeywords(value);
@@ -123,10 +111,31 @@ const Homepage = () => {
               className={cx('homepage__search-container__form__input', 'mr-3')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  setGlobalSearchingKeywords(searchKeywords);
+                  if (searchKeywords) {
+                    setSearchParams(
+                      createSearchParams({
+                        [`${SEARCH_QUERY}`]: searchKeywords,
+                      })
+                    );
+                  }
                 }
               }}
             />
+            <ButtonFinder
+              className={cx(
+                'homepage__search-container__form__search-btn',
+                'mr-3'
+              )}
+              onClick={() => {
+                if (searchKeywords) {
+                  setSearchParams(
+                    createSearchParams({ [`${SEARCH_QUERY}`]: searchKeywords })
+                  );
+                }
+              }}
+            >
+              Search
+            </ButtonFinder>
             <div className='mr-3'>
               <div className={cx('homepage__search-container__form__label')}>
                 Birth year
@@ -190,14 +199,7 @@ const Homepage = () => {
                 <Option value={true}>Female</Option>
               </Select>
             </div>
-            <ButtonFinder
-              className={cx('homepage__search-container__form__search-btn')}
-              onClick={() => {
-                setGlobalSearchingKeywords(searchKeywords);
-              }}
-            >
-              Search
-            </ButtonFinder>
+
             <ButtonFinder
               className={cx('homepage__search-container__form__reset-btn')}
               onClick={resetFilter}
