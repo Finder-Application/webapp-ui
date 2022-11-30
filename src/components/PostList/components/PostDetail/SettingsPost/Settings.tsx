@@ -1,5 +1,5 @@
 import { ROUTES } from '@/configs';
-import { Dropdown, MenuProps } from 'antd';
+import { Dropdown, MenuProps, Modal } from 'antd';
 import { BsTrash } from 'react-icons/bs';
 import { FaRegEdit } from 'react-icons/fa';
 
@@ -32,6 +32,14 @@ export const SettingsPost = (
 
   const navigate = useNavigate();
   const deletePost = useDeletePost();
+
+  const handleDelete = async () => {
+    setIsLoading && setIsLoading();
+    await deletePost.mutateAsync({ id: postId }).then(async () => {
+      toast.success('You delete post successfully');
+      onDelete && onDelete();
+    });
+  };
   const settingsDropdowns = [
     {
       title: 'Edit post',
@@ -46,13 +54,11 @@ export const SettingsPost = (
       title: 'Delete post',
       icon: BsTrash,
       onClick: async () => {
-        setIsLoading && setIsLoading();
-        if (confirm('Are you sure you want to delete this post?') == true) {
-          await deletePost.mutateAsync({ id: postId }).then(async () => {
-            toast.success('You delete post successfully');
-            onDelete && onDelete();
-          });
-        }
+        Modal.confirm({
+          title: 'Are you sure you want to delete this post?',
+          cancelText: 'Cancel',
+          onOk: handleDelete,
+        });
       },
       shouldShowItem: true,
     },
