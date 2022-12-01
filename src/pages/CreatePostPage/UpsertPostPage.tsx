@@ -228,6 +228,7 @@ const UpsertPostPage = () => {
                   {
                     required: true,
                     message: `Title is required`,
+                    max: 500,
                   },
                 ]}
               >
@@ -238,7 +239,7 @@ const UpsertPostPage = () => {
                   size='large'
                   allowClear
                   autoSize
-                  maxLength={80}
+                  maxLength={500}
                 />
               </Form.Item>
               <div className='mb-5' />

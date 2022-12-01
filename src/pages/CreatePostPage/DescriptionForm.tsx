@@ -28,7 +28,9 @@ export const DescriptionForm = () => {
           <Form.Item
             name={CreatePostFormItemsName.DESCRIPTION}
             initialValue={selectedPost?.description}
-            rules={[{ required: true, message: 'Description is required' }]}
+            rules={[
+              { required: true, message: 'Description is required', max: 2000 },
+            ]}
           >
             <TextArea
               className={cx(

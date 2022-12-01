@@ -3,6 +3,7 @@ export const constants = {
   RENDERED_POST_SIZE: 9,
   BASE_URL: 'https://finder.support',
   // BASE_URL: import.meta.env.VITE_BASE_URL,
+  formatDate: 'DD-MM-YYYY',
 };
 
 // TODO: UPDATE TO CONSTANTS

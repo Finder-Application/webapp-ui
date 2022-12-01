@@ -1,4 +1,5 @@
 import { CalendarIcon2 } from '@/components/Icons';
+import { constants } from '@/configs';
 import { usePostStore } from '@/store/post';
 
 import { DatePicker, Form, Select } from 'antd';
@@ -41,8 +42,8 @@ export const MissingTimeForm = () => {
                 'create-post__creating-form__inform-input-container__date-picker'
               )}
               style={{ width: '18em' }}
-              placeholder='MM/DD/YYYY'
-              format='MM-DD-YYYY'
+              placeholder={constants.formatDate}
+              format={constants.formatDate}
               suffixIcon={<CalendarIcon2 height={15} width={15} />}
             />
           </Form.Item>

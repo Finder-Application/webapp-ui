@@ -9,7 +9,7 @@ import toLower from 'lodash/toLower';
 import shallow from 'zustand/shallow';
 import { CreatePostFormItemsName, cx } from './CreatePostPage';
 import moment from 'moment';
-import { regex } from '@/configs';
+import { constants, regex } from '@/configs';
 
 const { Option } = Select;
 
@@ -125,8 +125,8 @@ export const MissingPersonInformationForm = () => {
                   className={cx(
                     'create-post__creating-form__inform-input-container__date-picker'
                   )}
-                  placeholder='MM/DD/YYYY'
-                  format='MM-DD-YYYY'
+                  placeholder={constants.formatDate}
+                  format={constants.formatDate}
                   suffixIcon={<CalendarIcon2 height={15} width={15} />}
                   clearIcon={false}
                 />
