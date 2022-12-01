@@ -11,6 +11,7 @@ import {
 import { Descriptor } from '@/hooks/post/interface';
 import { useAppStore } from '@/store/app';
 import { usePostStore } from '@/store/post';
+import { useUserStore } from '@/store/user';
 import GeoUtils from '@/utils/Geo.utils';
 import { Form, Input as AntdInput } from 'antd';
 import classNames from 'classnames/bind';
@@ -56,7 +57,9 @@ export enum EFormItemsName {
 const UpsertPostPage = () => {
   const { id } = useParams<{ id: string }>() || { id: -1 };
   const { data, isSuccess, isLoading } = useGetPostDetail(Number(id));
+
   const navigate = useNavigate();
+  const user = useUserStore((state) => state.user);
   const [createPostFormData, setSelectedPost, selectedPost] = usePostStore(
     (state) => [
       state.createPostFormData,
@@ -69,11 +72,11 @@ const UpsertPostPage = () => {
   const createPost = useCreatePost();
   const updatePost = useUpdatePost();
 
+  const netWorkImageUrl = useCreateNetworkImageUrl();
+  const [form] = Form.useForm<EFormItemsName>();
+
   const isCreatePost = !id && isEmpty(selectedPost);
   const isUpdatePost = id && !isLoading && selectedPost;
-  const netWorkImageUrl = useCreateNetworkImageUrl();
-
-  const [form] = Form.useForm<EFormItemsName>();
 
   useEffect(() => {
     if (!id) return setSelectedPost(undefined);
@@ -205,8 +208,31 @@ const UpsertPostPage = () => {
     console.log(values);
   };
 
-  // TODO: Refactor
+  const fields: Array<keyof typeof user> = [
+    'email',
+    'phone',
+    'firstName',
+    'lastName',
+    'address',
+  ];
+  console.log(
+    '🚀 ~ file: UpsertPostPage.tsx:218 ~ UpsertPostPage ~ user',
+    user
+  );
 
+  const hasMissInfoUser = fields.some((field) => !user[field]);
+
+  if (hasMissInfoUser) {
+    return (
+      <div className='d-flex justify-content-center flex-column'>
+        <div>You are missing information, Please update information now</div>
+        <div className='mt-2'>
+          <ButtonFinder type='primary'>Settings Here </ButtonFinder>
+        </div>
+      </div>
+    );
+  }
+  // TODO: Refactor
   return (
     <>
       <LoadingModal />

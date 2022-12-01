@@ -22,19 +22,14 @@ import {
 } from 'react-router-dom';
 import { Notification } from './Notification';
 
-import styles from './Header.module.scss';
-import { useUserStore } from '@/store/user';
+import { SEARCH_QUERY } from '@/configs';
 import { useGetMe } from '@/hooks/auth/query';
+import { useUserStore } from '@/store/user';
 import { RouteUtils } from '@/utils/Route.utils';
 import StorageUtils from '@/utils/Storage.utils';
-import { useAppStore } from '@/store/app';
-import shallow from 'zustand/shallow';
-import { SEARCH_QUERY } from '@/configs';
+import styles from './Header.module.scss';
+import { usePostStore } from '@/store/post';
 export const cx = classNames.bind(styles);
-
-type HeaderState = {
-  isFromPostDetail: boolean;
-};
 
 const Header = () => {
   const [position, setPosition] = useState(window.pageYOffset);
@@ -46,19 +41,15 @@ const Header = () => {
 
   const [searchValue, setSearchValue] = useState(searchQuery);
 
-  const location = useLocation();
-  const state = location.state as HeaderState;
-  const { isFromPostDetail = false } = state || {};
-
   const [user, resetUser] = useUserStore((state) => [
     state.user,
     state.resetUser,
   ]);
 
   const { data: me } = useGetMe();
-
   const navigate = useNavigate();
 
+  const [setSelectedPost] = usePostStore((state) => [state.setSelectedPost]);
   // init Refs
   const refSearch = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -160,6 +151,10 @@ const Header = () => {
     }
   );
 
+  const handleCreatePost = () => {
+    navigate(RouteUtils.getPath('createPost'));
+    setSelectedPost(undefined);
+  };
   return (
     <div className={headerClassName}>
       <NavLink to='/'>
@@ -212,11 +207,7 @@ const Header = () => {
 
         <ButtonFinder
           className={cx('header__right__upload-btn')}
-          onClick={
-            !isFromPostDetail
-              ? () => navigate(RouteUtils.getPath('createPost'))
-              : undefined
-          }
+          onClick={handleCreatePost}
         >
           Upload
         </ButtonFinder>
