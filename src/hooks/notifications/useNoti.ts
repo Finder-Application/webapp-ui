@@ -1,7 +1,9 @@
 import { initSocket } from '@/configs/socket';
+import { queryClient } from '@/main';
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { useGetMe } from '../auth/query';
+import { QUERY_KEY } from '../constants';
 
 export const useNoti = () => {
   // use socket io to connect to http://localhost:9000/api/
@@ -41,6 +43,11 @@ export const useNoti = () => {
 
       socket.on('increase-notification', () => {
         setTotalNoti((prev) => prev + 1);
+      });
+
+      socket.on('new-notification', (data) => {
+        queryClient.refetchQueries([QUERY_KEY.PAGINATION_COMMENTS]);
+        queryClient.refetchQueries([QUERY_KEY.COUNT_COMMENT]);
       });
 
       return () => {
