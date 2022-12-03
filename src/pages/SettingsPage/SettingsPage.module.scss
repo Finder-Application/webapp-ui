@@ -1,19 +1,86 @@
 .settings-page {
   --w-sb: 15rem;
+  display: flex;
+  flex-direction: row;
   .sidebar {
     min-height: 20rem;
     width: var(--w-sb);
     padding: 0.5rem 1rem;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5em;
     .item {
-      display: inline;
-      font-size: 1.75rem;
+      display: flex;
+      font-size: 1rem;
+      align-items: center;
+      width: 15em;
+      padding: 0.7em 2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s all ease-in-out;
+      background-color: var(--grey-19);
+      margin-bottom: 2em;
+
+      &:hover {
+        background-color: var(--grey-6-opacity-38);
+      }
+      &--active {
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+        background-color: var(--white);
+        font-weight: 500;
+        &:hover {
+          background-color: var(--white);
+        }
+      }
+    }
+  }
+  .header {
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 2em;
+    padding: 1.5rem 2rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.07);
+    .title {
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-weight: 400;
+      color: var(--grey-12);
+      font-size: 0.8rem;
     }
   }
   .content {
-    width: calc(calc(100% - var(--w-sb)) - 20px);
     background-color: white;
-    border-radius: 15px;
-    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    padding: 2rem 2.8rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.07);
+    .general {
+      .avatar {
+        border: solid 1px var(--grey-23);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.07);
+        width: 5em;
+        height: 5em;
+      }
+      .btn {
+        background: var(--bg-primary-2);
+        padding: 0.6em 1em;
+        border-radius: 10px;
+        margin-left: 1.5rem;
+        border: none;
+
+        &:hover {
+          background-color: var(--primary);
+          color: var(--white);
+        }
+      }
+    }
+    .notification {
+      .toggle-all-btn {
+        cursor: pointer;
+        color: var(--light-blue-1);
+      }
+    }
   }
 }

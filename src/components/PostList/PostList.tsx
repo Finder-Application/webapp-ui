@@ -4,7 +4,6 @@ import { Filter } from '@/hooks/interfaces';
 import { useGetPosts } from '@/hooks/post';
 import { Post } from '@/hooks/post/interface';
 import { Operator } from '@/services/common/types';
-import { useAppStore } from '@/store/app';
 import moment from 'moment';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -12,6 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 import { NoResultsFound } from '../NoResult';
 import { Post as PostComponent } from './components/Post/Post';
 import { PostLoading } from './components/PostLoading';
+import { omitBy, isNull } from 'lodash';
 
 type PostListProps = {
   filter: {
@@ -32,19 +32,12 @@ export const PostList = memo((props: PostListProps) => {
   const [searchParams] = useSearchParams();
   const searchKeyWords = searchParams.get(SEARCH_QUERY);
 
-  const postsToFilter: Filter<PostEntity>[] = useMemo(() => {
-    const filteringFields = [
-      'title',
-      'fullName',
-      'hometownRegion',
-      'hometownState',
-      'hometownHamlet',
-      'missingRegion',
-      'missingState',
-      'missingHamlet',
-      'missingCommune',
-    ] as const;
+  console.log('currentPage: ', currentPage);
+  console.log('pageCount: ', pageCount);
+  console.log('itemCount: ', itemCount);
+  console.log('posts.length: ', posts.length);
 
+  const postsToFilter: Filter<PostEntity>[] = useMemo(() => {
     const gender =
       filter.gender !== undefined
         ? [
@@ -75,26 +68,43 @@ export const PostList = memo((props: PostListProps) => {
             },
           ]
         : [];
-    const searchInput = searchKeyWords
-      ? filteringFields.map((field) => ({
-          operator: Operator.Like,
-          field,
-          value: `%${searchKeyWords.trim()}%`,
-        }))
-      : [];
 
-    return [...searchInput, ...gender, ...residence, ...birthYear];
-  }, [searchKeyWords, filter]);
+    return [...gender, ...residence, ...birthYear];
+  }, [filter]);
+
+  const search = useMemo(() => {
+    const searchingFields = [
+      'title',
+      'fullName',
+      'hometownRegion',
+      'hometownState',
+      'hometownHamlet',
+      'missingRegion',
+      'missingState',
+      'missingHamlet',
+      'missingCommune',
+    ] as const;
+
+    return {
+      search: searchKeyWords,
+      fields: searchingFields,
+    };
+  }, [searchKeyWords]);
+
+  const query = omitBy(
+    {
+      take: constants.RENDERED_POST_SIZE,
+      filter: postsToFilter,
+      order: { field: 'createdAt', direction: 'DESC' },
+      q: searchKeyWords ? JSON.stringify(search) : null,
+    },
+    isNull
+  );
 
   // Need to check again, the useQuery Key receives an object (here is postsToFilter) as dependencies but not trigger calling
   // when the component rerender. Is it use deep compare?
   const { data, fetchNextPage, hasNextPage, isSuccess, isLoading } =
-    useGetPosts({
-      page: currentPage,
-      take: constants.RENDERED_POST_SIZE,
-      filter: postsToFilter,
-      order: { field: 'createdAt', direction: 'DESC' },
-    });
+    useGetPosts({ ...query });
 
   const resetPagination = () => {
     setPosts([]);
@@ -116,6 +126,7 @@ export const PostList = memo((props: PostListProps) => {
       setPosts((state) => {
         const postsFromData = data.pages
           .flatMap((page) => {
+            setCurrentPage(page.meta.page);
             setPageCount(page.meta.pageCount);
             setItemCount(page.meta.itemCount);
             onSetTotalOfSearch(page.meta.itemCount);
@@ -159,10 +170,11 @@ export const PostList = memo((props: PostListProps) => {
         <InfiniteScroll
           dataLength={posts.length}
           next={() => {
-            fetchNextPage();
-            currentPage < pageCount && setCurrentPage((state) => state + 1);
+            if (hasNextPage) {
+              fetchNextPage();
+            }
           }}
-          hasMore={posts.length !== itemCount}
+          hasMore={hasNextPage || posts.length !== itemCount}
           loader={renderLoadingListPost()}
         >
           <div className='row flex-wrap justify-content-start align-items-center'>

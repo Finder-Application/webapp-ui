@@ -10,13 +10,12 @@ import {
   YourPostsIcon,
 } from '@/components/Icons';
 import { useOnClickOutside } from '@/hooks';
-import { Dropdown, MenuProps } from 'antd';
+import { Avatar, Dropdown, MenuProps } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import {
   createSearchParams,
   NavLink,
-  useLocation,
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
@@ -24,11 +23,15 @@ import { Notification } from './Notification';
 
 import { SEARCH_QUERY } from '@/configs';
 import { useGetMe } from '@/hooks/auth/query';
+import {
+  AVATAR_PLACEHOLDER,
+  SettingScreens,
+} from '@/pages/SettingsPage/SettingsPage';
+import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import { RouteUtils } from '@/utils/Route.utils';
 import StorageUtils from '@/utils/Storage.utils';
 import styles from './Header.module.scss';
-import { usePostStore } from '@/store/post';
 export const cx = classNames.bind(styles);
 
 const Header = () => {
@@ -117,7 +120,11 @@ const Header = () => {
     {
       title: 'Account Settings',
       icon: SettingIcon,
+      onClick: () => {
+        navigate(`${RouteUtils.getPath('settings')}/${SettingScreens.GENERAL}`);
+      },
     },
+
     {
       title: 'Sign out',
       icon: SignOutIcon,
@@ -200,7 +207,10 @@ const Header = () => {
               arrow
               overlayClassName={cx('header__user-dropdown')}
             >
-              <UserIcon style={{ cursor: 'pointer' }} />
+              <Avatar
+                src={me?.avatar ? me?.avatar : AVATAR_PLACEHOLDER}
+                style={{ cursor: 'pointer' }}
+              />
             </Dropdown>
           </>
         )}

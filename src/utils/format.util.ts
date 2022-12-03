@@ -2,9 +2,9 @@ import moment from 'moment';
 
 interface FormatUserName {
   user: {
-    firstName: string;
-    lastName: string;
-    middleName: string;
+    firstName?: string;
+    lastName?: string;
+    middleName?: string;
   };
   option?: 'short' | 'long';
 }

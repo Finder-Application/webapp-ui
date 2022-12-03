@@ -21,6 +21,8 @@ import CommonImages from '@/assets/images/common';
 
 import styles from './YourPosts.module.scss';
 import { RouteUtils } from '@/utils/Route.utils';
+import { formatUserName } from '@/utils/format.util';
+import { SettingScreens } from '../SettingsPage/SettingsPage';
 export const cx = classNames.bind(styles);
 
 const YourPosts = () => {
@@ -30,6 +32,14 @@ const YourPosts = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const user = useUserStore((state) => state.user);
+  const userName = formatUserName({
+    user: {
+      firstName: user?.firstName,
+      middleName: user?.middleName,
+      lastName: user?.lastName,
+    },
+  });
+
   const [setYourSelectedPost, setSelectedPost] = usePostStore((state) => [
     state.setYourSelectedPost,
     state.setSelectedPost,
@@ -151,10 +161,15 @@ const YourPosts = () => {
             className={cx('your-posts__header__avatar')}
             src={user?.avatar}
           />
-          <h4 className={cx('your-posts__header__name', 'mt-2')}>
-            {user?.firstName}
-          </h4>
-          <div className={cx('your-posts__header__edit')}>
+          <h4 className={cx('your-posts__header__name', 'mt-2')}>{userName}</h4>
+          <div
+            className={cx('your-posts__header__edit')}
+            onClick={() => {
+              navigate(
+                `${RouteUtils.getPath('settings')}/${SettingScreens.GENERAL}`
+              );
+            }}
+          >
             Edit Profile <ChevronRightIcon className='ml-2' />
           </div>
         </div>

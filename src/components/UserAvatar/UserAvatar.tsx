@@ -34,7 +34,12 @@ export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
             <div className='mr-5'>
               <div className='d-flex flex-row mb-3 align-items-center'>
                 {/* when done , remove it */}
-                <AsyncImage src={user?.avatar} avatar gender={user?.gender} />
+                <AsyncImage
+                  style={{ borderRadius: 50 }}
+                  src={user?.avatar}
+                  avatar
+                  gender={user?.gender}
+                />
                 <div className='ml-2 font-weight-bold text-dark'>
                   {data && formatUserName({ user: data })}
                 </div>
@@ -54,6 +59,7 @@ export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
         {...toolTopProps}
       >
         <AsyncImage
+          style={{ borderRadius: 50 }}
           src={user?.avatar}
           avatar
           gender={user?.gender}

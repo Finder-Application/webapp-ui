@@ -13,6 +13,7 @@ import { useAppStore } from '@/store/app';
 import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import GeoUtils from '@/utils/Geo.utils';
+import { RouteUtils } from '@/utils/Route.utils';
 import { Form, Input as AntdInput } from 'antd';
 import classNames from 'classnames/bind';
 import { isEmpty } from 'lodash';
@@ -20,6 +21,7 @@ import { useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import shallow from 'zustand/shallow';
+import { SettingScreens } from '../SettingsPage/SettingsPage';
 import { ContactInformationForm } from './ContactInformationForm';
 import styles from './CreatePostPage.module.scss';
 import { DescriptionForm } from './DescriptionForm';
@@ -220,14 +222,28 @@ const UpsertPostPage = () => {
     user
   );
 
-  const hasMissInfoUser = fields.some((field) => !user[field]);
+  const hasMissInfoUser = !user.email || !user.address || !user.phone;
 
   if (hasMissInfoUser) {
     return (
-      <div className='d-flex justify-content-center flex-column'>
-        <div>You are missing information, Please update information now</div>
+      <div className='d-flex justify-content-center flex-column align-items-center'>
+        <div>
+          You are missing information, Please update information to use this
+          feature!
+        </div>
         <div className='mt-2'>
-          <ButtonFinder type='primary'>Settings Here </ButtonFinder>
+          <ButtonFinder
+            type='primary'
+            onClick={() => {
+              navigate(
+                `${RouteUtils.getPath('settings')}/${
+                  SettingScreens.EDIT_CONTACT
+                }`
+              );
+            }}
+          >
+            Update now!
+          </ButtonFinder>
         </div>
       </div>
     );

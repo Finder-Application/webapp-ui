@@ -9,15 +9,25 @@ const cx = classNames.bind(styles);
 type MyInputProps = {
   label?: string;
   width?: number | string;
+  required?: boolean;
 };
 
 export const Input = (
   props: MyInputProps & InputProps & React.RefAttributes<InputRef>
 ) => {
-  const { label, width, className, ...inputProps } = props;
+  const { label, required = false, width, className, ...inputProps } = props;
   return (
     <div style={{ width: width }} className={className}>
-      {label && <label className={cx('my-input__label')}>{label}</label>}
+      {label && (
+        <label className={cx('my-input__label')}>
+          {label}
+          {required && (
+            <div className='ml-1' style={{ color: 'red' }}>
+              *
+            </div>
+          )}
+        </label>
+      )}
       <AntdInput className={cx('my-input__input')} {...inputProps} />
     </div>
   );

@@ -3,6 +3,7 @@ export enum FEATURE {
   COMMENT = 'comments',
   POST_NOTIS = 'notification/posts',
   COMMENT_NOTIS = 'notification/comments',
+  USER = 'users',
 }
 
 export enum QUERY_KEY {
