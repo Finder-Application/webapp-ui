@@ -212,9 +212,12 @@ const ProfileForm = () => {
             htmlType='submit'
             className={cn('btn')}
             onClick={async () => {
-              setIsShowingLoadingModal(true);
-              await onUpdateUserInformation();
-              setIsShowingLoadingModal(false);
+              const isFormValid = await form.validateFields();
+              if (isFormValid) {
+                setIsShowingLoadingModal(true);
+                await onUpdateUserInformation();
+                setIsShowingLoadingModal(false);
+              }
             }}
           >
             Save changes
