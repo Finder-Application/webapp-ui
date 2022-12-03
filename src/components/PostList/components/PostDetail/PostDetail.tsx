@@ -18,7 +18,7 @@ import { TOOL_TIP_zINDEX } from '@/configs/constants';
 import { useGetPostDetail } from '@/hooks/post';
 import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
-import { formatDate } from '@/utils/format.util';
+import { formatDate, formatUserName } from '@/utils/format.util';
 import { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -114,12 +114,13 @@ const PostDetail = (props: PostDetailProps) => {
     (state) => state.setIsShowSharingPopup
   );
   const { data, isLoading } = useGetPostDetail(Number(postID));
-  const ownerName =
-    (data?.owner.firstName || '') +
-    ' ' +
-    (data?.owner.middleName || '') +
-    ' ' +
-    (data?.owner.lastName || '');
+  const ownerName = formatUserName({
+    user: {
+      firstName: data?.owner.firstName,
+      middleName: data?.owner.middleName,
+      lastName: data?.owner.lastName,
+    },
+  });
 
   const onCloseCommentDrawer = () => {
     setShowCommentDrawer(false);

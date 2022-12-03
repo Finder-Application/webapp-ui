@@ -13,13 +13,14 @@ const getInfinitiesApi = <T, P>(
 ): Promise<TResponseList<T>> => {
   const baseUrl = `/api/${isPublic ? 'public' : 'private'}/${feature}`;
   params = params as IParamsDefault<{}>;
-  const { optionKey } = params;
+  const { optionKey, q: query } = params;
   return axiosClient.get(baseUrl, {
     params: {
       ...params,
       filter: JSON.stringify(params.filter),
       order:
         params.order && `${params.order?.field}:${params.order?.direction}`,
+      q: query,
       ...optionKey,
     },
   });

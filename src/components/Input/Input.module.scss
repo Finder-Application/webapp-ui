@@ -1,6 +1,8 @@
 .my-input {
   &__label {
     color: var(--grey-12);
+    display: flex;
+    flex-direction: row;
   }
   &__input {
     border: 1px solid var(--grey-9);

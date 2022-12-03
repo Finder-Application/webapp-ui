@@ -14,7 +14,7 @@ export const ROUTES = {
   forgotPassword: '/forgot-password',
   relevantPostsAndResources: '/relevantPostsAndResources/:id',
   yourPosts: '/your-posts',
-  settings: '/settings',
+  settings: '/settings/:screen',
   postDetail: '/post-detail/:id',
 };
 

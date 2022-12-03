@@ -29,6 +29,7 @@ export interface IParamsDefault<Field> {
   optionKey?: {
     [key: string]: string;
   };
+  q?: string;
 }
 
 export interface Meta {

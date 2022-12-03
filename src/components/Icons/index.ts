@@ -41,3 +41,7 @@ export * from './Chat';
 export * from './ThreeDots';
 export * from './ChevronDown';
 export * from './ViewDetail';
+export * from './Information';
+export * from './Lock';
+export * from './TingingBell';
+export * from './UserContact';

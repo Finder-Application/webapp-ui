@@ -17,35 +17,19 @@ export const ContactInformationForm = () => {
       <Form.Item
         initialValue={user?.address}
         name={CreatePostFormItemsName.CONTACT_LIVING_PLACE}
-        rules={[]}
       >
         <Input width='100%' label='Living place' disabled={true} />
       </Form.Item>
 
       <Form.Item
         name={CreatePostFormItemsName.CONTACT_EMAIL}
-        initialValue={formatUserName({
-          user: {
-            firstName: user?.firstName || '',
-            lastName: user?.lastName || '',
-            middleName: user?.middleName || '',
-          },
-        })}
-        rules={
-          [
-            // {
-            //   pattern: new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
-            //   message: `Email address is invalid`,
-            // },
-          ]
-        }
+        initialValue={user.email}
       >
         <Input width='100%' label='Email' className='my-3' disabled={true} />
       </Form.Item>
       <Form.Item
         initialValue={user?.phone}
         name={CreatePostFormItemsName.CONTACT_PHONE}
-        rules={[]}
       >
         <Input width='100%' label='Phone' disabled={true} />
       </Form.Item>
