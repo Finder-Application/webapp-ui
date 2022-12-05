@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './SettingsPage.module.scss';
-import ProfileForm from './components/ProfileForm';
-import { useNavigate, useParams } from 'react-router-dom';
-import { RouteUtils } from '@/utils/Route.utils';
 import {
   InformationIcon,
   LockIcon,
   TingingBellIcon,
   UserContactIcon,
-  UserIcon,
 } from '@/components/Icons';
-import EditContactForm from './components/EditContactForm';
-import ChangePasswordForm from './components/ChangePasswordForm';
 import { LoadingModal } from '@/components/LoadingModal';
 import { useGetMe } from '@/hooks/auth/query';
-import { Avatar } from 'antd';
 import { formatUserName } from '@/utils/format.util';
+import { RouteUtils } from '@/utils/Route.utils';
+import { Avatar } from 'antd';
+import classNames from 'classnames/bind';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import ChangePasswordForm from './components/ChangePasswordForm';
+import EditContactForm from './components/EditContactForm';
 import NotificationForm from './components/NotificationForm';
+import ProfileForm from './components/ProfileForm';
+import styles from './SettingsPage.module.scss';
 
 export enum SettingScreens {
   GENERAL = 'general',
@@ -121,9 +120,7 @@ const SettingsPage = () => {
 
     const userName = formatUserName({
       user: {
-        firstName: me?.firstName,
-        middleName: me?.middleName,
-        lastName: me?.lastName,
+        ...me,
       },
     });
 

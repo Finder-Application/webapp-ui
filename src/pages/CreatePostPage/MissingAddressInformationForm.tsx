@@ -1,5 +1,5 @@
 import { DropdownIcon } from '@/components/Icons';
-import { Input } from '@/components/Input';
+import { FinderInput } from '@/components/Input';
 import { usePostStore } from '@/store/post';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
@@ -142,13 +142,13 @@ export const MissingAddressInformationForm = () => {
             name={CreatePostFormItemsName.MISSING_COMMUNE}
             initialValue={selectedPost?.missingAddress.commune}
           >
-            <Input width='90%' label='Commune/Precint' className='mr-4' />
+            <FinderInput width='90%' label='Commune/Precint' className='mr-4' />
           </Form.Item>
           <Form.Item
             name={CreatePostFormItemsName.MISSING_HAMLET}
             initialValue={selectedPost?.missingAddress.hamlet}
           >
-            <Input width='100%' label='Hamlet' />
+            <FinderInput width='100%' label='Hamlet' />
           </Form.Item>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { AsyncImage, ButtonFinder } from '@/components';
 import { DropdownIcon, UserIcon } from '@/components/Icons';
-import { Input } from '@/components/Input';
+import { FinderInput } from '@/components/Input';
 import { useGetMe } from '@/hooks/auth/query';
 import { useCreateNetworkImageUrl } from '@/hooks/networkImage/query';
 import { useUpdateUserInformation } from '@/hooks/user/queries';
@@ -151,7 +151,12 @@ const ProfileForm = () => {
               span: 24,
             }}
           >
-            <Input required label='First name' width='32em' className='mr-3' />
+            <FinderInput
+              required
+              label='First name'
+              width='32em'
+              className='mr-3'
+            />
           </Form.Item>
           <Form.Item
             initialValue={me?.middleName}
@@ -160,7 +165,7 @@ const ProfileForm = () => {
               span: 24,
             }}
           >
-            <Input
+            <FinderInput
               label='Middle name'
               type='text'
               width='32em'
@@ -205,7 +210,7 @@ const ProfileForm = () => {
             span: 24,
           }}
         >
-          <Input required label='Last name' className='mt-3' />
+          <FinderInput required label='Last name' className='mt-3' />
         </Form.Item>
         <div className='d-flex flex-row justify-content-end mt-5'>
           <ButtonFinder

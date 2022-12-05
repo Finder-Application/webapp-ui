@@ -1,6 +1,6 @@
 import React from 'react';
 import { CalendarIcon2, DropdownIcon } from '@/components/Icons';
-import { Input } from '@/components/Input';
+import { FinderInput } from '@/components/Input';
 import { usePostStore } from '@/store/post';
 import GeoUtils from '@/utils/Geo.utils';
 import StringUtils from '@/utils/String.utils';
@@ -65,7 +65,7 @@ export const MissingPersonInformationForm = () => {
                 },
               ]}
             >
-              <Input
+              <FinderInput
                 width='18em'
                 label='Full name'
                 value={selectedPost?.fullName}
@@ -138,7 +138,7 @@ export const MissingPersonInformationForm = () => {
           name={CreatePostFormItemsName.NICK_NAME}
           initialValue={selectedPost?.nickname}
         >
-          <Input
+          <FinderInput
             width='18em'
             label='Nick name (optional)'
             name={CreatePostFormItemsName.NICK_NAME}
@@ -262,13 +262,13 @@ export const MissingPersonInformationForm = () => {
             name={CreatePostFormItemsName.HOMETOWN_COMMUNE}
             initialValue={selectedPost?.hometown.commune}
           >
-            <Input width='90%' label='Commune/Precint' className='mr-4' />
+            <FinderInput width='90%' label='Commune/Precint' className='mr-4' />
           </Form.Item>
           <Form.Item
             name={CreatePostFormItemsName.HOMETOWN_HAMLET}
             initialValue={selectedPost?.hometown.hamlet}
           >
-            <Input width='100%' label='Hamlet' />
+            <FinderInput width='100%' label='Hamlet' />
           </Form.Item>
         </div>
       </div>

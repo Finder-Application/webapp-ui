@@ -13,6 +13,7 @@ type UserAvarProps = {
   svgProps?: React.SVGProps<SVGSVGElement>;
   user?: User;
   popup?: boolean;
+  tooltip?: boolean;
 };
 
 export const UserAvatar = (props: UserAvarProps & TooltipProps) => {

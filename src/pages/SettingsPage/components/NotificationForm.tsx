@@ -1,4 +1,4 @@
-import { Checkbox, Col, Form, Row } from 'antd';
+import { Checkbox } from 'antd';
 import { cn } from '../SettingsPage';
 
 const NotificationForm = () => {

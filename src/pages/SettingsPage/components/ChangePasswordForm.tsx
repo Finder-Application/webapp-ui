@@ -1,7 +1,6 @@
 import { ButtonFinder } from '@/components';
-import { Input } from '@/components/Input';
-import { Form, Select } from 'antd';
-import React from 'react';
+import { FinderInput } from '@/components/Input';
+import { Form } from 'antd';
 import { cn } from '../SettingsPage';
 
 enum FormItemName {
@@ -34,7 +33,7 @@ const ChangePasswordForm = () => {
             span: 24,
           }}
         >
-          <Input required label='Old password' className='mt-3' />
+          <FinderInput required label='Old password' className='mt-3' />
         </Form.Item>
 
         <Form.Item
@@ -45,7 +44,12 @@ const ChangePasswordForm = () => {
             span: 24,
           }}
         >
-          <Input required label='New password' className='mt-3' />
+          <FinderInput
+            type='password'
+            required
+            label='New password'
+            className='mt-3'
+          />
         </Form.Item>
         <Form.Item
           name={FormItemName.ConfirmPassword}
@@ -56,7 +60,7 @@ const ChangePasswordForm = () => {
             span: 24,
           }}
         >
-          <Input required label='Confirm password' className='mt-3' />
+          <FinderInput required label='Confirm password' className='mt-3' />
         </Form.Item>
         <div className='d-flex flex-row justify-content-end mt-5'>
           <ButtonFinder htmlType='submit' className={cn('btn')}>

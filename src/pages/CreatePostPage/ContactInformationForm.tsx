@@ -1,4 +1,4 @@
-import { Input } from '@/components/Input';
+import { FinderInput } from '@/components/Input';
 import { useUserStore } from '@/store/user';
 import { formatUserName } from '@/utils/format.util';
 import { Form } from 'antd';
@@ -18,20 +18,25 @@ export const ContactInformationForm = () => {
         initialValue={user?.address}
         name={CreatePostFormItemsName.CONTACT_LIVING_PLACE}
       >
-        <Input width='100%' label='Living place' disabled={true} />
+        <FinderInput width='100%' label='Living place' disabled={true} />
       </Form.Item>
 
       <Form.Item
         name={CreatePostFormItemsName.CONTACT_EMAIL}
         initialValue={user.email}
       >
-        <Input width='100%' label='Email' className='my-3' disabled={true} />
+        <FinderInput
+          width='100%'
+          label='Email'
+          className='my-3'
+          disabled={true}
+        />
       </Form.Item>
       <Form.Item
         initialValue={user?.phone}
         name={CreatePostFormItemsName.CONTACT_PHONE}
       >
-        <Input width='100%' label='Phone' disabled={true} />
+        <FinderInput width='100%' label='Phone' disabled={true} />
       </Form.Item>
     </div>
   );

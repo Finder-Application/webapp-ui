@@ -5,12 +5,10 @@ const { TextArea } = Input;
 
 import { ButtonFinder } from '@/components/ButtonFinder';
 import { AttachIcon } from '@/components/Icons';
+import { useGetMe } from '@/hooks/auth/query';
+import { useCreateComment, useCreateSubComment } from '@/hooks/comments/query';
 import classNames from 'classnames';
 import styles from './CommentInput.scss';
-import { useCreateComment, useCreateSubComment } from '@/hooks/comments/query';
-import { useGetMe } from '@/hooks/auth/query';
-import { queryClient } from '@/main';
-import { QUERY_KEY } from '@/hooks/constants';
 
 const cx = classNames.bind(styles);
 
@@ -46,7 +44,6 @@ export const CommentInput = (
   };
 
   const me = useGetMe();
-
   const userInfo = me.data;
 
   const onComment = () => {

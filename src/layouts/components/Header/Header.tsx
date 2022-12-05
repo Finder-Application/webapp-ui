@@ -5,12 +5,11 @@ import {
   SearchIcon,
   SettingIcon,
   SignOutIcon,
-  UserIcon,
   UserProfileIcon,
   YourPostsIcon,
 } from '@/components/Icons';
 import { useOnClickOutside } from '@/hooks';
-import { Avatar, Dropdown, MenuProps } from 'antd';
+import { Dropdown, MenuProps } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -21,12 +20,9 @@ import {
 } from 'react-router-dom';
 import { Notification } from './Notification';
 
+import { UserAvatar } from '@/components/UserAvatar';
 import { SEARCH_QUERY } from '@/configs';
-import { useGetMe } from '@/hooks/auth/query';
-import {
-  AVATAR_PLACEHOLDER,
-  SettingScreens,
-} from '@/pages/SettingsPage/SettingsPage';
+import { SettingScreens } from '@/pages/SettingsPage/SettingsPage';
 import { usePostStore } from '@/store/post';
 import { useUserStore } from '@/store/user';
 import { RouteUtils } from '@/utils/Route.utils';
@@ -49,7 +45,6 @@ const Header = () => {
     state.resetUser,
   ]);
 
-  const { data: me } = useGetMe();
   const navigate = useNavigate();
 
   const [setSelectedPost] = usePostStore((state) => [state.setSelectedPost]);
@@ -104,14 +99,6 @@ const Header = () => {
   };
 
   const userDropdowns = [
-    {
-      title: 'Profile',
-      icon: UserProfileIcon,
-    },
-    {
-      title: 'Edit Profile',
-      icon: EditProfileIcon,
-    },
     {
       title: 'Your Posts',
       icon: YourPostsIcon,
@@ -198,7 +185,7 @@ const Header = () => {
           )} */}
         </div>
 
-        {me && (
+        {user && (
           <>
             <Notification />
             <Dropdown
@@ -207,10 +194,7 @@ const Header = () => {
               arrow
               overlayClassName={cx('header__user-dropdown')}
             >
-              <Avatar
-                src={me?.avatar ? me?.avatar : AVATAR_PLACEHOLDER}
-                style={{ cursor: 'pointer' }}
-              />
+              <UserAvatar user={user} popup={false} />
             </Dropdown>
           </>
         )}

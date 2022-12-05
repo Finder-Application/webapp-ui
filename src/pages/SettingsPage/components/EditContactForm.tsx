@@ -1,9 +1,10 @@
 import { ButtonFinder } from '@/components';
-import { Input } from '@/components/Input';
+import { FinderInput } from '@/components/Input';
+import { regex } from '@/configs';
 import { useGetMe } from '@/hooks/auth/query';
 import { useUpdateUserInformation } from '@/hooks/user/queries';
 import { useAppStore } from '@/store/app';
-import { Form, Select } from 'antd';
+import { Form } from 'antd';
 import { toast } from 'react-toastify';
 import { cn } from '../SettingsPage';
 
@@ -61,7 +62,7 @@ const EditContactForm = () => {
           rules={[
             { required: true, message: 'Please enter your email!' },
             {
-              pattern: new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
+              pattern: regex.email,
               message: `Please enter a valid email address`,
             },
           ]}
@@ -69,7 +70,7 @@ const EditContactForm = () => {
             span: 24,
           }}
         >
-          <Input type='email' required label='Email' className='mt-3' />
+          <FinderInput required label='Email' className='mt-3' />
         </Form.Item>
 
         <Form.Item
@@ -80,7 +81,7 @@ const EditContactForm = () => {
             span: 24,
           }}
         >
-          <Input required label='Address' className='mt-3' />
+          <FinderInput required label='Address' className='mt-3' />
         </Form.Item>
         <Form.Item
           initialValue={me?.phone}
@@ -98,7 +99,7 @@ const EditContactForm = () => {
             span: 24,
           }}
         >
-          <Input required label='Phone' className='mt-3' type='phone' />
+          <FinderInput required label='Phone' className='mt-3' type='phone' />
         </Form.Item>
         <div className='d-flex flex-row justify-content-end mt-5'>
           <ButtonFinder
