@@ -25,17 +25,11 @@ export const PostList = memo((props: PostListProps) => {
   const { filter, onSetTotalOfSearch } = props;
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageCount, setPageCount] = useState(1);
+
   const [itemCount, setItemCount] = useState(1);
 
   const [searchParams] = useSearchParams();
   const searchKeyWords = searchParams.get(SEARCH_QUERY);
-
-  console.log('currentPage: ', currentPage);
-  console.log('pageCount: ', pageCount);
-  console.log('itemCount: ', itemCount);
-  console.log('posts.length: ', posts.length);
 
   const postsToFilter: Filter<PostEntity>[] = useMemo(() => {
     const gender =
@@ -108,8 +102,6 @@ export const PostList = memo((props: PostListProps) => {
 
   const resetPagination = () => {
     setPosts([]);
-    setCurrentPage(1);
-    setPageCount(1);
     setItemCount(1);
   };
 
@@ -118,16 +110,10 @@ export const PostList = memo((props: PostListProps) => {
   }, [searchKeyWords, filter]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     if (data && isSuccess) {
       setPosts((state) => {
         const postsFromData = data.pages
           .flatMap((page) => {
-            setCurrentPage(page.meta.page);
-            setPageCount(page.meta.pageCount);
             setItemCount(page.meta.itemCount);
             onSetTotalOfSearch(page.meta.itemCount);
 

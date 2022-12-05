@@ -63,6 +63,7 @@ export interface IBaseUseInfinities<Params> {
   configApi: {
     feature: FEATURE;
     isPublic?: boolean;
+    cacheTime?: number;
   };
 }
 

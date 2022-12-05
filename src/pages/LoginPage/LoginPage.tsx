@@ -117,7 +117,7 @@ const LoginPage = () => {
         onClick={() => login()}
       >
         <ColoringGoogleIcon className='mr-3' width={25} height={25} />
-        Sign up with Google
+        Sign in with Google
       </ButtonFinder>
     </div>
   );

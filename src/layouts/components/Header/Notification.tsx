@@ -27,8 +27,6 @@ export const Notification = () => {
 
   const { totalNoti, socket } = useNoti();
 
-  console.log('totalNoti', totalNoti);
-
   const navigate = useNavigate();
 
   const TabItem = (item: NotificationTab) => {
