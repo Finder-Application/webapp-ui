@@ -40,9 +40,10 @@ const Header = () => {
 
   const [searchValue, setSearchValue] = useState(searchQuery);
 
-  const [user, resetUser] = useUserStore((state) => [
+  const [user, resetUser, isLoggedIn] = useUserStore((state) => [
     state.user,
     state.resetUser,
+    state.isLoggedIn,
   ]);
 
   const navigate = useNavigate();
@@ -185,7 +186,7 @@ const Header = () => {
           )} */}
         </div>
 
-        {user && (
+        {isLoggedIn && (
           <>
             <Notification />
             <Dropdown

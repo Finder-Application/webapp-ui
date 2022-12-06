@@ -104,7 +104,7 @@ export const Notification = () => {
                   description={getContentDisplay(item.content, MAX_DESCRIPTION)}
                 />
               )}
-              isNewNoti={(item: PostNotis) => !!item.seen}
+              isNewNoti={(item: PostNotis) => item.seen}
               type='post'
               socket={socket}
             />

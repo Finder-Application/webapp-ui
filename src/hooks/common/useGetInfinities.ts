@@ -60,7 +60,6 @@ export const useGetInfinities = <
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       cacheTime: cacheTime ?? 5 * 60 * 1000,
-
     }
   );
 };
