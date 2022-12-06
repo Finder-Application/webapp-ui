@@ -1,8 +1,8 @@
 import { initSocket } from '@/configs/socket';
 import { queryClient } from '@/main';
+import { useUserStore } from '@/store/user';
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
-import { useGetMe } from '../auth/query';
 import { QUERY_KEY } from '../constants';
 
 export const useNoti = () => {
@@ -12,11 +12,11 @@ export const useNoti = () => {
   const [totalNoti, setTotalNoti] = useState(0);
   const [socket, setSocket] = useState<Socket>();
 
-  const { data } = useGetMe();
+  const user = useUserStore((state) => state.user);
 
   // use effect to listen to the event "notification" from the server
   useEffect(() => {
-    if (data?.userId) {
+    if (user?.userId) {
       const socket = initSocket('api/notifications');
 
       setSocket(socket);
@@ -54,7 +54,7 @@ export const useNoti = () => {
         socket?.disconnect();
       };
     }
-  }, [data?.userId]);
+  }, [user?.userId]);
   // return the state
   return { totalNoti, socket };
 };

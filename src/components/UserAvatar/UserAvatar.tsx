@@ -4,6 +4,7 @@ import { useGetInfoUser } from '@/hooks/user/queries';
 import { formatUserName } from '@/utils/format.util';
 import { Tooltip } from 'antd';
 import { TooltipProps } from 'antd/es/tooltip';
+import classNames from 'classnames';
 import React from 'react';
 import { AsyncImage } from '../AsyncImage';
 import { ContactInform } from '../PostList/components/PostDetail/ContactInform';
@@ -14,6 +15,9 @@ type UserAvarProps = {
   user?: User;
   popup?: boolean;
   tooltip?: boolean;
+  onClick?:
+    | ((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
+    | undefined;
 };
 
 export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
@@ -23,8 +27,10 @@ export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
     user,
     className,
     popup = true,
+    onClick,
     ...toolTopProps
   } = props;
+  const avatarClassName = classNames('cursor-pointer', className);
   const { data } = useGetInfoUser(user?.userId, popup);
   return (
     <>
@@ -63,8 +69,9 @@ export const UserAvatar = (props: UserAvarProps & TooltipProps) => {
           style={{ borderRadius: 50 }}
           src={user?.avatar}
           avatar
+          onClick={onClick}
           gender={user?.gender}
-          className={className}
+          className={avatarClassName}
         />
       </Tooltip>
     </>

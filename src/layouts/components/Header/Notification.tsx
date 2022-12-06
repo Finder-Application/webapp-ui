@@ -14,6 +14,7 @@ import { cx } from './Header';
 import { BoxNotifications } from './BoxNotifications';
 import { useNavigate } from 'react-router-dom';
 import { RouteUtils } from '@/utils/Route.utils';
+import { UserAvatar } from '@/components/UserAvatar';
 
 enum NotificationTab {
   POSTS = 'Posts',
@@ -27,6 +28,9 @@ export const Notification = () => {
 
   const { totalNoti, socket } = useNoti();
 
+
+  const MAX_DESCRIPTION = 50;
+  const MAX_LENGTH_TITLE = 1000;
   const navigate = useNavigate();
 
   const TabItem = (item: NotificationTab) => {
@@ -44,6 +48,21 @@ export const Notification = () => {
     );
   };
 
+  const getContentDisplay = (
+    content: string,
+    Maxlength: number,
+    isTitle?: boolean
+  ) => {
+    let temp = '';
+    if (isTitle) {
+      temp = 'have a relevant post';
+    }
+    const contentDisplay =
+      content.length > Maxlength
+        ? content.slice(0, Maxlength) + '...'
+        : content;
+    return `${contentDisplay} ${temp}`;
+  };
   return (
     <Tooltip
       placement='bottomRight'
@@ -73,14 +92,17 @@ export const Notification = () => {
               }}
               itemRender={(item: PostNotis) => (
                 <List.Item.Meta
-                  avatar={<Avatar src={item.user.avatar} />}
-                  title={item.title}
-                  // check title if > 50 char then cut it and add ...
-                  description={
-                    item.content.length > 50
-                      ? item.content.slice(0, 50) + '...'
-                      : item.content
+                  avatar={
+                    <UserAvatar
+                      user={{
+                        ...item.user,
+                        avatar: item.photo,
+                      }}
+                    />
                   }
+                  title={getContentDisplay(item.title, MAX_LENGTH_TITLE, true)}
+                  // check title if > 50 char then cut it and add ...
+                  description={getContentDisplay(item.content, MAX_DESCRIPTION)}
                 />
               )}
               isNewNoti={(item: PostNotis) => !!!item.seen}
@@ -103,7 +125,7 @@ export const Notification = () => {
               }}
               itemRender={(item: CmtNotis) => (
                 <List.Item.Meta
-                  avatar={<Avatar src={item.user.avatar} />}
+                  avatar={<UserAvatar user={item.user} />}
                   description={item.content}
                 />
               )}

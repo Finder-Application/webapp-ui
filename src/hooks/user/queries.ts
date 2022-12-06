@@ -1,10 +1,11 @@
 import { axiosClient } from '@/apis';
 import { useMutation, useQuery } from 'react-query';
-import { User } from '../auth/interface';
+import { Me, User } from '../auth/interface';
 import { IBaseUseMutation } from '../interfaces';
 import { useMutationUpdate } from '../common/useUpdate';
 import { toast } from 'react-toastify';
 import { FEATURE } from '../constants';
+import { useUserStore } from '@/store/user';
 
 export interface UpdateUserInformationBody {
   firstName?: string;
@@ -25,15 +26,20 @@ export const useGetInfoUser = (id?: number, enabled: boolean = true) => {
       axiosClient.get(`/api/public/users/info/${id}`),
     staleTime: 5 * 60 * 60,
     enabled: !!id && enabled,
+    keepPreviousData: true,
   });
 };
 
 export const useUpdateUserInformation = () => {
-  const mutation = useMutation(
-    ['UPDATE_USER'],
-    (params: { body: UpdateUserInformationBody }) => {
+  const { setUser } = useUserStore((state) => state);
+  const mutation = useMutation(['UPDATE_USER'], {
+    mutationFn: (params: { body: UpdateUserInformationBody }): Promise<Me> => {
       return axiosClient.put('api/private/users', params.body);
-    }
-  );
+    },
+    onSuccess(data) {
+      console.log('🚀 ~ file: queries.ts:40 ~ onSuccess ~ data', data);
+      setUser(data);
+    },
+  });
   return mutation;
 };

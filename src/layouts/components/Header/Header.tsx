@@ -151,7 +151,7 @@ const Header = () => {
   };
   return (
     <div className={headerClassName}>
-      <NavLink to='/'>
+      <NavLink to={RouteUtils.getPath('home')}>
         <FinderLogo isLight={false} />
       </NavLink>
       {renderNavbar()}
@@ -194,7 +194,11 @@ const Header = () => {
               arrow
               overlayClassName={cx('header__user-dropdown')}
             >
-              <UserAvatar user={user} popup={false} />
+              <UserAvatar
+                user={user}
+                popup={false}
+                onClick={() => navigate(RouteUtils.getPath('yourPosts'))}
+              />
             </Dropdown>
           </>
         )}

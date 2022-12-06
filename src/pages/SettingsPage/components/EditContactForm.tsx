@@ -1,9 +1,9 @@
 import { ButtonFinder } from '@/components';
 import { FinderInput } from '@/components/Input';
 import { regex } from '@/configs';
-import { useGetMe } from '@/hooks/auth/query';
 import { useUpdateUserInformation } from '@/hooks/user/queries';
 import { useAppStore } from '@/store/app';
+import { useUserStore } from '@/store/user';
 import { Form } from 'antd';
 import { toast } from 'react-toastify';
 import { cn } from '../SettingsPage';
@@ -19,7 +19,7 @@ const EditContactForm = () => {
   const labelCol = {
     span: 24,
   };
-  const { data: me, refetch: refetchUserInform } = useGetMe();
+  const user = useUserStore((user) => user.user);
   const updateUserMutation = useUpdateUserInformation();
 
   const setIsShowingLoadingModal = useAppStore(
@@ -27,11 +27,11 @@ const EditContactForm = () => {
   );
 
   const onUpdateUserContact = async () => {
-    if (me) {
+    if (user) {
       await updateUserMutation
         .mutateAsync({
           body: {
-            ...me,
+            ...user,
             social: '',
             isActive: true,
             email: form.getFieldValue(FormItemName.Email),
@@ -41,7 +41,6 @@ const EditContactForm = () => {
         })
         .then(() => {
           toast.success('Update successfully');
-          refetchUserInform();
         })
         .catch((err) => toast.error(err));
     }
@@ -57,7 +56,7 @@ const EditContactForm = () => {
         labelCol={labelCol}
       >
         <Form.Item
-          initialValue={me?.email}
+          initialValue={user?.email}
           name={FormItemName.Email}
           rules={[
             { required: true, message: 'Please enter your email!' },
@@ -74,7 +73,7 @@ const EditContactForm = () => {
         </Form.Item>
 
         <Form.Item
-          initialValue={me?.address}
+          initialValue={user?.address}
           name={FormItemName.Address}
           rules={[{ required: true, message: 'Please enter your address!' }]}
           labelCol={{
@@ -84,14 +83,12 @@ const EditContactForm = () => {
           <FinderInput required label='Address' className='mt-3' />
         </Form.Item>
         <Form.Item
-          initialValue={me?.phone}
+          initialValue={user?.phone}
           name={FormItemName.Phone}
           rules={[
             { required: true, message: 'Please enter your phone!' },
             {
-              pattern: new RegExp(
-                /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
-              ),
+              pattern: regex.phone,
               message: `Please enter a valid phone`,
             },
           ]}

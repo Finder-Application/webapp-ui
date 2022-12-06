@@ -29,16 +29,16 @@ export const useUserStore = create<UserStoreInterface>((set, get, api) => ({
   user: initUser,
   isLoggedIn: true,
   setUser: (value: Me) => {
-    if (get().user.userId == -1) {
-      set({
-        user: value,
-        isLoggedIn: true,
-      });
-    }
+    const previousUser = get().user;
+    set({
+      user: {
+        ...previousUser,
+        ...value,
+      },
+      isLoggedIn: true,
+    });
   },
   resetUser: () => {
-    console.log('run it');
-
     set({
       user: initUser,
       isLoggedIn: false,

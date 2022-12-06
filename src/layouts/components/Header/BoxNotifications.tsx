@@ -120,9 +120,7 @@ export const NotiItem = <T,>({
       }}
       className='cursor-pointer'
     >
-      <Skeleton avatar title={false} loading={false} active={false}>
-        {itemRender(item)}
-      </Skeleton>
+      {itemRender(item)}
 
       {isNew && (
         <div className='dot-active'>

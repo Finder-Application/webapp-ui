@@ -1,15 +1,15 @@
+import { ReplyIcon } from '@/components/Icons';
 import { UserAvatar } from '@/components/UserAvatar';
-import React, { useState } from 'react';
-import classNames from 'classnames';
-import styles from './Comment.scss';
-import { ReplyComment } from '../ReplyComment';
-import { ReplyIcon, TrashIcon } from '@/components/Icons';
-import { CommentInput, CommentInputType } from '../CommentInput';
 import { Comment } from '@/hooks/comments/interface';
-import { formatDate, formatUserName } from '@/utils/format.util';
 import { useDeleteComment } from '@/hooks/comments/query';
-import { useGetMe } from '@/hooks/auth/query';
+import { useUserStore } from '@/store/user';
+import { formatDate, formatUserName } from '@/utils/format.util';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 import { FcEmptyTrash } from 'react-icons/fc';
+import { CommentInput, CommentInputType } from '../CommentInput';
+import { ReplyComment } from '../ReplyComment';
+import styles from './Comment.scss';
 
 const cx = classNames.bind(styles);
 
@@ -25,9 +25,9 @@ export const CommentCpn = (
 
   const { mutate } = useDeleteComment();
 
-  const me = useGetMe();
+  const me = useUserStore((state) => state.user);
 
-  const userId = me.data?.userId;
+  const userId = me.userId;
 
   const quantityOfReply = comment.child?.length || 0;
 
