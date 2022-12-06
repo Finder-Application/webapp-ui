@@ -15,6 +15,8 @@ import { BoxNotifications } from './BoxNotifications';
 import { useNavigate } from 'react-router-dom';
 import { RouteUtils } from '@/utils/Route.utils';
 import { UserAvatar } from '@/components/UserAvatar';
+import { queryClient } from '@/main';
+import { QUERY_KEY } from '@/hooks/constants';
 
 enum NotificationTab {
   POSTS = 'Posts',
@@ -27,7 +29,6 @@ export const Notification = () => {
   );
 
   const { totalNoti, socket } = useNoti();
-
 
   const MAX_DESCRIPTION = 50;
   const MAX_LENGTH_TITLE = 1000;
@@ -88,6 +89,8 @@ export const Notification = () => {
                   type: 'post',
                 });
 
+                queryClient.refetchQueries([QUERY_KEY.PAGINATION_POST_NOTIS]);
+
                 navigate(`${RouteUtils.getPath('postDetail')}/${item.postId}`);
               }}
               itemRender={(item: PostNotis) => (
@@ -121,6 +124,9 @@ export const Notification = () => {
                   id: item.id,
                   type: 'comment',
                 });
+
+                queryClient.refetchQueries([QUERY_KEY.PAGINATION_POST_NOTIS]);
+
                 navigate(`${RouteUtils.getPath('postDetail')}/${item.postId}`);
               }}
               itemRender={(item: CmtNotis) => (
