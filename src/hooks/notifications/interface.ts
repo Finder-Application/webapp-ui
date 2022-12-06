@@ -9,6 +9,7 @@ export interface PostNotis {
   createdAt: Date;
   updatedAt: Date;
   user: User;
+  photo: string;
 }
 
 export interface CmtNotis extends Omit<PostNotis, 'title'> {}

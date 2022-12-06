@@ -47,7 +47,6 @@ export const useGetInfinities = <
         page: pageParam,
         ...params,
       };
-
       return await getInfinitiesApi<TResponse, Params>(
         overrideParams,
         resource,
@@ -58,6 +57,7 @@ export const useGetInfinities = <
       getNextPageParam: (lastPage) => {
         return lastPage?.meta.hasNextPage ? lastPage.meta.page + 1 : undefined;
       },
+      refetchOnMount: false,
     }
   );
 };

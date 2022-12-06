@@ -51,6 +51,7 @@ export const useGetMe = () => {
     onError(data: Error) {
       resetUser();
     },
+    refetchOnMount: false,
   });
 };
 

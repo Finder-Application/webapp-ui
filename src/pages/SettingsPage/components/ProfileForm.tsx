@@ -1,10 +1,12 @@
 import { AsyncImage, ButtonFinder } from '@/components';
-import { DropdownIcon, UserIcon } from '@/components/Icons';
+import { DropdownIcon } from '@/components/Icons';
 import { FinderInput } from '@/components/Input';
-import { useGetMe } from '@/hooks/auth/query';
+import { Me } from '@/hooks/auth/interface';
 import { useCreateNetworkImageUrl } from '@/hooks/networkImage/query';
 import { useUpdateUserInformation } from '@/hooks/user/queries';
 import { useAppStore } from '@/store/app';
+import { useUserStore } from '@/store/user';
+import { UserUtils } from '@/utils/User.utils';
 import { Avatar, Form, Select } from 'antd';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -23,9 +25,9 @@ const ProfileForm = () => {
   const labelCol = {
     span: 24,
   };
-  const { data: me, refetch: refetchUserInform } = useGetMe();
 
-  const gender = !me ? undefined : me?.gender ? 'female' : 'male';
+  const [user, setUser] = useUserStore((user) => [user.user, user.setUser]);
+  const gender = UserUtils.toStringGender(user?.gender);
 
   const updateUserMutation = useUpdateUserInformation();
   const netWorkImageUrl = useCreateNetworkImageUrl();
@@ -80,35 +82,36 @@ const ProfileForm = () => {
   };
 
   const onUpdateUserInformation = async () => {
-    if (me) {
-      const avatarUrl = await getImageUrl();
+    if (user) {
+      try {
+        const avatarUrl = await getImageUrl();
 
-      await updateUserMutation
-        .mutateAsync({
+        const data = (await updateUserMutation.mutateAsync({
           body: {
-            ...me,
+            ...user,
             social: '',
             isActive: true,
             firstName: form.getFieldValue(FormItemName.FirstName),
             middleName: form.getFieldValue(FormItemName.MiddleName),
             lastName: form.getFieldValue(FormItemName.LastName),
-            gender:
-              form.getFieldValue(FormItemName.Gender) === 'male' ? false : true,
-            avatar: avatarUrl ? avatarUrl : me.avatar,
+            gender: UserUtils.toBooleanGender(
+              form.getFieldValue(FormItemName.Gender)
+            ),
+            avatar: avatarUrl ? avatarUrl : user.avatar,
           },
-        })
-        .then(() => {
-          toast.success('Update successfully');
-          refetchUserInform();
-        })
-        .catch((err) => toast.error(err));
+        })) as unknown as Me;
+        setUser(data);
+        toast.success('Update successfully');
+      } catch (error) {
+        toast.error('Something went wrong');
+      }
     }
   };
 
   const userAvatar = selectedAvatarImage
     ? (selectedAvatarImage as string)
-    : me?.avatar
-    ? me.avatar
+    : user?.avatar
+    ? user.avatar
     : AVATAR_PLACEHOLDER;
 
   return (
@@ -142,7 +145,7 @@ const ProfileForm = () => {
       >
         <div className='d-flex flex-row mt-4'>
           <Form.Item
-            initialValue={me?.firstName}
+            initialValue={user?.firstName}
             name={FormItemName.FirstName}
             rules={[
               { required: true, message: 'Please enter your first name!' },
@@ -159,7 +162,7 @@ const ProfileForm = () => {
             />
           </Form.Item>
           <Form.Item
-            initialValue={me?.middleName}
+            initialValue={user?.middleName}
             name={FormItemName.MiddleName}
             labelCol={{
               span: 24,
@@ -204,7 +207,7 @@ const ProfileForm = () => {
 
         <Form.Item
           name={FormItemName.LastName}
-          initialValue={me?.lastName}
+          initialValue={user?.lastName}
           rules={[{ required: true, message: 'Please enter your last name!' }]}
           labelCol={{
             span: 24,
