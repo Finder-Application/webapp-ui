@@ -28,6 +28,7 @@ export const Notification = () => {
 
   const { totalNoti, socket } = useNoti();
 
+
   const MAX_DESCRIPTION = 50;
   const MAX_LENGTH_TITLE = 1000;
   const navigate = useNavigate();

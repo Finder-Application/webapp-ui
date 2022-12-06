@@ -217,10 +217,6 @@ const UpsertPostPage = () => {
     'lastName',
     'address',
   ];
-  console.log(
-    '🚀 ~ file: UpsertPostPage.tsx:218 ~ UpsertPostPage ~ user',
-    user
-  );
 
   const hasMissInfoUser = !user.email || !user.address || !user.phone;
 

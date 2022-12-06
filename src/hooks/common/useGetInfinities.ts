@@ -36,7 +36,7 @@ export const useGetInfinities = <
   const {
     query_key,
     params,
-    configApi: { feature: resource, isPublic },
+    configApi: { feature: resource, isPublic, cacheTime },
   } = config;
 
   return useInfiniteQuery<TResponseList<TResponse>>(
@@ -58,6 +58,9 @@ export const useGetInfinities = <
         return lastPage?.meta.hasNextPage ? lastPage.meta.page + 1 : undefined;
       },
       refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      cacheTime: cacheTime ?? 5 * 60 * 1000,
+
     }
   );
 };

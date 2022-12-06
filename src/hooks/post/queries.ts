@@ -70,6 +70,7 @@ export const useGetPosts = (params: IParamsDefault<PostEntity>) =>
     configApi: {
       feature: FEATURE.POST,
       isPublic: true,
+      cacheTime: 0,
     },
   });
 

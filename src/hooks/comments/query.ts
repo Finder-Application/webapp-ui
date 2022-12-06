@@ -29,8 +29,9 @@ export const uesGetInfiComments = (params: IParamsDefault<{}>) =>
 export const useDeleteComment = () =>
   useMutationDelete({
     configMutation: {
-      onSuccess: (data, variables, context) => {
-        data?.record?.postId && refetchCountComment(data?.record?.postId);
+      onSuccess: async (data, variables, context) => {
+        data?.record?.postId &&
+          (await refetchCountComment(data?.record?.postId));
       },
     },
     resource: FEATURE.COMMENT,
@@ -49,8 +50,8 @@ export const useCreateComment = (
   useMutationCreate<ResponseCreateComment, unknown, CreateComment>({
     configMutation: {
       ...configMutation,
-      onSuccess: (data, variables, context) => {
-        refetchCountComment(variables.dataCreate.postId);
+      onSuccess: async (data, variables, context) => {
+        await refetchCountComment(variables.dataCreate.postId);
       },
     },
     resource: FEATURE.COMMENT,
@@ -69,8 +70,8 @@ export const useCreateSubComment = (
   useMutationCreate<ResponseCreateComment, unknown, CreateSubComment>({
     configMutation: {
       ...configMutation,
-      onSuccess: (data, variables, context) => {
-        refetchCountComment(variables.dataCreate.postId);
+      onSuccess: async (data, variables, context) => {
+        await refetchCountComment(variables.dataCreate.postId);
       },
     },
     resource: FEATURE.COMMENT,
@@ -91,10 +92,6 @@ export const useCountComment = (id: string | number | undefined) =>
 
 const refetchCountComment = async (id: string | number | undefined) => {
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEY.COUNT_COMMENT, id],
-    queryFn: () =>
-      axiosClient.get(baseURL(true, `comments/count?id=${id}`)) as unknown as {
-        total: number;
-      },
+    queryKey: [QUERY_KEY.COUNT_COMMENT, id?.toString()],
   });
 };
