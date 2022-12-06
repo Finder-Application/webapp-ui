@@ -48,6 +48,7 @@ export interface Post {
   owner: User;
   found: boolean;
   similar?: number;
+  user: User;
 }
 export interface Descriptor {
   0: number;

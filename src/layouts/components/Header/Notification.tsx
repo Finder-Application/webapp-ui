@@ -28,7 +28,6 @@ export const Notification = () => {
 
   const { totalNoti, socket } = useNoti();
 
-
   const MAX_DESCRIPTION = 50;
   const MAX_LENGTH_TITLE = 1000;
   const navigate = useNavigate();
@@ -55,10 +54,10 @@ export const Notification = () => {
   ) => {
     let temp = '';
     if (isTitle) {
-      temp = 'have a relevant post';
+      temp = 'have a new relevant post';
     }
     const contentDisplay =
-      content.length > Maxlength
+      content?.length > Maxlength
         ? content.slice(0, Maxlength) + '...'
         : content;
     return `${contentDisplay} ${temp}`;
@@ -105,7 +104,7 @@ export const Notification = () => {
                   description={getContentDisplay(item.content, MAX_DESCRIPTION)}
                 />
               )}
-              isNewNoti={(item: PostNotis) => !!!item.seen}
+              isNewNoti={(item: PostNotis) => !!item.seen}
               type='post'
               socket={socket}
             />

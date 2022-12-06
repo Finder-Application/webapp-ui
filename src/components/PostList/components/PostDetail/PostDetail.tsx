@@ -179,7 +179,7 @@ const PostDetail = (props: PostDetailProps) => {
             <ShareToolTipButton onClick={showSharingPopupModal} />
             {data?.owner.userId === user?.userId && (
               <SettingsPost
-                postId={Number(id)}
+                postId={Number(post_id)}
                 setIsLoading={() => setIsLoadingDelete(true)}
                 onDelete={handleClosePostDetail}
                 className='my-4'

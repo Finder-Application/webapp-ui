@@ -36,7 +36,7 @@ const LoginPage = () => {
   const { mutate: registerGG, isLoading: isLoadingGG } =
     useRegisterGoogleMutation({
       onSuccess: (data) => {
-        console.log(data);
+        console.log('🚀 ~ file: LoginPage.tsx:39 ~ LoginPage ~ data', data);
         StorageUtils.set('token', data.token.accessToken);
         navigate(ROUTES.home);
       },
