@@ -1,8 +1,7 @@
 export const constants = {
   APP_TITLE: 'Finder',
   RENDERED_POST_SIZE: 9,
-  BASE_URL: 'http://localhost:9000',
-  // BASE_URL: import.meta.env.VITE_BASE_URL,
+  BASE_URL: import.meta.env.VITE_BASE_URL,
   formatDate: 'DD-MM-YYYY',
 };
 
