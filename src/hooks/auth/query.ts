@@ -105,3 +105,18 @@ export const useRegisterGoogleMutation = (
     }
   );
 };
+
+export const useChangePassword = () => {
+  return useMutation(
+    (payload: { password: string; oldPassword: string }) =>
+      axiosClient.put(baseURL(false, 'users/change-pw'), {
+        pw: payload.password,
+        oldPw: payload.oldPassword,
+      }) as Promise<ResponseLogin>,
+    {
+      onError() {
+        toast.error('Something went wrong!');
+      },
+    }
+  );
+};

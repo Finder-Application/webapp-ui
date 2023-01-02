@@ -1,6 +1,9 @@
 import { ButtonFinder } from '@/components';
 import { FinderInput } from '@/components/Input';
+import { useChangePassword } from '@/hooks/auth/query';
+import { useAppStore } from '@/store/app';
 import { Form } from 'antd';
+import { toast } from 'react-toastify';
 import { cn } from '../SettingsPage';
 
 enum FormItemName {
@@ -14,6 +17,28 @@ const ChangePasswordForm = () => {
   const labelCol = {
     span: 24,
   };
+
+  const setIsShowingLoadingModal = useAppStore(
+    (state) => state.setIsShowingLoadingModal
+  );
+
+  const changePassword = useChangePassword();
+
+  const onChangePassword = async () => {
+    await changePassword
+      .mutateAsync({
+        password: form.getFieldValue(FormItemName.NewPassword),
+        oldPassword: form.getFieldValue(FormItemName.OldPassword),
+      })
+      .then(() => {
+        toast.success('Change password successfully');
+        form.resetFields();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
   return (
     <div className={cn('general')}>
       <Form
@@ -33,7 +58,12 @@ const ChangePasswordForm = () => {
             span: 24,
           }}
         >
-          <FinderInput required label='Old password' className='mt-3' />
+          <FinderInput
+            type='password'
+            required
+            label='Old password'
+            className='mt-3'
+          />
         </Form.Item>
 
         <Form.Item
@@ -55,15 +85,46 @@ const ChangePasswordForm = () => {
           name={FormItemName.ConfirmPassword}
           rules={[
             { required: true, message: 'Please enter password confirmation!' },
+            ({ getFieldValue }) => ({
+              validator: (_, value) => {
+                const confirmedPassword = Number(value);
+                const newPassword = Number(
+                  getFieldValue(FormItemName.NewPassword)
+                );
+
+                if (confirmedPassword === newPassword) {
+                  return Promise.resolve();
+                } else {
+                  return Promise.reject('Password does not match');
+                }
+              },
+            }),
           ]}
           labelCol={{
             span: 24,
           }}
         >
-          <FinderInput required label='Confirm password' className='mt-3' />
+          <FinderInput
+            type='password'
+            required
+            label='Confirm password'
+            className='mt-3'
+          />
         </Form.Item>
         <div className='d-flex flex-row justify-content-end mt-5'>
-          <ButtonFinder htmlType='submit' className={cn('btn')}>
+          <ButtonFinder
+            htmlType='submit'
+            className={cn('btn')}
+            onClick={async () => {
+              const isFormValid = await form.validateFields();
+
+              if (isFormValid) {
+                setIsShowingLoadingModal(true);
+                await onChangePassword();
+                setIsShowingLoadingModal(false);
+              }
+            }}
+          >
             Change
           </ButtonFinder>
         </div>
