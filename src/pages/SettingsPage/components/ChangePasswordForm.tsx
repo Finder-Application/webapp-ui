@@ -69,7 +69,18 @@ const ChangePasswordForm = () => {
         <Form.Item
           name={FormItemName.NewPassword}
           help='Minimum 6 characters'
-          rules={[{ required: true, message: 'Please enter new password!' }]}
+          rules={[
+            { required: true, message: 'Please enter new password!' },
+            ({ getFieldValue }) => ({
+              validator: (_, value) => {
+                if (value?.length > 6) {
+                  return Promise.resolve();
+                } else {
+                  return Promise.reject('Minimum 6 characters');
+                }
+              },
+            }),
+          ]}
           labelCol={{
             span: 24,
           }}
@@ -87,10 +98,8 @@ const ChangePasswordForm = () => {
             { required: true, message: 'Please enter password confirmation!' },
             ({ getFieldValue }) => ({
               validator: (_, value) => {
-                const confirmedPassword = Number(value);
-                const newPassword = Number(
-                  getFieldValue(FormItemName.NewPassword)
-                );
+                const confirmedPassword = value;
+                const newPassword = getFieldValue(FormItemName.NewPassword);
 
                 if (confirmedPassword === newPassword) {
                   return Promise.resolve();
