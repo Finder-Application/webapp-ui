@@ -81,10 +81,13 @@ export const Post = memo((props: Props) => {
               <span>FullName: </span>
               {postItem.fullName}
             </div>
-            <div className={cx('content-item')}>
-              <span>Nick name: </span>
-              {postItem.nickname}
-            </div>
+            {postItem.nickname && (
+              <div className={cx('content-item')}>
+                <span>Nick name: </span>
+                {postItem.nickname}
+              </div>
+            )}
+
             <div className={cx('content-item')}>
               <span>Date Of Birth: </span>
               {postItem.dateOfBirth}

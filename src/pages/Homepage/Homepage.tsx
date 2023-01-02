@@ -55,6 +55,7 @@ const Homepage = () => {
     setProvince(undefined);
     setGenderFilter(undefined);
     setBirthYearFilter(null);
+    setSearchParams('');
   };
 
   return (

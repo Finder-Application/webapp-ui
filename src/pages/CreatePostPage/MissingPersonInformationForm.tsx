@@ -129,6 +129,12 @@ export const MissingPersonInformationForm = () => {
                   format={constants.formatDate}
                   suffixIcon={<CalendarIcon2 height={15} width={15} />}
                   clearIcon={false}
+                  use12Hours
+                  disabledDate={(date) =>
+                    !date ||
+                    date.isAfter('2002-12-31') ||
+                    date.isSameOrBefore('1960-01-01')
+                  }
                 />
               </Form.Item>
             </div>
