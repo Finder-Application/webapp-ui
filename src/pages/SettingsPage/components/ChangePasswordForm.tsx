@@ -73,7 +73,7 @@ const ChangePasswordForm = () => {
             { required: true, message: 'Please enter new password!' },
             ({ getFieldValue }) => ({
               validator: (_, value) => {
-                if (value?.length > 6) {
+                if (value?.length >= 6) {
                   return Promise.resolve();
                 } else {
                   return Promise.reject('Minimum 6 characters');
