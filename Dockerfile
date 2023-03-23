@@ -1,36 +1,29 @@
-FROM node:lts as development
 
+# module install
+FROM node:16-alpine as module-install-stage
+# set working directory
 WORKDIR /app
 
-COPY package.json /app/package.json 
-COPY yarn.lock  /app/yarn.lock
+COPY package.json yarn.lock ./
 
-RUN yarn 
+RUN apk add yarn
+RUN yarn install
 
-COPY . /app
-
-ENV CI=true
-ENV PORT=3000
-
-FROM development AS build
-
+# build
+FROM node:16-alpine as build-stage
+COPY --from=module-install-stage /app/node_modules/ /app/node_modules
+WORKDIR /app
+COPY . .
 RUN yarn build
 
-CMD ["yarn","preview"]
-
-# 2. For Nginx setup
-FROM nginx:latest
-
+# use this alpine base for mini size after build , because we only need static files 
+FROM nginx:alpine
 # Copy config nginx
-COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
+COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/share/nginx/html
-
 # Remove default nginx static assets
 RUN rm -rf ./*
 
 # Copy static assets from builder stage
-COPY --from=build /app/dist .
+COPY --from=build-stage /app/dist .
 
-# Containers run nginx with global directives and daemon off
-EXPOSE 3000
