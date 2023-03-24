@@ -1,7 +1,7 @@
 export const constants = {
   APP_TITLE: 'Finder',
   RENDERED_POST_SIZE: 9,
-  BASE_URL: 'https://finder.support/api',
+  BASE_URL: import.meta.env.VITE_BASE_URL,
   formatDate: 'DD-MM-YYYY',
 };
 
