@@ -11,7 +11,7 @@ RUN yarn install
 
 # build
 FROM node:16-alpine as build-stage
-ENV VITE_BASE_URL=${VITE_BASE_URL}
+ENV VITE_BASE_URL=https://finder.support
 COPY --from=module-install-stage /app/node_modules/ /app/node_modules
 WORKDIR /app
 COPY . .
@@ -19,9 +19,6 @@ RUN yarn build
 
 # use this alpine base for mini size after build , because we only need static files 
 FROM nginx:alpine
-
-ENV VITE_BASE_URL=${VITE_BASE_URL}
-
 # Copy config nginx
 COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/share/nginx/html
