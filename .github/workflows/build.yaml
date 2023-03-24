@@ -2,6 +2,8 @@ name: CI-CD Finder UI Deploy
 on:
   push:
     branches: [main]
+env:
+  VITE_BASE_URL: http://localhost:9000
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -28,9 +30,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/finder-ui:latest
-          env:
-            VITE_BASE_URL: ${{ secrets.DOCKERHUB_USERNAME }}
-             
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
