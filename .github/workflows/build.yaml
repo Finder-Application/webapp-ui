@@ -29,7 +29,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/finder-ui:latest
           env:
-            VITE_BASE_URL: https://finder.support
+            VITE_BASE_URL: ${{ secrets.DOCKERHUB_USERNAME }}
              
 
       - name: executing remote ssh commands using password
