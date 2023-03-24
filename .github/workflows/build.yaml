@@ -28,6 +28,9 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/finder-ui:latest
+          env:
+            VITE_BASE_URL: "https://finder.support"
+             
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
