@@ -2,6 +2,8 @@
 # module install
 FROM node:16-alpine as module-install-stage
 # set working directory
+ENV VITE_BASE_URL=${VITE_BASE_URL}
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
