@@ -18,6 +18,9 @@ RUN yarn build
 
 # use this alpine base for mini size after build , because we only need static files 
 FROM nginx:alpine
+
+ENV VITE_BASE_URL=${VITE_BASE_URL}
+
 # Copy config nginx
 COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/share/nginx/html
