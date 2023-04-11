@@ -15,18 +15,16 @@ ENV VITE_BASE_URL=https://be.finder.support
 COPY --from=module-install-stage /app/node_modules/ /app/node_modules
 WORKDIR /app
 COPY . .
-# RUN yarn build
+RUN yarn build
 
-CMD [ "yarn",'preview' ]
+# use this alpine base for mini size after build , because we only need static files 
+FROM nginx:alpine
+# Copy config nginx
+COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html
+# Remove default nginx static assets
+RUN rm -rf ./*
 
-# # use this alpine base for mini size after build , because we only need static files 
-# FROM nginx:alpine
-# # Copy config nginx
-# COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-# WORKDIR /usr/share/nginx/html
-# # Remove default nginx static assets
-# RUN rm -rf ./*
-
-# # Copy static assets from builder stage
-# COPY --from=build-stage /app/dist .
+# Copy static assets from builder stage
+COPY --from=build-stage /app/dist .
 
