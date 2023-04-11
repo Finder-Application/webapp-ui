@@ -42,5 +42,5 @@ jobs:
           script_stop: true
           script: |
             cd build
-            docker pull cinny09/finder-ui
-            docker-compose up web-ui --build -d
+            sudo docker pull cinny09/finder-ui
+            sudo docker compose up web-ui --build -d
