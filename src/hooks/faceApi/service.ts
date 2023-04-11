@@ -1,13 +1,14 @@
 import { axiosClient } from '@/apis';
 import FileUtils from '@/utils/File.utils';
 import { Descriptor } from '../post/interface';
+import { constants } from '@/configs';
 
 interface FaceDetectionResponse {
   data: Descriptor[];
 }
 
 export class FaceApiService {
-  private static readonly baseURL: string = '/face-api';
+  private static readonly baseURL: string = constants.BASE_URL_DETECT;
 
   static async detectImages(files: File[]) {
     const requestData = new FormData();
@@ -15,7 +16,7 @@ export class FaceApiService {
       requestData.append('files', file);
     });
     const response: FaceDetectionResponse = await axiosClient.post(
-      this.baseURL + '/detect',
+      this.baseURL,
       requestData
     );
 
