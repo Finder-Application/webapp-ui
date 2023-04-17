@@ -11,7 +11,7 @@ RUN yarn install
 
 # build
 FROM node:16-alpine as build-stage
-ENV VITE_BASE_URL=https://finder.support
+ENV VITE_BASE_URL=https://be.finder.support
 COPY --from=module-install-stage /app/node_modules/ /app/node_modules
 WORKDIR /app
 COPY . .
