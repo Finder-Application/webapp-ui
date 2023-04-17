@@ -1,0 +1,21 @@
+.wrapper {
+  width: 20rem;
+  background-color: #eefaf9;
+  border-radius: 15px;
+  padding: 10px 20px;
+  max-height: 950px;
+}
+
+.title {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.description {
+  height: 150px;
+  text-overflow: ellipsis;
+  margin-top: 5px;
+  margin-left: -45px;
+  text-align: justify;
+}

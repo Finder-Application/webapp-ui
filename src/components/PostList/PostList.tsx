@@ -9,9 +9,9 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 import { NoResultsFound } from '../NoResult';
-import { Post as PostComponent } from './components/Post/Post';
 import { PostLoading } from './components/PostLoading';
 import { omitBy, isNull } from 'lodash';
+import { default as PostComponent } from '@/containers/home/Post/Post';
 
 type PostListProps = {
   filter: {
@@ -161,12 +161,17 @@ export const PostList = memo((props: PostListProps) => {
             }
           }}
           hasMore={hasNextPage || posts.length !== itemCount}
-          loader={renderLoadingListPost()}
+          // loader={renderLoadingListPost()}
         >
-          <div className='row flex-wrap justify-content-start align-items-center'>
+          <div
+            className='row gap-5 flex-column justify-content-start align-items-center'
+            style={{
+              gap: 20,
+            }}
+          >
             {posts.map((post, index) => (
-              <div key={post.id.toString()} className='col-xl-4 col-lg-3'>
-                <PostComponent postItem={post} />
+              <div key={post.id.toString()}>
+                <PostComponent {...post} />
               </div>
             ))}
           </div>

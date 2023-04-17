@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from 'react';
 import styles from './Homepage.module.scss';
 import CommonImages from '@/assets/images/common';
 import { SEARCH_QUERY } from '@/configs';
+import HomeLayout from '@/layouts/HomeLayout/HomeLayout';
 
 const { Option } = Select;
 
@@ -59,8 +60,8 @@ const Homepage = () => {
   };
 
   return (
-    <div className={cx('homepage')}>
-      <div className={cx('homepage__search-container')}>
+    <HomeLayout>
+      {/* <div className={cx('homepage__search-container')}>
         <img width='100%' src={CommonImages.banner} />
         <div className={cx('homepage__search-container__content')}>
           <h1 className={cx('homepage__search-container__content__title')}>
@@ -210,18 +211,16 @@ const Homepage = () => {
             </ButtonFinder>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className={cx('mt-4')}>
-        <PostList
-          filter={filterOptions}
-          onSetTotalOfSearch={(value) => setTotalOfSearch(value)}
-        />
-      </div>
+      <PostList
+        filter={filterOptions}
+        onSetTotalOfSearch={(value) => setTotalOfSearch(value)}
+      />
       {searchParams.get('id') && (
         <PostDetail id={String(searchParams.get('id'))} />
       )}
-    </div>
+    </HomeLayout>
   );
 };
 export default Homepage;

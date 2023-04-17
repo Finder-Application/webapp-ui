@@ -1,0 +1,48 @@
+.wrapper {
+  background-color: var(--white);
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  width: 60rem;
+}
+
+.header {
+  &__info {
+    .avt-img {
+      border-radius: 50%;
+    }
+  }
+  &__fullName {
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-left: 1rem;
+  }
+
+  &__location {
+    margin-left: 3.5rem;
+    color: cadetblue;
+  }
+}
+
+.content {
+  padding: 2rem 0;
+
+  .title {
+    font-weight: 500;
+  }
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f4f4f4;
+
+    border-radius: 50%;
+  }
+}

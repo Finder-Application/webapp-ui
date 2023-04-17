@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useMemo, useCallback } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -11,30 +11,33 @@ import { PrivateOutletRoute, PublicOutletRoute } from './routes';
 
 function App() {
   useGetMe();
-  const renderRoutes = (routes: RouteFinder[]): JSX.Element[] =>
-    routes.map((route, index) => {
-      const Layout =
-        route.layout === undefined
-          ? DefaultLayout
-          : route.layout === null
-          ? Fragment
-          : route.layout;
-      let path = route.path;
-      if (route.params) {
-        path = `${route.path}/${route.params}`;
-      }
-      return (
-        <Route
-          key={index}
-          path={path}
-          element={
-            <Layout>
-              <CustomPage {...route} />
-            </Layout>
-          }
-        />
-      );
-    });
+  const renderRoutes = useCallback(
+    (routes: RouteFinder[]): JSX.Element[] =>
+      routes.map((route, index) => {
+        const Layout =
+          route.layout === undefined
+            ? DefaultLayout
+            : route.layout === null
+            ? Fragment
+            : route.layout;
+        let path = route.path;
+        if (route.params) {
+          path = `${route.path}/${route.params}`;
+        }
+        return (
+          <Route
+            key={index}
+            path={path}
+            element={
+              <Layout>
+                <CustomPage {...route} />
+              </Layout>
+            }
+          />
+        );
+      }),
+    []
+  );
   return (
     <GlobalStyles>
       <>
