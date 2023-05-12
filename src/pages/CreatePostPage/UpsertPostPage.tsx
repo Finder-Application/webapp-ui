@@ -192,8 +192,6 @@ const UpsertPostPage = () => {
           networkImageUrls
         );
 
-        console.log('descriptors', descriptors);
-
         const body = {
           ...getRequestPayloadInfo(),
           photos: [...(selectedPost?.photos ?? []), ...networkImageUrls],

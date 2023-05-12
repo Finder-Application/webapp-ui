@@ -132,7 +132,7 @@ export const MissingPersonInformationForm = () => {
                   use12Hours
                   disabledDate={(date) =>
                     !date ||
-                    date.isAfter('2002-12-31') ||
+                    date.isAfter(new Date()) ||
                     date.isSameOrBefore('1960-01-01')
                   }
                 />

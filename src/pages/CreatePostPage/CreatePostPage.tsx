@@ -63,10 +63,6 @@ const CreatePostPage = () => {
     ],
     shallow
   );
-  console.log(
-    '🚀 ~ file: CreatePostPage.tsx:66 ~ CreatePostPage ~ createPostFormData:',
-    createPostFormData
-  );
 
   const { data } = useGetPostDetail(selectedPost?.id);
 
@@ -164,10 +160,6 @@ const CreatePostPage = () => {
               },
               []
             );
-          console.log(
-            '🚀 ~ file: CreatePostPage.tsx:143 ~ .then ~ descriptors:',
-            descriptors
-          );
 
           await updatePost
             .mutateAsync({
