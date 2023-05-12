@@ -22,7 +22,10 @@ const ModalScanImage = ({ images, isScanning }: ModalScanImageProps) => {
     >
       <div className='d-flex flex-row justify-content-center'>
         {images.map((src) => (
-          <div className='d-flex flex-row align-items-center justify-content-center position-relative mr-3'>
+          <div
+            className='d-flex flex-row align-items-center justify-content-center position-relative mr-3'
+            key={src}
+          >
             <div className={cx('image')}>
               <AsyncImage src={src} width={300} height={300} />
             </div>

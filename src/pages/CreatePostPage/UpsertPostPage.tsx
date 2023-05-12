@@ -17,7 +17,7 @@ import { RouteUtils } from '@/utils/Route.utils';
 import { Form, Input as AntdInput } from 'antd';
 import classNames from 'classnames/bind';
 import { isEmpty } from 'lodash';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import shallow from 'zustand/shallow';
@@ -146,8 +146,11 @@ const UpsertPostPage = () => {
     return [];
   };
 
-  const getPayloadDescriptors = (networkImageUrls: string[]) => {
-    return createPostFormData?.descriptors?.reduce(
+  const getPayloadDescriptors = (
+    descriptors: any[],
+    networkImageUrls: string[]
+  ) => {
+    return descriptors.reduce(
       (prev: { id: string; descriptor: Descriptor }[], descriptor, index) => {
         const url: string = networkImageUrls[index];
         if (url) {
@@ -176,13 +179,21 @@ const UpsertPostPage = () => {
       id,
     });
   };
-  const onFormSubmit = useCallback(async () => {
+
+  const onFormSubmit = async () => {
     const isFormValid = await hasFormValid();
     if (isFormValid) {
       setIsShowingLoadingModal(true);
       try {
         const networkImageUrls = await getImageUrls();
-        const descriptors = getPayloadDescriptors(networkImageUrls);
+
+        const descriptors = getPayloadDescriptors(
+          createPostFormData.descriptors || [],
+          networkImageUrls
+        );
+
+        console.log('descriptors', descriptors);
+
         const body = {
           ...getRequestPayloadInfo(),
           photos: [...(selectedPost?.photos ?? []), ...networkImageUrls],
@@ -204,10 +215,10 @@ const UpsertPostPage = () => {
       }
       setIsShowingLoadingModal(false);
     }
-  }, [form, selectedPost?.photos, createPostFormData?.descriptors, id]);
+  };
 
   const onFinish = (values: any) => {
-    console.log(values);
+    onFormSubmit();
   };
 
   const fields: Array<keyof typeof user> = [
@@ -294,7 +305,6 @@ const UpsertPostPage = () => {
                   htmlType='submit'
                   onClick={() => {
                     form.submit();
-                    onFormSubmit();
                   }}
                 >
                   {id ? 'Save' : 'Create Post'}
