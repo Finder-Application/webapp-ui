@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <GoogleOAuthProvider clientId='894609161760-1btovlg15pcuoedtfanpkogtahetsdq7.apps.googleusercontent.com'>
+        <GoogleOAuthProvider clientId='217050693116-3ka33u4v0p21ajau3a11mgee86obbvbq.apps.googleusercontent.com'>
           <App />
         </GoogleOAuthProvider>
       </QueryClientProvider>
