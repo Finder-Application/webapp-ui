@@ -205,6 +205,8 @@ const UpsertPostPage = () => {
           ...body,
         };
         if (isCreatePost) {
+          console.log('is CreatePost');
+
           await handleCreatePost(payload);
         } else {
           await handleUpdatePost(String(id), payload);
@@ -303,9 +305,6 @@ const UpsertPostPage = () => {
                 <ButtonFinder
                   className={cx('create-post__creating-form__create-post-btn')}
                   htmlType='submit'
-                  onClick={() => {
-                    form.submit();
-                  }}
                 >
                   {id ? 'Save' : 'Create Post'}
                 </ButtonFinder>
