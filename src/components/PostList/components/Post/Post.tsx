@@ -68,63 +68,59 @@ export const Post = memo((props: Props) => {
           <AsyncImage src={postItem.photos[0]} />
         </div>
         <div className={cx('card__info', 'col-7 h-100')}>
-          {!!postItem.similarText && (
-            <Tooltip
-              placement='rightBottom'
-              title={
-                <div
-                  style={{
-                    color: 'black',
-                  }}
-                >
-                  Text Similarity
-                </div>
-              }
-              trigger='hover'
-              overlayInnerStyle={{
-                backgroundColor: 'white',
-                borderRadius: '5px',
-                maxWidth: 150,
-              }}
-              overlayClassName={'user-avatar__overlay'}
-            >
-              <Progress
-                className={cx('card__info__matching-text')}
-                type='circle'
-                percent={postItem.similarText * 100}
-                format={(percent) => `${percent?.toFixed(0)}%`}
-              />
-            </Tooltip>
-          )}
-          {!!postItem.similar && (
-            <Tooltip
-              placement='rightBottom'
-              title={
-                <div
-                  style={{
-                    color: 'black',
-                  }}
-                >
-                  Face Similarity
-                </div>
-              }
-              trigger='hover'
-              overlayInnerStyle={{
-                backgroundColor: 'white',
-                borderRadius: '5px',
-                maxWidth: 150,
-              }}
-              overlayClassName={'user-avatar__overlay'}
-            >
-              <Progress
-                className={cx('card__info__matching-image')}
-                type='circle'
-                strokeColor={'green'}
-                percent={postItem.similar * 100}
-                format={(percent) => `${percent?.toFixed(0)}%`}
-              />
-            </Tooltip>
-          )}
+          <Tooltip
+            placement='rightBottom'
+            title={
+              <div
+                style={{
+                  color: 'black',
+                }}
+              >
+                Text Similarity
+              </div>
+            }
+            trigger='hover'
+            overlayInnerStyle={{
+              backgroundColor: 'white',
+              borderRadius: '5px',
+              maxWidth: 150,
+            }}
+            overlayClassName={'user-avatar__overlay'}
+          >
+            <Progress
+              className={cx('card__info__matching-text')}
+              type='circle'
+              percent={postItem.similarText ?? 0 * 100}
+              format={(percent) => `${percent?.toFixed(0)}%`}
+            />
+          </Tooltip>
+          <Tooltip
+            placement='rightBottom'
+            title={
+              <div
+                style={{
+                  color: 'black',
+                }}
+              >
+                Face Similarity
+              </div>
+            }
+            trigger='hover'
+            overlayInnerStyle={{
+              backgroundColor: 'white',
+              borderRadius: '5px',
+              maxWidth: 150,
+            }}
+            overlayClassName={'user-avatar__overlay'}
+          >
+            <Progress
+              className={cx('card__info__matching-image')}
+              type='circle'
+              strokeColor={'green'}
+              percent={postItem.similar ?? 0 * 100}
+              format={(percent) => `${percent?.toFixed(0)}%`}
+            />
+          </Tooltip>
           <div className={cx('card__info-content')}>
             <div className={cx('content-item')}>
               <span>FullName: </span>
