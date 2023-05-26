@@ -68,7 +68,7 @@ export const Post = memo((props: Props) => {
           <AsyncImage src={postItem.photos[0]} />
         </div>
         <div className={cx('card__info', 'col-7 h-100')}>
-          {postItem.similarText && (
+          {!!postItem.similarText && (
             <Tooltip
               placement='rightBottom'
               title={
@@ -96,7 +96,7 @@ export const Post = memo((props: Props) => {
               />
             </Tooltip>
           )}
-          {postItem.similar && (
+          {!!postItem.similar && (
             <Tooltip
               placement='rightBottom'
               title={
