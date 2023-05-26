@@ -90,7 +90,7 @@ export const Post = memo((props: Props) => {
             <Progress
               className={cx('card__info__matching-text')}
               type='circle'
-              percent={postItem.similarText ?? 0 * 100}
+              percent={(postItem.similarText || 0) * 100}
               format={(percent) => `${percent?.toFixed(0)}%`}
             />
           </Tooltip>
@@ -117,7 +117,7 @@ export const Post = memo((props: Props) => {
               className={cx('card__info__matching-image')}
               type='circle'
               strokeColor={'green'}
-              percent={postItem.similar ?? 0 * 100}
+              percent={(postItem.similar || 0) * 100}
               format={(percent) => `${percent?.toFixed(0)}%`}
             />
           </Tooltip>
