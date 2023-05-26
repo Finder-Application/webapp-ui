@@ -4,7 +4,7 @@ import { Post as PostInterface } from '@/hooks/post/interface';
 import { usePostStore } from '@/store/post';
 import { formatUserName } from '@/utils/format.util';
 import { RouteUtils } from '@/utils/Route.utils';
-import { Progress } from 'antd';
+import { Progress, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import React, { memo } from 'react';
 import { FcOvertime } from 'react-icons/fc';
@@ -68,13 +68,62 @@ export const Post = memo((props: Props) => {
           <AsyncImage src={postItem.photos[0]} />
         </div>
         <div className={cx('card__info', 'col-7 h-100')}>
+          {postItem.similarText && (
+            <Tooltip
+              placement='rightBottom'
+              title={
+                <div
+                  style={{
+                    color: 'black',
+                  }}
+                >
+                  Text Similarity
+                </div>
+              }
+              trigger='hover'
+              overlayInnerStyle={{
+                backgroundColor: 'white',
+                borderRadius: '5px',
+                maxWidth: 150,
+              }}
+              overlayClassName={'user-avatar__overlay'}
+            >
+              <Progress
+                className={cx('card__info__matching-text')}
+                type='circle'
+                percent={postItem.similarText * 100}
+                format={(percent) => `${percent?.toFixed(0)}%`}
+              />
+            </Tooltip>
+          )}
           {postItem.similar && (
-            <Progress
-              className={cx('card__info__matching-percent')}
-              type='circle'
-              percent={postItem.similar * 100}
-              format={(percent) => `${percent?.toFixed(0)}%`}
-            />
+            <Tooltip
+              placement='rightBottom'
+              title={
+                <div
+                  style={{
+                    color: 'black',
+                  }}
+                >
+                  Face Similarity
+                </div>
+              }
+              trigger='hover'
+              overlayInnerStyle={{
+                backgroundColor: 'white',
+                borderRadius: '5px',
+                maxWidth: 150,
+              }}
+              overlayClassName={'user-avatar__overlay'}
+            >
+              <Progress
+                className={cx('card__info__matching-image')}
+                type='circle'
+                strokeColor={'green'}
+                percent={postItem.similar * 100}
+                format={(percent) => `${percent?.toFixed(0)}%`}
+              />
+            </Tooltip>
           )}
           <div className={cx('card__info-content')}>
             <div className={cx('content-item')}>

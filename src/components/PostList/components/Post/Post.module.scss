@@ -16,9 +16,21 @@
     height: var(--card-height);
 
     &__info {
-      &__matching-percent {
+      &__matching-image {
         position: absolute;
         right: 0.5em;
+        top: 0.5em;
+        :global(.ant-progress-inner) {
+          width: 1.5em !important;
+          height: 1.5em !important;
+          :global(.ant-progress-text) {
+            font-size: 0.8rem !important;
+          }
+        }
+      }
+      &__matching-text {
+        position: absolute;
+        right: 3.5em;
         top: 0.5em;
         :global(.ant-progress-inner) {
           width: 1.5em !important;
