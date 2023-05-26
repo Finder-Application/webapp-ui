@@ -10,7 +10,7 @@ import { RouteUtils } from '@/utils/Route.utils';
 const cx = classNames.bind(styles);
 
 const TopFinder = () => {
-  const MAX = 10;
+  const MAX = 4;
   const MAX_LENGTH = 150;
   const query = omitBy(
     {
